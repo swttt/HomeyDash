@@ -81,11 +81,11 @@ html, body{
 
 }
 #layout {
-  background: url(assets/bg.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url(assets/bg.jpg) no-repeat center center fixed!important;
+  -webkit-background-size: cover!important;
+  -moz-background-size: cover!important;
+  -o-background-size: cover!important;
+  background-size: cover!important;
   position: absolute!important;
   top:0!important;
   left:0!important;
