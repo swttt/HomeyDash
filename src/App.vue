@@ -78,9 +78,6 @@ export default {
 
 <style>
 html, body{
-
-}
-#layout {
   background: url(assets/bg.jpg) no-repeat center center fixed!important;
   -webkit-background-size: cover!important;
   -moz-background-size: cover!important;
