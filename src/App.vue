@@ -83,6 +83,11 @@ html, body{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
 }
 #layout {
   background: url(assets/bg.jpg) no-repeat center center fixed;
