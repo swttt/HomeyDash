@@ -78,16 +78,7 @@ export default {
 
 <style>
 html, body{
-  background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover!important;
-  -moz-background-size: cover!important;
-  -o-background-size: cover!important;
-  background-size: cover!important;
-  position: absolute!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  bottom:0!important;
+
 }
 #layout {
   background: url(assets/bg.jpg) no-repeat center center fixed;
@@ -95,13 +86,11 @@ html, body{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 100%;
-  min-width: 100%;
-  position: absolute;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  position: absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
 }
 
 .layout-aside {
