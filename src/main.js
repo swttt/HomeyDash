@@ -84,7 +84,7 @@ async function init() {
   }
   if (!token) {
     if (Platform.is.android){
-      window.open(Vue.prototype.$athomCloud.getLoginUrl(), '_system');
+      window.location.replace(Vue.prototype.$athomCloud.getLoginUrl());
     }
     else{
       window.location.replace(Vue.prototype.$athomCloud.getLoginUrl());
