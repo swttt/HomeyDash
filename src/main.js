@@ -84,7 +84,7 @@ async function init() {
   }
   if (!token) {
     alert('Going to redirect to auth!');
-    window.location.href = Vue.prototype.$athomCloud.getLoginUrl();
+    window.location = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
   Vue.prototype.$athomCloud.getHomeys()
