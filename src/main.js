@@ -74,7 +74,6 @@ async function init() {
       window.localStorage.removeItem('token');
     })
   let token = window.localStorage.getItem('token');
-  alert(token);
   if (token) {
     token = await Vue.prototype.$athomCloud.setAuthState(JSON.parse(token))
   }
@@ -84,15 +83,12 @@ async function init() {
     window.history.pushState({}, "", "/");
   }
   if (!token) {
-    alert('trying to redirect...');
     document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
   Vue.prototype.$athomCloud.getHomeys()
     .then(result => {
-      alert('querying homeys');
       if (result.length === 1) {
-        alert('found 1 homey!');
         Vue.prototype.$homeyAPI.forHomeyObject(result[0])
           .then(result => {
             Vue.prototype.$homey = result;
@@ -130,7 +126,7 @@ async function init() {
       }
     })
     .catch(error => {
-      alert(error);
+      console.log(error);
     });
 }
 
