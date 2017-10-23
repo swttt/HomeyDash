@@ -95,7 +95,6 @@ async function init() {
           .then(result => {
             Vue.prototype.$homey = result;
 
-            alert('loading vue with homey!')
             new Vue({
               el: '#q-app',
               router,
