@@ -77,6 +77,14 @@ export default {
 </script>
 
 <style>
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
 html, body{
   margin: 0!important;
   padding: 0!important;
