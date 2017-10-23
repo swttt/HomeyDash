@@ -78,11 +78,12 @@ export default {
 
 <style>
 html, body{
-  margin: 0;
-  padding: 0;
-  width:100%;
-  height:100%;
-  overflow: hidden; 
+  margin: 0!important;
+  padding: 0!important;
+  margin-top: -10px!important;
+  width:100%!important;
+  height:100%!important;
+  overflow: hidden!important;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
   -webkit-background-size: cover!important;
   -moz-background-size: cover!important;

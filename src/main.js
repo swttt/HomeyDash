@@ -83,7 +83,7 @@ async function init() {
     window.history.pushState({}, "", "/");
   }
   if (!token) {
-    document.location = await Vue.prototype.$athomCloud.getLoginUrl();
+    document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
   Vue.prototype.$athomCloud.getHomeys()
