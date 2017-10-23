@@ -17,7 +17,7 @@ export default {
   methods: {
     test(device){
       if (navigator.vibrate) {
-      	navigator.vibrate(1000);
+      	navigator.vibrate(150);
       }
     },
     setCapability(device, capability){
