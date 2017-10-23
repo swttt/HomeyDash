@@ -83,33 +83,13 @@ async function init() {
     window.history.pushState({}, "", "/");
   }
   if (!token) {
-    if (Platform.is.android){
-      document.location = Vue.prototype.$athomCloud.getLoginUrl();
-    }
-    else{
-      window.location = Vue.prototype.$athomCloud.getLoginUrl();
-    }
-}
+    window.location = Vue.prototype.$athomCloud.getLoginUrl();
+  }
 
-Vue.prototype.$athomCloud.getHomeys()
-  .then(result => {
-    if (result.length === 1) {
-      Vue.prototype.$homeyAPI.forHomeyObject(result[0])
-        .then(result => {
-          Vue.prototype.$homey = result;
-          /* eslint-disable no-new */
-          new Vue({
-            el: '#q-app',
-            router,
-            render: h => h(require('./App').default)
-          })
-        });
-    }
-    else {
-      if (qs.cloudid) {
-        Vue.prototype.$homeyAPI.forHomeyObject(lodash.find(result, function(homey) {
-            return homey.id === qs.cloudid;
-          }))
+  Vue.prototype.$athomCloud.getHomeys()
+    .then(result => {
+      if (result.length === 1) {
+        Vue.prototype.$homeyAPI.forHomeyObject(result[0])
           .then(result => {
             Vue.prototype.$homey = result;
             /* eslint-disable no-new */
@@ -121,17 +101,32 @@ Vue.prototype.$athomCloud.getHomeys()
           });
       }
       else {
-        new Vue({
-          el: '#q-app',
-          router,
-          render: h => h(require('./App').default)
-        })
+        if (qs.cloudid) {
+          Vue.prototype.$homeyAPI.forHomeyObject(lodash.find(result, function(homey) {
+              return homey.id === qs.cloudid;
+            }))
+            .then(result => {
+              Vue.prototype.$homey = result;
+              /* eslint-disable no-new */
+              new Vue({
+                el: '#q-app',
+                router,
+                render: h => h(require('./App').default)
+              })
+            });
+        }
+        else {
+          new Vue({
+            el: '#q-app',
+            router,
+            render: h => h(require('./App').default)
+          })
+        }
       }
-    }
-  })
-  .catch(error => {
-    console.log(error);
-  });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 
 init()
