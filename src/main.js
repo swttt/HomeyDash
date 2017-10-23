@@ -83,6 +83,7 @@ async function init() {
     window.history.pushState({}, "", "/");
   }
   if (!token) {
+    alert('trying to redirect...');
     document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
