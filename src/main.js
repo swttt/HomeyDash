@@ -84,10 +84,10 @@ async function init() {
   }
   if (!token) {
     if (Platform.is.android){
-      window.location.replace(Vue.prototype.$athomCloud.getLoginUrl());
+      document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
     }
     else{
-      window.location.replace(Vue.prototype.$athomCloud.getLoginUrl());
+      document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
     }
 }
 
