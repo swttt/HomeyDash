@@ -60,6 +60,7 @@ export default {
     }
   },
   async created() {
+    alert('loaded app!');
     if(this.$homey) {
       this.selectHomey = false;
     } else {
