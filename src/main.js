@@ -87,7 +87,7 @@ async function init() {
       document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
     }
     else{
-      document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
+      window.location.href = Vue.prototype.$athomCloud.getLoginUrl();
     }
 }
 
