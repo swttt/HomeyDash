@@ -102,7 +102,7 @@ async function init() {
               el: '#q-app',
               router,
               render: h => h(require('./App').default)
-            })
+            });
           });
       }
       else {
