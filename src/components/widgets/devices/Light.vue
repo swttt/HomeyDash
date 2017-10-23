@@ -33,7 +33,7 @@ export default {
     setDim: _.debounce(function(value){
       console.log(value)
       this.device.setCapabilityValue('dim', value)
-    }, 500)
+    }, 100)
   }
 }
 
@@ -91,7 +91,7 @@ export default {
       .q-slider-handle
         /*display none*/
         height 75px
-        width 10px
+        width 5px
         box-shadow 0 0 0 0
         background $primary
         border-radius 0!important
