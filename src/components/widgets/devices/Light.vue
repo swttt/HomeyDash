@@ -30,10 +30,10 @@ export default {
     setOnoff(){
         this.device.setCapabilityValue('onoff', !this.device.state.onoff)
     },
-    setDim: _.debounce((value)=>{
+    setDim: _.debounce(function(value){
       console.log(value)
       this.device.setCapabilityValue('dim', value)
-    }, 200)
+    }, 100)
   }
 }
 
