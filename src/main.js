@@ -91,10 +91,12 @@ async function init() {
   Vue.prototype.$athomCloud.getHomeys()
     .then(result => {
       if (result.length === 1) {
+        alert('found 1 homey!');
         Vue.prototype.$homeyAPI.forHomeyObject(result[0])
           .then(result => {
             Vue.prototype.$homey = result;
             /* eslint-disable no-new */
+            alert('loading vue with homey!')
             new Vue({
               el: '#q-app',
               router,
