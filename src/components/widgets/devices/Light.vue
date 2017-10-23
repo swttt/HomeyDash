@@ -1,17 +1,23 @@
 <template>
-<v-touch v-on:press="test(device)" v-on:tap="setCapability(device, 'onoff')" class="device">
+<v-touch v-on:press="test(device)" v-on:tap="setOnoff" class="device">
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
+
+  <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
+    <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
+  </q-modal>
 </v-touch>
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   props: ['device'],
   data() {
     return {
       // initializing for second tab to be selected by default
-      devices: {}
+      showModal: false
     }
   },
   methods: {
@@ -19,19 +25,24 @@ export default {
       if (navigator.vibrate) {
       	navigator.vibrate(150);
       }
+      this.showModal = true;
     },
-    setCapability(device, capability){
-        device.setCapabilityValue(capability, !device.state.onoff)
-
-    }
+    setOnoff(){
+        this.device.setCapabilityValue('onoff', !this.device.state.onoff)
+    },
+    setDim: _.debounce(function(value){
+      console.log(value)
+      this.device.setCapabilityValue('dim', value)
+    }, 500)
   }
 }
 
 
   </script>
 
-  <style lang="stylus" scoped>
+  <style lang="stylus">
   @import '~variables'
+
 
   .device
     height 90px
@@ -59,4 +70,25 @@ export default {
       overflow hidden
       text-overflow ellipsis
       white-space nowrap
+
+  .modal.device-modal
+    overflow visible
+    background rgba(0,0,0,0.8)!important
+    .modal-content
+      height 120px
+      padding-top 40px
+      background rgba(0,0,0,0)
+      box-shadow 0 0 0 0
+      h4
+        color $neutral
+      .q-slider
+        margin 0 auto
+        width 250px
+      .q-slider-track
+        height 75px
+        border-radius 5px
+        background rgba(255,255,255,1)
+      .q-slider-handle
+        display none
+
   </style>
