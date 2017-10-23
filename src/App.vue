@@ -90,7 +90,7 @@ html, body{
   bottom:0!important;
 }
 #layout {
-  /*min-height: 100%;
+  min-height: 100%;
   min-width: 100%;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
   -webkit-background-size: cover!important;
@@ -101,7 +101,7 @@ html, body{
   top:0!important;
   left:0!important;
   right:0!important;
-  bottom:0!important;*/
+  bottom:0!important;
 }
 
 .layout-aside {
