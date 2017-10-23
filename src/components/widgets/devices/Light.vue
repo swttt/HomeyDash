@@ -89,6 +89,12 @@ export default {
         border-radius 5px
         background rgba(255,255,255,1)
       .q-slider-handle
-        display none
+        /*display none*/
+        height 75px
+        width 10px
+        box-shadow 0 0 0 0
+        background $primary
+        border-radius 0!important
+
 
   </style>
