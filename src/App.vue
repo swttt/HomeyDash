@@ -78,16 +78,21 @@ export default {
 
 <style>
 html, body{
+  margin: 0;
+  padding: 0;
+  width:100%;
+  height:100%;
+  overflow: hidden; 
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
   -webkit-background-size: cover!important;
   -moz-background-size: cover!important;
   -o-background-size: cover!important;
   background-size: cover!important;
-  position: absolute!important;
+  /*position: absolute!important;
   top:0!important;
   left:0!important;
   right:0!important;
-  bottom:0!important;
+  bottom:0!important;*/
 }
 #layout {
   min-height: 100%;
