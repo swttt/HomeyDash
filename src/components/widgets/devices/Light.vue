@@ -16,7 +16,9 @@ export default {
   },
   methods: {
     test(device){
-      alert('test')
+      if (navigator.vibrate) {
+      	navigator.vibrate(1000);
+      }
     },
     setCapability(device, capability){
         device.setCapabilityValue(capability, !device.state.onoff)

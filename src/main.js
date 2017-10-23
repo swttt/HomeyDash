@@ -30,6 +30,8 @@ const {
   HomeyAPI
 } = require('athom-api')
 
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
 Vue.config.productionTip = false
 
 Vue.use(VueTouch, {
