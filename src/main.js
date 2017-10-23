@@ -74,6 +74,7 @@ async function init() {
       window.localStorage.removeItem('token');
     })
   let token = window.localStorage.getItem('token');
+  alert(token);
   if (token) {
     token = await Vue.prototype.$athomCloud.setAuthState(JSON.parse(token))
   }
