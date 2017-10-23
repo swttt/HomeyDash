@@ -4,7 +4,7 @@
   <div class="name">{{device.name}}</div>
 
   <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
-    <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
+    <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.1" @change="setDim" />
   </q-modal>
 </v-touch>
 </template>
@@ -30,10 +30,10 @@ export default {
     setOnoff(){
         this.device.setCapabilityValue('onoff', !this.device.state.onoff)
     },
-    setDim: _.debounce(function(value){
+    setDim: _.debounce((value)=>{
       console.log(value)
       this.device.setCapabilityValue('dim', value)
-    }, 100)
+    }, 200)
   }
 }
 
