@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/swttt/HomeyDash/blob/master/.github/logo.png?raw=true" style="width: 200%;height: auto;" alt="HomeyDash Logo"/>
+<img src="https://github.com/swttt/HomeyDash/raw/master/.github/logo.png" alt="HomeyDash Logo"/>
 </p>
 
 # HomeyDash
