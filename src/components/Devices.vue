@@ -19,10 +19,12 @@
 
 <script>
 import light from '@/widgets/devices/Light'
+import other from '@/widgets/devices/Other'
 
 export default {
   components: {
-    light
+    light,
+    other
   },
   data() {
     return {
