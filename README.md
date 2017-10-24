@@ -2,7 +2,22 @@
 
 > Home-automation dashboard for Homey
 
-This is the source used for https://homeyda.sh .
+HomeyDash is a dashboard that can be used to control devices paired to Homey  ([Athom.com](http://athom.com)) and show information like weather, news, media etc.
+
+#### Work in progress
+
+Current release isn't considered stable and functional yet.
+
+## Contributing
+
+#### Found Bugs
+
+First make sure the bug hasn't been reported yet. New bugs found can be submitted to the [GitHub Issues](https://github.com/swttt/HomeyDash/issues/new) .
+And if you already know a good solution, feel free to make a [Pull Request](https://github.com/swttt/HomeyDash/pulls)!
+
+#### Pull Requests
+
+Pull requests can be done on the develop branch. Until the master branch isn't stable enough (and is considered alpha/beta) the develop branch won't get build and pushed for now. After the master branch is more stable, i will auto build the develop branch to a seperate sub-domain.
 
 
 
