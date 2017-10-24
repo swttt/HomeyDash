@@ -1,6 +1,10 @@
-# Quasar PWA App
+# HomeyDash
 
-> A Quasar PWA project
+> Home-automation dashboard for Homey
+
+This is the source used for https://homeyda.sh .
+
+
 
 ## Build Setup
 
@@ -9,11 +13,8 @@
 $ npm install
 
 # serve with hot reload at localhost:8081
-$ quasar dev
+$ npm run dev
 
 # build for production with minification
-$ quasar build
-
-# lint code
-$ quasar lint
+$ npm run build
 ```
