@@ -1,5 +1,5 @@
 <template>
-<v-touch v-on:press="test(device)" v-on:tap="setOnoff" class="device">
+<v-touch v-on:pressup="test(device)" v-on:tap="setOnoff" class="device">
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
 
