@@ -7,7 +7,7 @@
   </div>
 
   <div class="row devices" v-else>
-    <div  class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices" v-if="device.zone.id === $route.params.zone && device.class == 'light' || device.class == 'other'">
+    <div  class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices" v-if="device.zone.id === $route.params.zone && device.class == 'light' || device.zone.id === $route.params.zone && device.class == 'other' && device.capabilities.onoff">
       <component :is="device.class" :device="device">
         <!-- inactive components will be cached! -->
       </component>

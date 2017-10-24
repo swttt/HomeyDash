@@ -72,13 +72,14 @@ export default {
       white-space nowrap
 
   .modal.device-modal
-    overflow visible
     background rgba(0,0,0,0.8)!important
     .modal-content
-      height 120px
+      overflow visible
+      min-height 120px
       padding-top 40px
       background rgba(0,0,0,0)
       box-shadow 0 0 0 0
+      text-align center
       h4
         color $neutral
       .q-slider
