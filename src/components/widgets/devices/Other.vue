@@ -1,11 +1,30 @@
 <template>
-<v-touch v-on:press="test(device)" v-on:tap="setOnoff" class="device">
+<v-touch v-on:press="longPress" v-on:tap="setOnoff" class="device">
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
   <div class="info">{{mapOnoff}} <span v-if="device.state.dim"> - {{device.state.dim*100}}%</span></div>
 
-  <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
-    <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.1" @change="setDim" />
+  <q-modal no-backdrop-dismiss style="background-color: rgba(0, 0, 0, 0.85)" class="device-modal" :content-css="{background: 'rgba(0, 0, 0, 0)', boxShadow: '0 0 0 0', border: '0 0 0 0'}" v-model="showModal" minimized>
+    <q-list no-border>
+      <q-list-header class="text-teal">{{device.name}}</q-list-header>
+      <q-item v-if="device.capabilities.dim">
+        <q-item-side class="text-white">
+          Dim
+        </q-item-side>
+        <q-item-main class="text-right">
+          <q-slider color="teal" v-if="device.capabilities.dim" v-model="device.capabilities.dim" :min="0" :max="1" :step="0.01"  />
+        </q-item-main>
+      </q-item>
+      <q-item v-if="device.capabilities.onoff">
+        <q-item-side class="text-white">
+          On/Off
+        </q-item-side>
+        <q-item-main class="text-right">
+          <q-toggle color="teal" v-model="device.state.onoff" @blur="setOnoff" @focus="setOnoff" />
+        </q-item-main>
+      </q-item>
+    </q-list>
+    <center><q-btn style="margin-top:50px;" v-on:click="modalState(false)" icon="close" outline color="white">close</q-btn></center>
   </q-modal>
 </v-touch>
 </template>
@@ -22,11 +41,11 @@ export default {
     }
   },
   methods: {
-    test(device){
-      if (navigator.vibrate) {
-      	navigator.vibrate(150);
-      }
-      this.showModal = true;
+    longPress(ev){
+        if (navigator.vibrate) {
+          navigator.vibrate(150);
+        }
+        this.showModal = true;
     },
     setOnoff(){
         this.device.setCapabilityValue('onoff', !this.device.state.onoff)
@@ -34,7 +53,10 @@ export default {
     setDim: _.debounce(function(value){
       console.log(value)
       this.device.setCapabilityValue('dim', value)
-    }, 100)
+    }, 100),
+    modalState(state){
+      this.showModal = state
+    }
   },
   computed:{
     mapOnoff(){
@@ -82,7 +104,7 @@ export default {
       background-color $neutral
       opacity 0.2
     .on
-      background-color $cyan-8
+      background-color $teal
     .name
       position absolute
       bottom 24px
