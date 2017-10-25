@@ -3,11 +3,30 @@
 
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
-  <div class="info">{{mapOnoff}} <span v-if="device.state.dim"> - {{device.state.dim*100}}%</span></div>
+  <div class="info">{{mapOnoff}} <span v-if="device.state.dim"> - {{Number((device.state.dim*100).toFixed(0))}}%</span></div>
 
 
-  <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
-    <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.1" @change="setDim" />
+  <q-modal class="device-modal" :content-css="{background: 'rgba(0, 0, 0, 0.6)', border: '0 0 0 0'}" v-model="showModal" minimized>
+    <q-list no-border>
+      <q-list-header>{{device.name}}</q-list-header>
+      <q-item>
+        <q-item-side class="text-white">
+          Dim
+        </q-item-side>
+        <q-item-main class="text-right">
+          <q-slider color="white" v-if="device.capabilities.dim" v-model="dimValue" :min="0" :max="1" :step="0.1" @change="setDim" />
+        </q-item-main>
+      </q-item>
+      <q-item>
+        <q-item-side class="text-white">
+          On/Off
+        </q-item-side>
+        <q-item-main class="text-right">
+          <q-toggle v-model="device.state.onoff" />
+        </q-item-main>
+      </q-item>
+    </q-list>
+
   </q-modal>
 </div>
 </template>
@@ -19,7 +38,8 @@ export default {
   props: ['device'],
   data() {
     return {
-      showModal: false
+      showModal: false,
+      dimValue: this.device.state.dim
     }
   },
   methods: {
@@ -105,31 +125,7 @@ export default {
       text-overflow ellipsis
       white-space nowrap
 
-  .modal.device-modal
-    background rgba(0,0,0,0.8)!important
-    .modal-content
-      overflow visible
-      min-height 120px
-      padding-top 40px
-      background rgba(0,0,0,0)
-      box-shadow 0 0 0 0
-      text-align center
-      h4
-        color $neutral
-      .q-slider
-        margin 0 auto
-        width 250px
-      .q-slider-track
-        height 75px
-        border-radius 5px
-        background rgba(255,255,255,1)
-      .q-slider-handle
-        /*display none*/
-        height 75px
-        width 5px
-        box-shadow 0 0 0 0
-        background $primary
-        border-radius 0!important
+
 
 
   </style>
