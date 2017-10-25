@@ -14,7 +14,7 @@
           Dim
         </q-item-side>
         <q-item-main class="text-right">
-          <q-slider color="teal" v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01"  />
+          <q-slider color="teal" v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
         </q-item-main>
       </q-item>
       <q-item v-if="device.capabilities.onoff">
@@ -82,7 +82,7 @@ export default {
     height 90px
     margin 5px
     text-align left
-    background-color rgba(0, 0, 0, 0.3)
+    background-color rgba(0, 0, 0, 0.5)
     border-radius 10px
     position relative
     .icon
