@@ -14,7 +14,7 @@
           Dim
         </q-item-side>
         <q-item-main class="text-right">
-          <q-slider color="white" v-if="device.capabilities.dim" v-model="dimValue" :min="0" :max="1" :step="0.1" @change="setDim" />
+          <q-slider color="white" v-if="device.capabilities.dim" v-model="dimValue" :min="0" :max="1" :step="0.1"  />
         </q-item-main>
       </q-item>
       <q-item>
