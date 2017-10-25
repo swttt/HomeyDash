@@ -1,12 +1,12 @@
 <template>
-<v-touch v-on:press="vibrate" v-on:pressup="longPress" v-on:tap="setOnoff" class="device">
+<div v-touch-hold="longPress" v-on:click="setOnoff" class="device">
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
 
   <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
     <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.1" @change="setDim" />
   </q-modal>
-</v-touch>
+</div>
 </template>
 
 <script>
@@ -16,20 +16,25 @@ export default {
   props: ['device'],
   data() {
     return {
-      // initializing for second tab to be selected by default
       showModal: false
     }
   },
   methods: {
     longPress(ev){
-        this.showModal = true;
-    },
-    vibrate(){
-      if (navigator.vibrate) {
-        navigator.vibrate(150);
+      console.log(ev)
+      if(ev.duration < 300){
+        this.device.setCapabilityValue('onoff', !this.device.state.onoff)
       }
+      else{
+        if (navigator.vibrate) {
+          navigator.vibrate(150);
+        }
+        this.showModal = true;
+      }
+
     },
     setOnoff(){
+      console.log('click')
         this.device.setCapabilityValue('onoff', !this.device.state.onoff)
     },
     setDim: _.debounce(function(value){
