@@ -2,6 +2,7 @@
 <v-touch v-on:press="test(device)" v-on:tap="setOnoff" class="device">
   <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
+  <div class="info">{{mapOnoff}} <span v-if="device.state.dim"> - {{device.state.dim*100}}%</span></div>
 
   <q-modal class="device-modal" v-model="showModal" minimized v-on:tap="showModal = false" :no-backdrop-dismiss="false">
     <q-slider v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.1" @change="setDim" />
@@ -34,51 +35,76 @@ export default {
       console.log(value)
       this.device.setCapabilityValue('dim', value)
     }, 100)
-  }
+  },
+  computed:{
+    mapOnoff(){
+      if(this.device.state.onoff){
+        return 'ON'
+      }
+      else{
+        return 'OFF'
+      }
+    }
+  },
 }
 
 
   </script>
 
-  <style lang="stylus">
+  <style lang="stylus" scoped>
   @import '~variables'
 
 
   .device
     height 90px
     margin 5px
-    padding 5px
-    text-align center
-    background-color rgba(0, 0, 0, 0.12)
+    text-align left
+    background-color rgba(0, 0, 0, 0.3)
     border-radius 10px
+    position relative
     .icon
-      height 50px
-      width 50px
-      margin 0 auto
+      height 38px
+      width 38px
+      position relative
+      top 7px
+      left 7px
       -webkit-mask-size contain
-      -webkit-mask-position center center
+      -webkit-mask-position center left
       -webkit-mask-repeat no-repeat
+    .info
+      position absolute
+      left 7px
+      bottom 7px
+      font-size 0.8em
+      color $secondary
+      font-weight 300
     .off
       background-color $neutral
-      opacity 0.5
+      opacity 0.2
     .on
-      background-color $amber-7
+      background-color $cyan-8
     .name
-      margin-top 10px
+      position absolute
+      bottom 24px
+      left 7px
+      right 7px
       color $neutral
       font-size 0.8em
+      max-width 100%
       overflow hidden
+      text-align left
       text-overflow ellipsis
       white-space nowrap
 
   .modal.device-modal
-    overflow visible
     background rgba(0,0,0,0.8)!important
     .modal-content
-      height 120px
+      overflow visible
+      min-height 120px
       padding-top 40px
       background rgba(0,0,0,0)
       box-shadow 0 0 0 0
+      text-align center
       h4
         color $neutral
       .q-slider
