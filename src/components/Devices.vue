@@ -7,10 +7,20 @@
   </div>
 
   <div class="row devices" v-else>
-    <div  class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices" v-if="device.zone.id === $route.params.zone && device.class == 'socket' || device.zone.id === $route.params.zone && device.class == 'light' || device.zone.id === $route.params.zone && device.class == 'other' && device.capabilities.onoff">
-      <component :is="device.class" :device="device">
-        <!-- inactive components will be cached! -->
-      </component>
+
+    <!-- ONOFF Capabilities -->
+    <div v-if="device.zone.id === $route.params.zone && device.capabilities.onoff" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+      <onoff :device="device" />
+    </div>
+
+    <!-- LOCK -->
+    <div v-if="device.zone.id === $route.params.zone && device.capabilities.locked" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+      <lock :device="device" />
+    </div>
+
+    <!-- MOTION -->
+    <div v-if="device.zone.id === $route.params.zone && device.capabilities.alarm_motion" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+      <motion :device="device" />
     </div>
 
   </div>
@@ -18,15 +28,15 @@
 </template>
 
 <script>
-import light from '@/widgets/devices/Light'
-import socket from '@/widgets/devices/Socket'
-import other from '@/widgets/devices/Other'
+import onoff from '@/widgets/devices/Onoff'
+import lock from '@/widgets/devices/Lock'
+import motion from '@/widgets/devices/Motion'
 
 export default {
   components: {
-    light,
-    other,
-    socket
+    onoff,
+    lock,
+    motion
   },
   data() {
     return {

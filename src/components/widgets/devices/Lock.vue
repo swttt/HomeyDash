@@ -1,30 +1,42 @@
 <template>
-<v-touch v-on:press="longPress" v-on:tap="setOnoff" class="device">
+<v-touch v-on:press="longPress" v-on:tap="setLock" class="device">
 
-  <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div class="icon" v-bind:class="[device.state.lock ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
-  <div class="info">{{mapOnoff}} <span v-if="device.state.dim"> - {{Number((device.state.dim*100).toFixed(0))}}%</span></div>
+  <div class="info">{{device.state.lock ? 'LOCKED' : 'UNLOCKED'}}</div>
+  <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
+    <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-4" />
+    <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-3" />
+    <q-icon color="teal" v-else-if="device.state.measure_battery < 51 && device.state.measure_battery > 25" name="fa-battery-2" />
+    <q-icon color="orange" v-else-if="device.state.measure_battery < 56 && device.state.measure_battery > 10" name="fa-battery-1" />
+    <q-icon color="red" v-else-if="device.state.measure_battery < 10" name="fa-battery-0" />
+  </div>
 
 
   <q-modal no-backdrop-dismiss style="background-color: rgba(0, 0, 0, 0.85)" class="device-modal" :content-css="{background: 'rgba(0, 0, 0, 0)', boxShadow: '0 0 0 0', border: '0 0 0 0'}" v-model="showModal" minimized>
     <q-list no-border>
+
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
-      <q-item v-if="device.capabilities.dim">
+
+      <q-item v-if="device.capabilities.locked">
         <q-item-side class="text-white">
-          Dim
+          Lock state
         </q-item-side>
         <q-item-main class="text-right">
-          <q-slider color="teal" v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
+          <q-toggle unchecked-icon="fa-unlock"
+  checked-icon="fa-lock" color="teal" v-model="device.state.locked" @blur="setLock" @focus="setLock" />
         </q-item-main>
       </q-item>
-      <q-item v-if="device.capabilities.onoff">
+
+      <q-item v-if="device.capabilities.lock_mode">
         <q-item-side class="text-white">
-          On/Off
+          Lock mode
         </q-item-side>
-        <q-item-main class="text-right">
-          <q-toggle color="teal" v-model="device.state.onoff" @blur="setOnoff" @focus="setOnoff" />
+        <q-item-main class="text-right text-white">
+          {{device.state.lock_mode.en}}
         </q-item-main>
       </q-item>
+
     </q-list>
     <center><q-btn style="margin-top:50px;" v-on:click="modalState(false)" icon="close" outline color="white">close</q-btn></center>
   </q-modal>
@@ -48,26 +60,15 @@ export default {
         }
         this.showModal = true;
     },
-    setOnoff(){
-        this.device.setCapabilityValue('onoff', !this.device.state.onoff)
+    setLock(){
+        this.device.setCapabilityValue('locked', !this.device.state.locked)
     },
-    setDim: _.debounce(function(value){
-      console.log(value)
-      this.device.setCapabilityValue('dim', value)
-    }, 100),
     modalState(state){
       this.showModal = state
     }
   },
-  computed:{
-    mapOnoff(){
-      if(this.device.state.onoff){
-        return 'ON'
-      }
-      else{
-        return 'OFF'
-      }
-    }
+  mounted(){
+
   }
 }
 
@@ -92,7 +93,7 @@ export default {
       top 7px
       left 7px
       -webkit-mask-size contain
-      -webkit-mask-position top left
+      -webkit-mask-position top center
       -webkit-mask-repeat no-repeat
     .info
       position absolute
@@ -101,9 +102,13 @@ export default {
       font-size 0.8em
       color $secondary
       font-weight 300
+    .battery
+      position absolute
+      top 3px
+      right 7px
     .off
-      background-color $neutral
-      opacity 0.2
+      background-color $red
+      opacity 0.7
     .on
       background-color $teal
     .name
