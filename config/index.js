@@ -15,7 +15,7 @@ module.exports = {
   progressFormat: ' [:bar] ' + ':percent'.bold + ' (:msg)',
 
   // Default theme to build with ('ios' or 'mat')
-  defaultTheme: 'mat',
+  defaultTheme: 'ios',
 
   build: {
     env: require('./prod.env'),
