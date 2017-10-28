@@ -1,9 +1,9 @@
 <template>
 <v-touch v-on:press="longPress" v-on:tap="setLock" class="device">
 
-  <div class="icon" v-bind:class="[device.state.lock ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div class="icon" v-bind:class="[device.state.locked ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
-  <div class="info">{{device.state.lock ? 'LOCKED' : 'UNLOCKED'}}</div>
+  <div class="info">{{device.state.locked ? 'LOCKED' : 'UNLOCKED'}}</div>
   <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
     <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-4" />
     <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-3" />
