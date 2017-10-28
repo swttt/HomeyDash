@@ -23,6 +23,10 @@
       <motion :device="device" />
     </div>
 
+    <div v-if="device.zone.id === $route.params.zone && !device.capabilities.alarm_motion && device.class == 'sensor'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+      <sensor :device="device" />
+    </div>
+
     <!-- WINDOWBLINDS -->
     <div v-if="device.zone.id === $route.params.zone && device.class == 'windowcoverings' && device.capabilities.dim" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <windowblinds :device="device" />
@@ -37,13 +41,15 @@ import onoff from '@/widgets/devices/Onoff'
 import lock from '@/widgets/devices/Lock'
 import motion from '@/widgets/devices/Motion'
 import windowblinds from '@/widgets/devices/Windowblinds'
+import sensor from '@/widgets/devices/Sensor'
 
 export default {
   components: {
     onoff,
     lock,
     motion,
-    windowblinds
+    windowblinds,
+    sensor
   },
   data() {
     return {
