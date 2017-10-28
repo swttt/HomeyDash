@@ -38,7 +38,7 @@
           {{value.title.en}}
         </q-item-side>
         <q-item-main class="text-right text-white">
-          <span>{{device.state[key] || '-' }} <span v-if="value.units">{{value.units.en}}</span></span>
+          <span><span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span></span>
           <!-- <span v-else>-</span> -->
         </q-item-main>
       </q-item>
