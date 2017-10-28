@@ -10,6 +10,9 @@
         </q-btn>
         <q-toolbar-title>
           {{$route.name}}
+          <span slot="subtitle" v-if="$route.name == 'Devices' && $route.params.zone">
+            {{routeName}}
+          </span>
         </q-toolbar-title>
         <q-btn flat>
           <q-icon name="settings" />
@@ -71,6 +74,12 @@ export default {
     loadHomey(id){
       console.log(id)
       window.location.href = "/?cloudid="+id
+    }
+  },
+  asyncComputed:{
+    routeName(){
+        return this.$homey.zones.getZone({id: this.$route.params.zone})
+          .then(response => response.name)
     }
   }
 }
