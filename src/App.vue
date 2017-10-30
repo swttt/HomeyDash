@@ -18,8 +18,8 @@
           <q-icon name="settings" />
         </q-btn>
       </q-toolbar>
-      <router-view id="sidebar" v-if="$route.matched[0].components.sidebar && !selectHomey" slot="left" name="sidebar"></router-view>
-      </router-view>
+      <router-view slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey"  name="sidebar"></router-view>
+
       <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
         <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />

@@ -1,17 +1,12 @@
 <template>
-<q-list style="border: 0;" highlight>
-  <q-side-link tag="a" exact v-for="zone in zones" v-bind:key="zone.id" :to="'/devices/'+zone.id">
-    <q-item>
-
-      <q-item-side left>
-        <img :src="'data:image/png;base64,'+zone.icon" style="height:24px;padding:2px;" />
-      </q-item-side>
-      <q-item-main>
-        <q-item-tile label>{{zone.name}}</q-item-tile>
-      </q-item-main>
-    </q-item>
+<div>
+  <q-side-link item exact v-for="zone in zones" v-bind:key="zone.id" :to="{ name: 'Devices', params: { zone: zone.id } }">
+    <q-item-side>
+      <img icon :src="'data:image/png;base64,'+zone.icon" style="height:24px;padding:2px;display:inline-block;" />
+    </q-item-side>
+    <q-item-main :label="zone.name" />
   </q-side-link>
-</q-list>
+</div>
 </template>
 
 <script>
