@@ -27,15 +27,19 @@
 
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
-        <q-item-side class="text-white" v-if="!device.capabilitiesOptions[key]">
+      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable">
+        <q-item-side class="text-white" v-if="!device.driver.metadata || !device.driver.metadata.capabilitiesOption">
           {{value.title.en}}
         </q-item-side>
-        <q-item-side class="text-white" v-if="device.capabilitiesOptions[key]">
-          {{device.capabilitiesOptions[key].title.en}}
+        <q-item-side class="text-white" v-else-if="device.driver.metadata.capabilitiesOption[key]">
+          {{device.driver.metadata.capabilitiesOptions[key].title.en}}
+        </q-item-side>
+        <q-item-side class="text-white" v-else>
+          {{value.title.en}}
         </q-item-side>
         <q-item-main class="text-right text-white">
-          <span> <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span></span>
+          <span v-if="typeof(device.state[key]) === 'boolean'"><q-icon v-if="!device.state[key]" color="green" name="fa-check" /><q-icon v-else color="red" name="fa-exclamation-triangle" /></span>
+          <span v-else> <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span></span>
           <!-- <span v-else>-</span> -->
         </q-item-main>
       </q-item>
@@ -69,7 +73,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.device.state)
+    console.log(this.device)
   }
 }
 
