@@ -95,21 +95,11 @@ export default {
 }
 
 html, body{
-  margin: 0!important;
-  padding: 0!important;
-  width:100%!important;
-  height:100%!important;
+  position: fixed!important;
   overflow: hidden!important;
-  background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover!important;
-  -moz-background-size: cover!important;
-  -o-background-size: cover!important;
-  background-size: cover!important;
-  position: absolute!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  bottom:0!important;
+  padding:0!important;
+  margin:0!important;
+
 }
 #layout {
   min-height: 100%;
@@ -124,6 +114,10 @@ html, body{
   left:0!important;
   right:0!important;
   bottom:0!important;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .layout-aside {
