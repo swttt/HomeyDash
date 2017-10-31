@@ -6,7 +6,7 @@
     </h5>
   </div>
 
-  <div class="row devices" v-else>
+  <div class="row devices scroll" v-else>
 
     <!-- ONOFF Capabilities -->
     <div v-if="device.zone.id === $route.params.zone && device.capabilities.onoff && !device.capabilities.alarm_motion && device.class != 'windowcoverings'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
