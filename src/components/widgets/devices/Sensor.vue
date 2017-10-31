@@ -1,7 +1,15 @@
 <template>
 <v-touch v-on:press="longPress" class="device">
-
-  <div class="icon" v-bind:class="[alarmState ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div v-if="device.class == 'light'" class="icon">
+    <q-icon v-bind:class="[alarmState ? 'on' : 'off']"  name="ion-ios-lightbulb" />
+  </div>
+  <div v-else-if="device.class == 'socket'" class="icon">
+    <q-icon v-bind:class="[alarmState ? 'on' : 'off']"  name="ion-outlet" />
+  </div>
+  <div v-else-if="device.class == 'sensor' && device.capabilities.alarm_motion" class="icon">
+    <q-icon v-bind:class="[alarmState ? 'on' : 'off']"  name="directions_walk" />
+  </div>
+  <div v-else class="icon" v-bind:class="[alarmState ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
   <div class="info" v-if="device.state.alarm_motion">MOTION DETECTED</div>
   <div class="info" color="red" v-else-if="device.state.alarm_contact">CONTACT ALARM</div>
@@ -108,12 +116,19 @@ export default {
     .icon
       height 38px
       width 38px
+      font-size 38px
+      line-height 30px
+      vertial-align text-top
       position relative
       top 7px
       left 7px
       -webkit-mask-size contain
       -webkit-mask-position top left
       -webkit-mask-repeat no-repeat
+      .on
+        color $red
+      .off
+        color $teal
     .info
       position absolute
       left 7px
@@ -132,10 +147,10 @@ export default {
       position absolute
       top 3px
       right 7px
-    .off
+    .icon.off
       background-color $teal
       opacity 1
-    .on
+    .icon.on
       background-color $red
     .name
       position absolute

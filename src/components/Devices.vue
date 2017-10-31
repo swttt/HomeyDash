@@ -19,11 +19,12 @@
     </div>
 
     <!-- MOTION -->
-    <div v-if="device.zone.id === $route.params.zone && device.capabilities.alarm_motion" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+    <!-- <div v-if="device.zone.id === $route.params.zone && device.capabilities.alarm_motion" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <motion :device="device" />
-    </div>
+    </div> -->
 
-    <div v-if="device.zone.id === $route.params.zone && !device.capabilities.alarm_motion && device.class == 'sensor'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+    <!-- SENSOR -->
+    <div v-if="device.zone.id === $route.params.zone && device.class == 'sensor'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <sensor :device="device" />
     </div>
 

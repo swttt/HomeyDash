@@ -1,7 +1,15 @@
 <template>
 <v-touch v-on:press="longPress" v-on:tap="setOnoff" class="device">
-
-  <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div v-if="device.class == 'light'" class="icon">
+    <q-icon v-bind:class="[device.state.onoff ? 'on' : 'off']"  name="ion-ios-lightbulb" />
+  </div>
+  <div v-else-if="device.class == 'socket'" class="icon">
+    <q-icon v-bind:class="[device.state.onoff ? 'on' : 'off']"  name="ion-outlet" />
+  </div>
+  <div v-else-if="device.class == 'sensor' && device.capabilities.alarm_motion" class="icon">
+    <q-icon v-bind:class="[device.state.onoff ? 'on' : 'off']"  name="directions-walk" />
+  </div>
+  <div v-else class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
   <div class="info">{{device.state.onoff ? 'ON' : 'OFF'}} <span v-if="device.state.dim"> - {{Number((device.state.dim*100).toFixed(0))}}%</span></div>
 <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
@@ -101,12 +109,20 @@ export default {
     .icon
       height 38px
       width 38px
+      font-size 38px
+      line-height 30px
+      vertial-align text-top
       position relative
       top 7px
       left 7px
       -webkit-mask-size contain
       -webkit-mask-position top left
       -webkit-mask-repeat no-repeat
+      .on
+        color $teal
+      .off
+        color $neutral
+        opacity 0.2
     .info
       position absolute
       left 7px
@@ -123,10 +139,10 @@ export default {
       position absolute
       top 3px
       right 7px
-    .off
+    .icon.off
       background-color $neutral
       opacity 0.2
-    .on
+    .icon.on
       background-color $teal
     .name
       position absolute
