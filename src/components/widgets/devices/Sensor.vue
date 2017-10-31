@@ -4,8 +4,10 @@
   <div class="icon off" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
   <div class="info" v-if="device.state.alarm_motion">MOTION DETECTED</div>
+  <div class="info" v-else-if="device.state.alarm_contact">CONTACT ALARM</div>
   <div class="info" v-else-if="device.state.alarm_tamper">TAMPER DETECTED</div>
   <div class="info" v-else-if="device.state.alarm_battery">BATTERY LOW</div>
+  <div class="info" v-else-if="device.state.alarm_smoke">SMOKE DETECTED</div>
   <div class="info" v-else >
     <span style="" v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
       <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span> -
