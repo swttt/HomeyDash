@@ -111,7 +111,7 @@ html, body{
   right:0!important;
   bottom:0!important;*/
 }
-/*#layout {
+#layout {
   min-height: 100%;
   min-width: 100%;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
@@ -124,7 +124,7 @@ html, body{
   left:0!important;
   right:0!important;
   bottom:0!important;
-}*/
+}
 
 .layout-aside {
   background-color: #E0E1E2;
