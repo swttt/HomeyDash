@@ -27,7 +27,7 @@
 
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && value.units">
+      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable">
         <q-item-side class="text-white" v-if="!device.driver.metadata || !device.driver.metadata.capabilitiesOption">
           {{value.title.en}}
         </q-item-side>
