@@ -28,7 +28,7 @@
     </div>
 
     <!-- WINDOWBLINDS -->
-    <div v-if="device.zone.id === $route.params.zone && device.class == 'windowcoverings' && device.capabilities.dim" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+    <div v-if="device.zone.id === $route.params.zone && device.class == 'windowcoverings'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <windowblinds :device="device" />
     </div>
 
