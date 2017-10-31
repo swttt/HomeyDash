@@ -80,6 +80,7 @@ export default {
     routeName(){
         return this.$homey.zones.getZone({id: this.$route.params.zone})
           .then(response => response.name)
+          .catch(error => {return ''})
     }
   }
 }
