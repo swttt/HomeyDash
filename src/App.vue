@@ -20,7 +20,7 @@
       </q-toolbar>
       <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey"  name="sidebar"></router-view>
 
-      <router-view v-if="!selectHomey" name="main"></router-view>
+      <router-view class="scroll" v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
         <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
         <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
