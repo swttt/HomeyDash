@@ -3,7 +3,7 @@
 <div id="q-app">
   <header></header>
   <main>
-    <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
+    <q-layout id="layout" ref="layout" view="lHh LpR fFf" :right-breakpoint="1100">
       <q-toolbar v-if="!selectHomey" slot="header">
         <q-btn v-if="$route.matched[0].components.sidebar" flat @click="$refs.layout.toggleLeft()">
           <q-icon name="menu" />
@@ -20,7 +20,7 @@
       </q-toolbar>
       <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey"  name="sidebar"></router-view>
 
-      <router-view class="scroll" v-if="!selectHomey" name="main"></router-view>
+      <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
         <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
         <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
@@ -97,27 +97,17 @@ export default {
 html, body{
   position: fixed!important;
   overflow: hidden!important;
-  padding:0!important;
-  margin:0!important;
-
 }
 #layout {
-  min-height: 100%;
-  min-width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
   -webkit-background-size: cover!important;
   -moz-background-size: cover!important;
   -o-background-size: cover!important;
   background-size: cover!important;
-  position: absolute!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  bottom:0!important;
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 }
 
 .layout-aside {
