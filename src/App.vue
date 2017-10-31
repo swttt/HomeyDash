@@ -3,7 +3,7 @@
 <div id="q-app">
   <header></header>
   <main>
-    <q-layout id="layout" ref="layout" view="lHh LpR fFf" :right-breakpoint="1100">
+    <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
       <q-toolbar v-if="!selectHomey" slot="header">
         <q-btn v-if="$route.matched[0].components.sidebar" flat @click="$refs.layout.toggleLeft()">
           <q-icon name="menu" />
