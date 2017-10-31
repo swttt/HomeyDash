@@ -1,16 +1,16 @@
 <template>
 <v-touch v-on:press="longPress" class="device">
 
-  <div class="icon off" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div class="icon" v-bind:class="[alarmState ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
   <div class="info" v-if="device.state.alarm_motion">MOTION DETECTED</div>
-  <div class="info" v-else-if="device.state.alarm_contact">CONTACT ALARM</div>
+  <div class="info" color="red" v-else-if="device.state.alarm_contact">CONTACT ALARM</div>
   <div class="info" v-else-if="device.state.alarm_tamper">TAMPER DETECTED</div>
   <div class="info" v-else-if="device.state.alarm_battery">BATTERY LOW</div>
   <div class="info" v-else-if="device.state.alarm_smoke">SMOKE DETECTED</div>
   <div class="info" v-else >
-    <span style="" v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
-      <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span> -
+    <span style="" v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units && device.state[key] != null">
+      {{device.state[key]}} {{value.units.en}}
     </span>
   </div>
   <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
@@ -74,6 +74,20 @@ export default {
   },
   mounted(){
     console.log(this.device)
+  },
+  computed:{
+    alarmState(){
+      var result = false
+      _.forEach(this.device.state, (capability, key)=>{
+        if(!this.device.capabilities[key].setable && typeof(capability) === 'boolean'){
+          if(capability){
+            console.log(true)
+            result = true;
+          }
+        }
+      })
+      return result;
+    }
   }
 }
 
@@ -112,6 +126,8 @@ export default {
       white-space nowrap
       max-width 100%
       overflow hidden
+      span+span:before
+        content ' - '
     .battery
       position absolute
       top 3px
