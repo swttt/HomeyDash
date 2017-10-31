@@ -45,7 +45,7 @@
       </q-item>
       <q-item v-if="device.capabilities.windowcoverings_state">
         <q-item-side class="text-white">
-            <q-btn small @click="setState('up')" :color="device.state.windowcoverings_state === 'up' ? 'teal' : 'neutral'" icon="fa-chevron-up">Up</q-btn> <q-btn @click="setState('idle')" :color="device.state.windowcoverings_state === 'idle' ? 'teal' : 'neutral'" small icon="fa-pause">Idle</q-btn> <q-btn @click="setState('down')" small :color="device.state.windowcoverings_state === 'down' ? 'teal' : 'neutral'" icon="fa-chevron-down">Down</q-btn>
+            <q-btn small @click="setState('up')" :color="device.state.windowcoverings_state === 'up' ? 'teal' : 'neutral'"><q-icon name="fa-chevron-up" /></q-btn> <q-btn @click="setState('idle')" :color="device.state.windowcoverings_state === 'idle' ? 'teal' : 'neutral'" small><q-icon name="fa-pause" /></q-btn> <q-btn @click="setState('down')" small :color="device.state.windowcoverings_state === 'down' ? 'teal' : 'neutral'"><q-icon name="fa-chevron-down" /></q-btn>
         </q-item-side>
         <q-item-main class="text-right" style="">
 
