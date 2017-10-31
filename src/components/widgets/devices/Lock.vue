@@ -102,6 +102,11 @@ export default {
       font-size 0.8em
       color $secondary
       font-weight 300
+      max-width 100%
+      overflow hidden
+      text-align left
+      text-overflow ellipsis
+      white-space nowrap
     .battery
       position absolute
       top 3px
