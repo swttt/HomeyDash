@@ -36,14 +36,11 @@
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
 
       <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable">
-        <q-item-side class="text-white" v-if="!device.driver.metadata || !device.driver.metadata.capabilitiesOption">
-          {{value.title.en}}
-        </q-item-side>
-        <q-item-side class="text-white" v-else-if="device.driver.metadata.capabilitiesOption[key]">
-          {{device.driver.metadata.capabilitiesOptions[key].title.en}}
+        <q-item-side class="text-white" v-if="device.capabilitiesOptions[key].title">
+          {{device.capabilitiesOptions[key].title.en}}
         </q-item-side>
         <q-item-side class="text-white" v-else>
-          {{value.title.en}} NO TITLE FOUND
+          {{value.title.en}}
         </q-item-side>
         <q-item-main class="text-right text-white">
           <span v-if="typeof(device.state[key]) === 'boolean' && key.substring(0, 5) == 'alarm'"><q-icon v-if="!device.state[key]" color="green" name="fa-check" /><q-icon v-else color="red" name="fa-exclamation-triangle" /></span>
