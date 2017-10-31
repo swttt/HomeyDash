@@ -105,11 +105,11 @@ html, body{
   -moz-background-size: cover!important;
   -o-background-size: cover!important;
   background-size: cover!important;
-  /*position: absolute!important;
+  position: absolute!important;
   top:0!important;
   left:0!important;
   right:0!important;
-  bottom:0!important;*/
+  bottom:0!important;
 }
 #layout {
   min-height: 100%;
