@@ -28,7 +28,41 @@
         for (var file of chunk.files) {
           if (file.match(/\.(js|css)$/)) { %>
       <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
-
+    <script>
+      /**
+* Small helper class to detect os
+*/
+      var Device = new(function () {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        // Windows Phone must come first because its UA also contains "Android"
+        this.windows = /windows phone/i.test(userAgent)
+        this.android = /android/i.test(userAgent)
+        // iOS detection from: http://stackoverflow.com/a/9039885/177710
+        this.ios = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
+      })();
+      /**
+* Execute any function with debounce of given wait amount
+* @param  {number} wait       wait amount in miliseconds to bounce
+* @param  {boolean} immediate true for immidate execution
+*/
+      function debounce(func, wait, immediate) {
+        var timeout
+        return function () {
+          var context = this,
+            args = arguments
+          var later = function () {
+            timeout = null
+            if (!immediate)
+              func.apply(context, args)
+          }
+          var callNow = immediate && !timeout
+          clearTimeout(timeout)
+          timeout = setTimeout(later, wait)
+          if (callNow)
+            func.apply(context, args)
+        }
+      }
+    </script>
   </head>
   <body>
     <noscript>
@@ -38,6 +72,24 @@
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
+    <script>
+      if (Device.ios) {
+        //need to add event after body created
+        document.body.addEventListener('touchmove', function (e) {
+          e.preventDefault()
+          //magically helps click events to be more precise
+          if (e.target) {
+            debounce(function () {
+              e.target.click()
+            }, 300, true)()
+          }
+        }, false)
 
+        var scrollingDiv = document.getElementById('layout');
+        scrollingDiv.addEventListener('touchmove', function (event) {
+          event.stopPropagation();
+        });
+      }
+    </script>
   </body>
 </html>
