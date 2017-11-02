@@ -99,10 +99,6 @@ html, body{
   overflow: hidden!important;
 }
 #layout {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
   -webkit-background-size: cover!important;
   -moz-background-size: cover!important;
