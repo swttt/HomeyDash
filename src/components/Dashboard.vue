@@ -1,52 +1,46 @@
 <template>
-<container class="row" :layout.sync="layoutJson">
-  <box class="col-3"  boxId="box-a">
-    <h1>Box 1</h1>
-  </box>
-  <box boxId="box-b">
-    <h1>Box 2</h1>
-  </box>
-</container>
+<div class="grid">
+  <div class="grid-sizer"></div>
+  <div class="grid-item" >Box1</div>
+  <div class="grid-item" >box2</div>
+  <div class="grid-item" >box3</div>
+</div>
 </template>
 
 <script>
-import {
-  Container,
-  Box
-} from '@dattn/dnd-grid'
+import Packery from "packery"
+import Draggabilly from "draggabilly"
 export default {
   data() {
     return {
-      layoutJson: [{
-          id: 'box-a',
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1
-          }
-        },
-        {
-          id: 'box-b',
-          hidden: false,
-          pinned: false,
-          position: {
-            x: 1,
-            y: 0,
-            w: 1,
-            h: 1
-          }
-        },
-      ]
+
     }
   },
   components: {
-    Container,
-    Box,
+
   },
   mounted() {
+
+    var pckry = new Packery('.grid', {
+      // options
+      itemSelector: '.grid-item',
+      gutter: 10,
+      percentPosition: true,
+      horizontal: true,
+      rowHeight: 60
+    });
+    var draggableElems = document.querySelectorAll('.grid-item');
+    // array of Draggabillies
+    var draggies = []
+    // init Draggabillies
+    for(var i = 0, len = draggableElems.length; i < len; i++) {
+      var draggableElem = draggableElems[i];
+      var draggie = new Draggabilly(draggableElem, {
+        // options...
+      });
+      pckry.bindDraggabillyEvents(draggie)
+      draggies.push(draggie);
+    }
 
   },
   methods: {
@@ -59,6 +53,20 @@ export default {
 <style lang="stylus">
 @import '~variables'
 
+.grid
+  min-width 100%
+  height 100vh
+  background-color rgba(0, 0, 0, 0.34)!important
+
+.grid-item
+  float left
+  width 20%
+  height 60px
+  background #e6e5e4
+  border 2px solid #b6b5b4
+
+.grid-item--width2
+  width 40%
 
 
 </style>
