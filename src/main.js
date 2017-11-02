@@ -19,6 +19,7 @@ import AsyncComputed from 'vue-async-computed'
 window._ = require('lodash');
 import VueTouch from 'vue-touch'
 import queryString from 'query-string'
+import '@dattn/dnd-grid/dist/index.css'
 import {
   Platform
 } from 'quasar'
