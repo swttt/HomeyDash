@@ -1,9 +1,8 @@
 <template>
-<div class="grid">
-  <div class="grid-sizer"></div>
-  <div class="grid-item" >Box1</div>
-  <div class="grid-item" >box2</div>
-  <div class="grid-item" >box3</div>
+<div class="row container">
+  <div class="col-3 box"> Box 1</div>
+  <div class="col-2 box" >Box 2</div>
+  <div class="col-3 box" >Box 3</div>
 </div>
 </template>
 
@@ -21,24 +20,16 @@ export default {
   },
   mounted() {
 
-    var pckry = new Packery('.grid', {
-      // options
-      itemSelector: '.grid-item',
-      gutter: 10,
-      percentPosition: true,
-      horizontal: true,
-      rowHeight: 60
-    });
-    var draggableElems = document.querySelectorAll('.grid-item');
+    var draggableElems = document.querySelectorAll('.box');
     // array of Draggabillies
     var draggies = []
     // init Draggabillies
     for(var i = 0, len = draggableElems.length; i < len; i++) {
       var draggableElem = draggableElems[i];
       var draggie = new Draggabilly(draggableElem, {
-        // options...
+        containment: '.container',
+        grid: [ 5, 5 ]
       });
-      pckry.bindDraggabillyEvents(draggie)
       draggies.push(draggie);
     }
 
@@ -53,20 +44,13 @@ export default {
 <style lang="stylus">
 @import '~variables'
 
-.grid
+.container
   min-width 100%
-  height 100vh
-  background-color rgba(0, 0, 0, 0.34)!important
+  min-height 100vh
 
-.grid-item
-  float left
-  width 20%
-  height 60px
-  background #e6e5e4
-  border 2px solid #b6b5b4
-
-.grid-item--width2
-  width 40%
+.box
+  height 100px
+  background-color white
 
 
 </style>
