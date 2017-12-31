@@ -78,7 +78,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.device)
+    // console.log(this.device)
   },
   computed:{
     alarmState(){

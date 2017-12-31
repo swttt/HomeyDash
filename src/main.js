@@ -80,7 +80,7 @@ async function init() {
     })
   let token = window.localStorage.getItem('token');
   if (token) {
-    token = await Vue.prototype.$athomCloud.setAuthState(JSON.parse(token))
+    token = await Vue.prototype.$athomCloud.setToken(JSON.parse(token))
   }
   let qs = queryString.parse(window.location.search);
   if (qs.code) {
@@ -91,13 +91,13 @@ async function init() {
     document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
-  Vue.prototype.$athomCloud.getHomeys()
+  Vue.prototype.$athomCloud.getAuthenticatedUser()
+    .then( user => user.getHomeys() )
     .then(result => {
       if (result.length === 1) {
         Vue.prototype.$homeyAPI.forHomeyObject(result[0])
           .then(result => {
             Vue.prototype.$homey = result;
-
             new Vue({
               el: '#q-app',
               router,
@@ -112,6 +112,7 @@ async function init() {
             }))
             .then(result => {
               Vue.prototype.$homey = result;
+              Vue.prototype.$homey.authenticate();
               /* eslint-disable no-new */
               new Vue({
                 el: '#q-app',
