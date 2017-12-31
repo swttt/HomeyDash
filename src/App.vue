@@ -4,20 +4,7 @@
   <header></header>
   <main>
     <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
-      <q-toolbar v-if="!selectHomey" slot="header">
-        <q-btn v-if="$route.matched[0].components.sidebar" flat @click="$refs.layout.toggleLeft()">
-          <q-icon name="menu" />
-        </q-btn>
-        <q-toolbar-title>
-          {{$route.name}}
-          <span slot="subtitle" v-if="$route.name == 'Devices' && $route.params.zone">
-            {{routeName}}
-          </span>
-        </q-toolbar-title>
-        <q-btn flat>
-          <q-icon name="settings" />
-        </q-btn>
-      </q-toolbar>
+      <router-view slot="header"  v-if="!selectHomey"  name="toolbar"></router-view>
       <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey"  name="sidebar"></router-view>
 
       <router-view v-if="!selectHomey" name="main"></router-view>
@@ -69,6 +56,10 @@ export default {
       this.homeys = await this.$athomCloud.getHomeys()
       // console.log(this.homeys)
     }
+    if(!window.localStorage.getItem('widgets')){
+      console.log('no widgets array found')
+      window.localStorage.setItem('widgets', [])
+    }
   },
   methods: {
     loadHomey(id){
@@ -117,11 +108,7 @@ html, body{
 
 .layout-footer {
   border: 0!important;
-}
-
-.layout-header,
-.q-toolbar {
-  border: 0!important;
-  background: rgba(255, 255, 255, 0)!important;
+  position:fixed;
+  bottom:0;
 }
 </style>

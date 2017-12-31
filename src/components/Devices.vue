@@ -12,7 +12,7 @@
   <div class="row devices scroll" v-else>
 
     <!-- ONOFF Capabilities -->
-    <div v-if="device.zone.id === $route.params.zone && device.capabilities.onoff && !device.capabilities.alarm_motion && !device.capabilities.measure_temperature && device.class != 'windowcoverings'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+    <div v-if="device.zone.id === $route.params.zone && device.capabilities.onoff && !device.capabilities.alarm_motion && device.class != 'windowcoverings'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <onoff :device="device" />
     </div>
 
@@ -27,7 +27,7 @@
     </div> -->
 
     <!-- SENSOR -->
-    <div v-if="device.zone.id === $route.params.zone && device.class == 'sensor'" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
+    <div v-if="device.zone.id === $route.params.zone && device.class == 'sensor' && !device.capabilities.onoff" class="col-lg-2 col-md-2 col-xs-4 col-sm-2" v-for="device in devices">
       <sensor :device="device" />
     </div>
 

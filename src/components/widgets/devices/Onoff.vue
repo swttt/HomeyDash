@@ -28,7 +28,7 @@
           {{device.capabilities.dim.title.en}}
         </q-item-side>
         <q-item-main class="text-right">
-          <q-slider color="teal" v-if="device.capabilities.dim" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
+          <q-slider color="teal" v-model="device.state.dim" :min="0" :max="1" :step="0.01" @change="setDim" />
         </q-item-main>
       </q-item>
 
@@ -41,7 +41,7 @@
         </q-item-main>
       </q-item>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
+      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && !value.setable">
         <q-item-side class="text-white">
           {{value.title.en}}
         </q-item-side>

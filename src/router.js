@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+// Components
 import Devices from '@/Devices'
-import Devices_sidebar from '@/Devices_sidebar'
 import Dashboard from '@/Dashboard'
 import Spotify from '@/Spotify'
+
+// Sidebars
+import Devices_sidebar from '@/base/sidebars/Devices_sidebar'
+
+// Toolbars
+import DashboardToolbar from '@/base/toolbars/DashboardToolbar'
+import BasicToolbar from '@/base/toolbars/BasicToolbar'
 
 const {
   AthomCloudAPI,
@@ -41,6 +48,7 @@ const router = new VueRouter({
     path: '/devices/:zone?',
     components: {
       main: Devices,
+      toolbar: BasicToolbar,
       sidebar: Devices_sidebar
     }
   },
@@ -49,6 +57,7 @@ const router = new VueRouter({
     path: '/',
     components: {
       main: Dashboard,
+      toolbar: DashboardToolbar,
       sidebar: null
     }
   },
@@ -57,6 +66,7 @@ const router = new VueRouter({
     path: '/spotify',
     components: {
       main: Spotify,
+      toolbar: BasicToolbar,
       sidebar: null
     }
   }]

@@ -35,7 +35,7 @@
 
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable">
+      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && !value.setable">
         <q-item-side class="text-white" v-if="device.capabilitiesOptions[key].title">
           {{device.capabilitiesOptions[key].title.en}}
         </q-item-side>

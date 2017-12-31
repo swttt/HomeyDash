@@ -58,7 +58,7 @@ if (DEV) {
   Vue.prototype.$athomCloud = new AthomCloudAPI({
     clientId: '59e881ac57256a350db0fcf8',
     clientSecret: 'daJ0BQBWd1Jq1eIwU8msjS4qg0hM0YYLPhoLAE5U',
-    redirectUrl: 'http://localhost:8081',
+    redirectUrl: 'http://homeydash.local:8081',
   });
 }
 if (PROD) {
