@@ -66,12 +66,6 @@ export default {
       console.log(id)
       window.location.href = "/?cloudid="+id
     }
-  },
-  asyncComputed:{
-    routeName(){
-        return this.$homey.zones.getZone({id: this.$route.params.zone})
-          .then(response => response.name)
-    }
   }
 }
 </script>
