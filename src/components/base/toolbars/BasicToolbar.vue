@@ -27,7 +27,9 @@ export default {
 
   },
   mounted() {
-    this.getZone(this.$route.params.zone);
+    if(this.$route.params.zone){
+      this.getZone(this.$route.params.zone);
+    }
   },
   methods: {
     getZone(zone){
