@@ -1,20 +1,20 @@
 <template>
 <div>
-  <div v-for="zone in nestedZones">
+  <div v-for="zone in sortByIndex(nestedZones)">
     <q-side-link item exact v-bind:key="zone.id" :to="{ name: 'Devices', params: { zone: zone.id } }">
       <q-item-side>
         <img icon :src="'data:image/png;base64,'+zone.icon" style="height:24px;padding:2px;display:inline-block;" />
       </q-item-side>
       <q-item-main :label="zone.name" />
     </q-side-link>
-    <div v-for="child in zone.children" >
+    <div v-for="child in sortByIndex(zone.children)" >
       <q-side-link item exact v-bind:key="child.id" :to="{ name: 'Devices', params: { zone: child.id } }">
         <q-item-side style="padding-left:35px;">
           <img icon :src="'data:image/png;base64,'+child.icon" style="height:24px;padding:2px;display:inline-block;" />
         </q-item-side>
         <q-item-main :label="child.name" />
       </q-side-link>
-      <div v-for="child in child.children" >
+      <div v-for="child in sortByIndex(child.children)" >
         <q-side-link  item exact v-bind:key="child.id" :to="{ name: 'Devices', params: { zone: child.id } }">
           <q-item-side style="padding-left:70px;">
             <img icon :src="'data:image/png;base64,'+child.icon" style="height:24px;padding:2px;display:inline-block;" />
@@ -68,8 +68,11 @@ export default {
         }
 
       });
-
-      return rootElements;
+      let sortedView = _.sortBy(rootElements, [function(o) { return o.index; }]);
+      return sortedView;
+    },
+    sortByIndex(list){
+      return _.orderBy(list, 'index', 'asc');
     }
   },
   computed() {
