@@ -62,6 +62,9 @@ export default {
     }
   },
   async mounted() {
+    if(!this.$route.params.zone && window.localStorage.getItem('lastDevicePage')){
+      this.$router.push({ name: 'Devices', params: { zone: window.localStorage.getItem('lastDevicePage') }})
+    }
     await this.$homey.devices.subscribe();
     this.devices = await this.$homey.devices.getDevices();
     _.forEach(this.devices, device => {
@@ -69,6 +72,12 @@ export default {
         // console.log(state);
       })
     });
+  },
+  beforeRouteLeave (to, from, next) {
+    if(to.name !== 'Devices'){
+      window.localStorage.setItem('lastDevicePage', from.params.zone)
+    }
+    next();
   },
   methods: {
 
