@@ -37,7 +37,7 @@ export default {
       nestedZones: {}
     }
   },
-  async mounted() {
+  async created() {
     this.zones = await this.$homey.zones.getZones({
       icons: 'png'
     });
