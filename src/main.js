@@ -15,7 +15,6 @@ import Quasar, * as All from 'quasar'
 import router from './router'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
-import AsyncComputed from 'vue-async-computed'
 window._ = require('lodash');
 import VueTouch from 'vue-touch'
 import queryString from 'query-string'
@@ -39,7 +38,6 @@ Vue.config.productionTip = false
 Vue.use(VueTouch, {
   name: 'v-touch'
 })
-Vue.use(AsyncComputed)
 // Vue.use(VueLodash, lodash)
 Vue.use(Quasar, {
   components: All,
