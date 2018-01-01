@@ -6,7 +6,7 @@
   <q-toolbar-title>
     {{$route.name}}
     <span slot="subtitle" v-if="$route.name == 'Devices' && $route.params.zone">
-        {{$route.params.zone}}
+        {{currentZone}}
       </span>
   </q-toolbar-title>
   <q-btn flat>
@@ -20,16 +20,28 @@
 export default {
   data() {
     return {
-
+      currentZone: ''
     }
   },
   components: {
 
   },
   mounted() {
-
+    this.getZone(this.$route.params.zone);
   },
   methods: {
+    getZone(zone){
+      this.$homey.zones.getZone({id: zone})
+        .then(result => {
+          this.currentZone = result.name;
+        });
+    }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.getZone(to.params.zone);
+    next();
+  },
+  computed: {
 
   }
 }
