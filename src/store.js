@@ -16,8 +16,11 @@ const store = new Vuex.Store({
       newBox.h = 1;
       newBox.x = 2;
       newBox.y = 3;
-      newBox.i = state.widgets.length + 1;
+      newBox.i = newBox.name;
       state.widgets.push(newBox);
+    },
+    updateWidgets (state, newWidgets){
+      state.widgets = newWidgets;
     }
   },
   plugins: [createPersistedState()]

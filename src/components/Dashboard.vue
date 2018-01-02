@@ -1,5 +1,5 @@
 <template>
-  <grid-layout class="container"
+  <grid-layout ref="container" class="container"
             :layout="widgets"
             :col-num="12"
             :row-height="30"
@@ -9,9 +9,13 @@
             :vertical-compact="true"
             :margin="[10, 10]"
             :use-css-transforms="true"
+            @layout-updated="layoutUpdatedEvent"
+            :maxRows="totalRows"
+
+
     >
 
-        <grid-item class="box" v-for="item in widgets"
+        <grid-item class="box" v-for="item in widgets" :key="item.name"
                    :x="item.x"
                    :y="item.y"
                    :w="item.w"
@@ -20,35 +24,44 @@
             {{item.name}}
         </grid-item>
     </grid-layout>
+
 </template>
 
 <script>
 // import Packery from "packery"
 // import Draggabilly from "draggabilly"
 import {GridLayout, GridItem} from 'vue-grid-layout'
-import store from 'src/store';
 
 export default {
   data() {
     return {
-
+      totalRows: null
     }
   },
   components: {
     GridLayout,
     GridItem
   },
-  mounted() {
-
+  created() {
+    // console.log(Math.round((window.innerHeight - 200) / 30))
+    this.totalRows = Math.floor((window.innerHeight - 120) / 40);
+    console.log(this.totalRows)
+    console.log(window)
   },
   methods: {
-    dragEnd(ev) {
-      console.log(ev);
+    layoutUpdatedEvent(value) {
+      this.widgets = value
     }
   },
   computed: {
-    widgets() {
-      return store.state.widgets;
+    widgets: {
+      get() {
+            console.log('Change!')
+            return this.$store.state.widgets
+        },
+        set(value) {
+          this.$store.commit('updateWidgets', value)
+        }
     }
   },
 }
@@ -64,6 +77,7 @@ export default {
   bottom 0
   right 0
   left 0
+  max-height:100%!important;
   margin 0px 10px 10px 10px
 
 .box
