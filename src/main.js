@@ -121,7 +121,6 @@ async function init() {
             }))
             .then(result => {
               Vue.prototype.$homey = result;
-              Vue.prototype.$homey.authenticate();
               /* eslint-disable no-new */
               new Vue({
                 el: '#q-app',
