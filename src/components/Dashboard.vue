@@ -52,7 +52,7 @@ export default {
 
         // Something you want delayed.
         this.createDrag();
-      }, 500);
+      }, 1000);
 
     });
 
