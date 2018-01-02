@@ -14,9 +14,9 @@ const store = new Vuex.Store({
       newBox.name = "Box " + state.widgets.length;
       newBox.w = 1;
       newBox.h = 1;
-      newBox.x = 2;
-      newBox.y = 3;
-      newBox.i = newBox.name;
+      newBox.x = 0;
+      newBox.y = 0;
+      newBox.i = state.widgets.length;
       state.widgets.push(newBox);
     },
     updateWidgets (state, newWidgets){

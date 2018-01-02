@@ -9,10 +9,17 @@
         {{$route.name}}
       </span>
   </q-toolbar-title>
-  <q-btn flat v-on:click="addBox()">
-    <q-icon name="add" />
+
+  <q-btn  color="white" flat style="margin-left:20px;"  small v-on:click="addBox()">
+    <q-icon name="add" /> ADD WIDGET
   </q-btn>
-  <q-btn flat>
+  <q-btn v-if="!editMode"  color="white" flat style="margin-left:20px;" small v-on:click="startEdit()">
+    <q-icon name="edit" /> EDIT MODE
+  </q-btn>
+  <q-btn v-if="editMode" color="red" style="margin-left:20px;" small v-on:click="quitEdit()">
+    <q-icon name="exit to app" /> QUIT EDIT MODE
+  </q-btn>
+  <q-btn flat style="margin-left:20px;" v-if="!editMode">
     <q-icon name="settings" />
   </q-btn>
 </q-toolbar>
@@ -20,24 +27,37 @@
 
 <script>
 import store from 'src/store';
+import { EventBus } from 'src/eventBus';
+
 export default {
   data() {
     return {
-
+      editMode: false
     }
   },
   components: {
 
   },
   mounted() {
-
+    EventBus.$on('editModeOn', () => {
+      this.editMode = true;
+  });
   },
   created(){
 
   },
   methods: {
     addBox(){
-       store.commit('addWidget')
+       store.commit('addWidget');
+       EventBus.$emit('widgetAdded')
+       EventBus.$emit('editModeOn')
+    },
+    startEdit(){
+      EventBus.$emit('editModeOn')
+    },
+    quitEdit(){
+      this.editMode = false;
+      EventBus.$emit('editModeOff')
     }
   }
 }
