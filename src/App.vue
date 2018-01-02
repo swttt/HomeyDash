@@ -56,10 +56,6 @@ export default {
       this.homeys = await this.$athomCloud.getHomeys()
       // console.log(this.homeys)
     }
-    if(!window.localStorage.getItem('widgets')){
-      console.log('no widgets array found')
-      window.localStorage.setItem('widgets', [])
-    }
   },
   methods: {
     loadHomey(id){

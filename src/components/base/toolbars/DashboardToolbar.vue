@@ -9,7 +9,7 @@
         {{$route.name}}
       </span>
   </q-toolbar-title>
-  <q-btn flat>
+  <q-btn flat v-on:click="addBox()">
     <q-icon name="add" />
   </q-btn>
   <q-btn flat>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-
+import store from 'src/store';
 export default {
   data() {
     return {
@@ -32,8 +32,13 @@ export default {
   mounted() {
 
   },
-  methods: {
+  created(){
 
+  },
+  methods: {
+    addBox(){
+       store.commit('addWidget')
+    }
   }
 }
 </script>

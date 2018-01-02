@@ -1,50 +1,56 @@
 <template>
+  <grid-layout class="container"
+            :layout="widgets"
+            :col-num="12"
+            :row-height="30"
+            :is-draggable="true"
+            :is-resizable="true"
+            :is-mirrored="false"
+            :vertical-compact="true"
+            :margin="[10, 10]"
+            :use-css-transforms="true"
+    >
 
-<div class="container">
-  <div class="box" data-x="3" data-y="3"> Box 1</div>
-  <div class="box"> Box 2</div>
-</div>
+        <grid-item class="box" v-for="item in widgets"
+                   :x="item.x"
+                   :y="item.y"
+                   :w="item.w"
+                   :h="item.h"
+                   :i="item.i">
+            {{item.name}}
+        </grid-item>
+    </grid-layout>
 </template>
 
 <script>
-import Packery from "packery"
-import Draggabilly from "draggabilly"
+// import Packery from "packery"
+// import Draggabilly from "draggabilly"
+import {GridLayout, GridItem} from 'vue-grid-layout'
+import store from 'src/store';
 
 export default {
   data() {
     return {
-      widgets: window.localStorage.getItem('widgets'),
-      draggies: []
+
     }
   },
   components: {
+    GridLayout,
+    GridItem
   },
   mounted() {
 
-    var draggableElems = document.querySelectorAll('.box');
-    // array of Draggabillies
-    // init Draggabillies
-    for(var i = 0, len = draggableElems.length; i < len; i++) {
-      var draggableElem = draggableElems[i];
-      var draggie = new Draggabilly(draggableElem, {
-        containment: '.container',
-        grid: [ 10, 10 ],
-        position: [0,3]
-      });
-      draggie.on( 'dragEnd', ( event, pointer ) => {
-        console.log(this.draggies)
-      })
-      console.log(draggie)
-      draggie.position.x = 3
-      draggie.position.y =2
-      this.draggies.push(draggie);
-      // console.log(this.draggies);
-    }
-
   },
   methods: {
-
-  }
+    dragEnd(ev) {
+      console.log(ev);
+    }
+  },
+  computed: {
+    widgets() {
+      return store.state.widgets;
+    }
+  },
 }
 </script>
 
@@ -61,8 +67,6 @@ export default {
   margin 0px 10px 10px 10px
 
 .box
-  height 100px
-  width 200px
   background-color white
   padding 5px
 

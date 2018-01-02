@@ -26,6 +26,13 @@ import {
 } from 'quasar'
 AddressbarColor.set('#4f4f4f')
 
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import store from './store';
+
+
+
+
 const {
   AthomCloudAPI,
   HomeyAPI
@@ -35,6 +42,7 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 
 Vue.config.productionTip = false
 
+Vue.use(Vuex)
 Vue.use(VueTouch, {
   name: 'v-touch'
 })
@@ -51,6 +59,8 @@ import 'quasar-extras/material-icons'
 import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 import 'quasar-extras/animate'
+
+
 
 if (DEV) {
   Vue.prototype.$athomCloud = new AthomCloudAPI({
@@ -99,6 +109,7 @@ async function init() {
             new Vue({
               el: '#q-app',
               router,
+              store,
               render: h => h(require('./App').default)
             });
           });
@@ -115,6 +126,7 @@ async function init() {
               new Vue({
                 el: '#q-app',
                 router,
+                store,
                 render: h => h(require('./App').default)
               })
             });
@@ -123,6 +135,7 @@ async function init() {
           new Vue({
             el: '#q-app',
             router,
+            store,
             render: h => h(require('./App').default)
           })
         }
