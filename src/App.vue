@@ -54,7 +54,7 @@ export default {
       this.selectHomey = false;
     } else {
 
-      let user = = await this.$athomCloud.getAuthenticatedUser()
+      let user = await this.$athomCloud.getAuthenticatedUser()
       this.homeys = user.getHomeys();
       // console.log(this.homeys)
     }
