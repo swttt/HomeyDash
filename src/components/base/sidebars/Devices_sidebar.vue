@@ -47,7 +47,7 @@ export default {
     if(this.nestedZones) {
       setTimeout(() => {
         this.loaded = true;
-      }, 1000);
+      }, 500);
     }
 
     this.zones = await this.$homey.zones.getZones({

@@ -1,10 +1,11 @@
 <template>
 <div class="container">
 
-
+  <q-transition group appear enter="fadeIn" leave="fadeOut">
   <v-touch v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box" v-on:press="changeMode">
     {{item.name}}
   </v-touch>
+  </q-transition>
 
   <!-- <div v-if="!widgets.length" style="width:100%;text-align:center;">
     <q-btn color="white" class="text-black" large v-on:click="addBox()">
