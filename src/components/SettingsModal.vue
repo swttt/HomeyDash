@@ -10,10 +10,10 @@
       </q-toolbar>
 
       <div slot="footer">
-        <q-btn color="red-8" outlined style="margin:20px;" v-on:click="closeModal()">
+        <q-btn color="grey-5" outline style="margin:20px;" icon="close" v-on:click="closeModal()">
           CANCEL
         </q-btn>
-        <q-btn color="teal" outlined style="margin:20px;">
+        <q-btn color="teal" icon="done" outline style="margin:20px;">
           SAVE
         </q-btn>
       </div>

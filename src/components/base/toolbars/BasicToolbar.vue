@@ -9,13 +9,15 @@
         {{currentZone}}
       </span>
   </q-toolbar-title>
-  <q-btn flat>
-    <q-icon name="settings" />
-  </q-btn>
+  <q-btn round flat icon="settings" v-on:click="openSettings()"/>
 </q-toolbar>
 </template>
 
 <script>
+import {
+  EventBus
+} from 'src/eventBus';
+
 
 export default {
   data() {
@@ -37,6 +39,9 @@ export default {
         .then(result => {
           this.currentZone = result.name;
         });
+    },
+    openSettings(){
+      EventBus.$emit('openSettings')
     }
   },
   beforeRouteUpdate (to, from, next) {

@@ -10,18 +10,16 @@
       </span>
   </q-toolbar-title>
 
-  <q-btn v-if="editMode" color="white" flat style="margin-left:20px;" small v-on:click="addBox()">
+  <q-btn v-if="editMode" color="white" flat style="margin-left:20px;"  v-on:click="addBox()">
     <q-icon name="add" /> ADD WIDGET
   </q-btn>
-  <q-btn v-if="!editMode" color="white" flat style="margin-left:20px;" small v-on:click="startEdit()">
-    <q-icon name="edit" /> EDIT MODE
+  <q-btn icon="edit" v-if="!editMode" color="white" flat style="margin-left:20px;"  v-on:click="startEdit()">
+    EDIT MODE
   </q-btn>
-  <q-btn v-if="editMode" color="red" style="margin-left:20px;" small v-on:click="quitEdit()">
-    <q-icon name="exit to app" /> QUIT EDIT MODE
+  <q-btn icon="exit to app" v-if="editMode" color="red" style="margin-left:20px;"  v-on:click="quitEdit()">
+    QUIT EDIT MODE
   </q-btn>
-  <q-btn flat style="margin-left:20px;" v-if="!editMode" v-on:click="openSettings()">
-    <q-icon name="settings" />
-  </q-btn>
+  <q-btn round flat style="margin-left:20px;" v-if="!editMode" v-on:click="openSettings()" icon="settings" />
 </q-toolbar>
 </template>
 
