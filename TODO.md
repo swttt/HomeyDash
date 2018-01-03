@@ -1,0 +1,1 @@
+- [ ] Add thermostat class to Devices
