@@ -10,10 +10,10 @@
       </span>
   </q-toolbar-title>
 
-  <q-btn  color="white" flat style="margin-left:20px;"  small v-on:click="addBox()">
+  <q-btn v-if="editMode" color="white" flat style="margin-left:20px;" small v-on:click="addBox()">
     <q-icon name="add" /> ADD WIDGET
   </q-btn>
-  <q-btn v-if="!editMode"  color="white" flat style="margin-left:20px;" small v-on:click="startEdit()">
+  <q-btn v-if="!editMode" color="white" flat style="margin-left:20px;" small v-on:click="startEdit()">
     <q-icon name="edit" /> EDIT MODE
   </q-btn>
   <q-btn v-if="editMode" color="red" style="margin-left:20px;" small v-on:click="quitEdit()">
@@ -27,7 +27,9 @@
 
 <script>
 import store from 'src/store';
-import { EventBus } from 'src/eventBus';
+import {
+  EventBus
+} from 'src/eventBus';
 
 export default {
   data() {
@@ -41,22 +43,24 @@ export default {
   mounted() {
     EventBus.$on('editModeOn', () => {
       this.editMode = true;
-  });
+    });
+    EventBus.$on('editModeOff', () => {
+      this.editMode = false;
+    });
   },
-  created(){
+  created() {
 
   },
   methods: {
-    addBox(){
-       store.commit('addWidget');
-       EventBus.$emit('widgetAdded')
-       EventBus.$emit('editModeOn')
-    },
-    startEdit(){
+    addBox() {
+      store.commit('addWidget');
+      EventBus.$emit('widgetAdded')
       EventBus.$emit('editModeOn')
     },
-    quitEdit(){
-      this.editMode = false;
+    startEdit() {
+      EventBus.$emit('editModeOn')
+    },
+    quitEdit() {
       EventBus.$emit('editModeOff')
     }
   }
@@ -64,11 +68,9 @@ export default {
 </script>
 
 <style>
-
 .layout-header,
 .q-toolbar {
   border: 0!important;
   background: rgba(255, 255, 255, 0)!important;
 }
-
 </style>

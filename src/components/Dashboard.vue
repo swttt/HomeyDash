@@ -2,16 +2,11 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-  <v-touch v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box" v-on:press="changeMode">
+  <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box">
     {{item.name}}
-  </v-touch>
+  </div>
   </q-transition>
 
-  <!-- <div v-if="!widgets.length" style="width:100%;text-align:center;">
-    <q-btn color="white" class="text-black" large v-on:click="addBox()">
-      <q-icon name="add" /> ADD YOUR FIRST WIDGET
-    </q-btn>
-  </div> -->
 </div>
 </template>
 
@@ -49,10 +44,8 @@ export default {
 
     EventBus.$on('widgetAdded', () => {
       setTimeout(() => {
-
-        // Something you want delayed.
         this.createDrag();
-      }, 1000);
+      }, 100);
 
     });
 
@@ -62,15 +55,6 @@ export default {
 
   },
   methods: {
-    changeMode(ev) {
-      if(!this.editMode) {
-        this.editMode = true;
-        EventBus.$emit('editModeOn')
-        _.forEach(this.draggies, box => {
-          box.enable();
-        })
-      }
-    },
     createDrag() {
       this.draggies = [];
       var draggableElems = document.querySelectorAll('.box');
@@ -95,23 +79,33 @@ export default {
         })
         this.draggies.push(draggie);
       }
-    },
-    addBox() {
-      this.$store.commit('addWidget');
-      EventBus.$emit('widgetAdded')
     }
   },
   computed: {
     widgets: {
       get() {
-        Draggabilly
         return this.$store.state.widgets
       },
       set(value) {
         this.$store.commit('updateWidgets', value)
       }
     }
-  }
+  },
+  watch: {
+    // whenever question changes, this function will run
+    editMode: function () {
+      if(this.editMode){
+        _.forEach(this.draggies, box => {
+          box.enable();
+        })
+      }
+      else{
+        _.forEach(this.draggies, box => {
+          box.disable();
+        })
+      }
+    }
+  },
 }
 </script>
 
