@@ -19,7 +19,7 @@
   <q-btn v-if="editMode" color="red" style="margin-left:20px;" small v-on:click="quitEdit()">
     <q-icon name="exit to app" /> QUIT EDIT MODE
   </q-btn>
-  <q-btn flat style="margin-left:20px;" v-if="!editMode">
+  <q-btn flat style="margin-left:20px;" v-if="!editMode" v-on:click="openSettings()">
     <q-icon name="settings" />
   </q-btn>
 </q-toolbar>
@@ -62,6 +62,9 @@ export default {
     },
     quitEdit() {
       EventBus.$emit('editModeOff')
+    },
+    openSettings(){
+      EventBus.$emit('openSettings')
     }
   }
 }

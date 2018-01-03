@@ -32,6 +32,7 @@
           </div>
         </div>
       </div>
+      <settings/>
     </q-layout>
   </main>
 </div>
@@ -41,6 +42,8 @@
 /*
  * Root component
  */
+
+import settings from '@/SettingsModal'
 export default {
   data() {
     return {
@@ -48,6 +51,9 @@ export default {
       selectHomey: true,
       homeys: []
     }
+  },
+  components: {
+    settings
   },
   async created() {
     if(this.$homey) {
