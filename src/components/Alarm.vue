@@ -1,5 +1,7 @@
 <template>
+
 <div class="row justify-center items-center content-center alarm-row">
+  <q-transition appear enter="fadeIn" leave="fadeOut">
   <div class="col col-6 col-md-6 col-lg-3 col-xs-10 alarm-container">
     <q-chip color="red" class="status">
       Unarmed
@@ -44,7 +46,9 @@
       </div>
     </div>
   </div>
+  </q-transition>
 </div>
+
 </template>
 
 
