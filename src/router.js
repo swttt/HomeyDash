@@ -6,6 +6,7 @@ import Devices from '@/Devices'
 import Dashboard from '@/Dashboard'
 import Spotify from '@/Spotify'
 import Alarm from '@/Alarm'
+import Powerusage from '@/Powerusage'
 
 // Sidebars
 import Devices_sidebar from '@/base/sidebars/Devices_sidebar'
@@ -76,6 +77,15 @@ const router = new VueRouter({
     path: '/alarm',
     components: {
       main: Alarm,
+      toolbar: BasicToolbar,
+      sidebar: null
+    }
+  },
+  {
+    name: 'Power Usage',
+    path: '/power-usage',
+    components: {
+      main: Powerusage,
       toolbar: BasicToolbar,
       sidebar: null
     }
