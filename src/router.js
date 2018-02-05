@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Devices from '@/Devices'
 import Dashboard from '@/Dashboard'
 import Spotify from '@/Spotify'
+import Alarm from '@/Alarm'
 
 // Sidebars
 import Devices_sidebar from '@/base/sidebars/Devices_sidebar'
@@ -66,6 +67,15 @@ const router = new VueRouter({
     path: '/spotify',
     components: {
       main: Spotify,
+      toolbar: BasicToolbar,
+      sidebar: null
+    }
+  },
+  {
+    name: 'Alarm',
+    path: '/alarm',
+    components: {
+      main: Alarm,
       toolbar: BasicToolbar,
       sidebar: null
     }

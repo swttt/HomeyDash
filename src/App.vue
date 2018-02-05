@@ -12,6 +12,7 @@
         <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
         <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
         <q-route-tab slot="title" icon="fa-spotify" to="/spotify" exact label="Spotify" />
+        <q-route-tab slot="title" icon="security" to="/alarm" exact label="Alarm" />
       </q-tabs>
       <div v-if="selectHomey">
         <div class="row justify-center" style="height:100vh;">
