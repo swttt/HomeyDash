@@ -126,13 +126,15 @@ export default {
   background-color rgba(255, 0, 0, 0.29)!important
 
 .box
-  background-color white
   padding 5px
   width 300px
   height 150px
   position absolute
   top 0
   left 0
+  background-color rgba(0, 0, 0, 0.5)
+  border-radius 10px
+  color white
 
 
 </style>

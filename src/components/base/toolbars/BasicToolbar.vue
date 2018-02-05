@@ -9,7 +9,7 @@
         {{currentZone}}
       </span>
   </q-toolbar-title>
-  <q-btn round flat icon="settings" v-on:click="openSettings()"/>
+  <q-btn round small flat icon="settings" v-on:click="openSettings()"/>
 </q-toolbar>
 </template>
 
