@@ -11,8 +11,9 @@
       <q-tabs v-if="!selectHomey" slot="navigation">
         <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
         <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
-        <q-route-tab slot="title" icon="fa-spotify" to="/spotify" exact label="Spotify" />
+        <!-- <q-route-tab slot="title" icon="fa-spotify" to="/spotify" exact label="Spotify" /> -->
         <q-route-tab slot="title" icon="security" to="/alarm" exact label="Alarm" />
+        <q-route-tab slot="title" icon="fa-bolt" to="/power-usage" exact label="Power usage" />
       </q-tabs>
       <div v-if="selectHomey">
         <div class="row justify-center" style="height:100vh;">
@@ -82,6 +83,13 @@ export default {
     -moz-user-select: -moz-none;
     -o-user-select: none;
     user-select: none;
+}
+
+@supports(padding: max(0px)) {
+    #layout {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+    }
 }
 
 html, body{
