@@ -4,8 +4,8 @@
   <header></header>
   <main>
     <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
-      <router-view slot="header"  v-if="!selectHomey"  name="toolbar"></router-view>
-      <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey"  name="sidebar"></router-view>
+      <router-view slot="header" v-if="!selectHomey" name="toolbar"></router-view>
+      <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey" name="sidebar"></router-view>
 
       <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
@@ -26,7 +26,7 @@
                     <img src="/statics/img/icon.svg" style="padding:5px;"/>
                   </q-item-tile>
                 </q-item-side> -->
-                <q-item-main :label="homey.name"/>
+                <q-item-main :label="homey.name" />
 
               </q-item>
             </q-list>
@@ -68,9 +68,9 @@ export default {
     }
   },
   methods: {
-    loadHomey(id){
+    loadHomey(id) {
       console.log(id)
-      window.location.href = "/?cloudid="+id
+      window.location.href = "/?cloudid=" + id
     }
   }
 }
@@ -78,44 +78,45 @@ export default {
 
 <style>
 * {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -o-user-select: none;
-    user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
 }
 
-@supports(padding: max(0px)) {
-    #layout {
-        padding-left: max(12px, env(safe-area-inset-left));
-        padding-right: max(12px, env(safe-area-inset-right));
-    }
+html,
+body {
+  position: fixed !important;
+  top: 0;
+  bottom: 0;
+  overflow: hidden !important;
 }
 
-html, body{
-  position: fixed!important;
-  overflow: hidden!important;
-}
 #layout {
   width: 100vw;
   height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover!important;
-  -moz-background-size: cover!important;
-  -o-background-size: cover!important;
-  background-size: cover!important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
 }
 
 .layout-aside {
   background-color: #E0E1E2;
-  border: 0!important;
+  border: 0 !important;
 }
 
 .layout-footer {
-  border: 0!important;
-  position:fixed;
-  bottom:0;
+  border: 0 !important;
+  position: fixed;
+  bottom: 0;
+  /* Status bar height on iOS 11.0 */
+  padding-bottom: constant(safe-area-inset-bottom);
+  /* Status bar height on iOS 11+ */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>
