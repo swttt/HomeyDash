@@ -6,43 +6,44 @@
     <q-chip color="red" class="status">
       Unarmed
     </q-chip>
-    <h3>****</h3>
+    <h3 v-if="maskedCode.length == 0" style="font-size:28px;">Enter PIN...</h3>
+    <h3 v-else style="font-size:32px;font-weight:300;">{{maskedCode}}</h3>
     <div class="row">
       <div class="col col-4 number">
-        <q-btn big round flat>1</q-btn>
+        <q-btn big round flat v-on:click="addPin('1')">1</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>2</q-btn>
+        <q-btn big round flat v-on:click="addPin('2')">2</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>3</q-btn>
+        <q-btn big round flat v-on:click="addPin('3')">3</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>4</q-btn>
+        <q-btn big round flat v-on:click="addPin('4')">4</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>5</q-btn>
+        <q-btn big round flat v-on:click="addPin('5')">5</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>6</q-btn>
+        <q-btn big round flat v-on:click="addPin('6')">6</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>7</q-btn>
+        <q-btn big round flat v-on:click="addPin('7')">7</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>8</q-btn>
+        <q-btn big round flat v-on:click="addPin('8')">8</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>9</q-btn>
+        <q-btn big round flat v-on:click="addPin('9')">9</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat color="teal">Partial Arm</q-btn>
+        <q-btn big round flat color="red" v-on:click="clearPin()">Clear</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat>0</q-btn>
+        <q-btn big round flat v-on:click="addPin('0')">0</q-btn>
       </div>
       <div class="col col-4 number">
-        <q-btn big round flat color="teal">Arm</q-btn>
+        <q-btn big round flat color="teal">Enter</q-btn>
       </div>
     </div>
   </div>
@@ -51,6 +52,33 @@
 
 </template>
 
+<script>
+
+export default {
+  data() {
+    return {
+      // initializing for second tab to be selected by default
+      code: '',
+      maskedCode: ''
+    }
+  },
+  mounted() {
+
+  },
+  methods: {
+    addPin(number){
+      if(this.code.length < 6){
+        this.maskedCode = this.maskedCode + '*';
+        this.code = this.code + number
+      }
+    },
+    clearPin(){
+      this.maskedCode = '';
+      this.code = '';
+    }
+  }
+}
+</script>
 
 <style lang="stylus" scoped>
 @import '~variables'
@@ -75,11 +103,12 @@
   padding 0
 
   h3
-    color white
+    color rgb(219, 219, 219)
     font-weight 200
     width 100%
     text-align center
-    line-height 75%
+    line-height 28px
+    font-size 28px
     position relative
     top 30px
     margin-top 10px
