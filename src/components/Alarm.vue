@@ -6,8 +6,8 @@
     <q-chip color="red" class="status">
       Unarmed
     </q-chip>
-    <h3 v-if="maskedCode.length == 0" style="font-size:28px;">Enter PIN...</h3>
-    <h3 v-else style="font-size:32px;font-weight:300;">{{maskedCode}}</h3>
+    <h3 v-if="code.length == 0" style="font-size:28px;">Enter PIN...</h3>
+    <h3 v-else  style="font-size:32px;font-weight:300;"><span v-for="n in code.length" style="padding: 0px 5px 0px 5px;position:relative;top:5px;">*</span></h3>
     <div class="row">
       <div class="col col-4 number">
         <q-btn big round flat v-on:click="addPin('1')">1</q-btn>
@@ -58,8 +58,7 @@ export default {
   data() {
     return {
       // initializing for second tab to be selected by default
-      code: '',
-      maskedCode: ''
+      code: ''
     }
   },
   mounted() {
@@ -68,12 +67,10 @@ export default {
   methods: {
     addPin(number){
       if(this.code.length < 6){
-        this.maskedCode = this.maskedCode + '*';
         this.code = this.code + number
       }
     },
     clearPin(){
-      this.maskedCode = '';
       this.code = '';
     }
   }
