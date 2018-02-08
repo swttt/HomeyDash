@@ -1,8 +1,7 @@
 <template>
 <div class="row justify-center items-center content-center power-row">
-  <div class="col col-6 col-xs-11 col-md-6 settings-box">
-    <h4>No default power measure device found</h4>
-    <p>Please go to your settings and select one.</p>
+  <div class="col col-4 col-xs-11 col-md-4 settings-box">
+    <p>No default power measure device found, please go to your settings and select one.</p>
     <q-btn color="teal" style="margin: 0 auto;" v-on:click="openSettings()" icon="settings">
       Settings
     </q-btn>
@@ -58,7 +57,7 @@ export default {
 .settings-box
   background-color rgba(0, 0, 0, 0.5)
   border-radius 10px
-  padding 10px
+  padding 20px
   color white
   text-align center
   h4
