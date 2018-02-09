@@ -6,9 +6,13 @@ Vue.use(Vuex);
 //VUEX Stores
 const store = new Vuex.Store({
   state: {
-    widgets: []
+    widgets: [],
+    settings: {
+      powerUsageDevice: ""
+    }
   },
   mutations: {
+    // WIDGETS
     addWidget (state) {
       let newBox = {};
       newBox.name = "Box " + state.widgets.length;
@@ -21,6 +25,10 @@ const store = new Vuex.Store({
     },
     updateWidgets (state, newWidgets){
       state.widgets = newWidgets;
+    },
+    // SETTINGS
+    updateSettings (state, newSettings){
+      state.settings = newSettings;
     }
   },
   plugins: [createPersistedState()]
