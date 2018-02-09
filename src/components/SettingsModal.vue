@@ -20,7 +20,7 @@
 
       <div class="layout-padding settings-content">
         <div class="row">
-          <div class="col col-4">
+          <div class="col col-4 col-xs-12 col-md-6">
             <h6 color="teal">Power Usage</h6>
             <q-select dark frame-color="white" v-model="settings.powerUsageDevice" float-label="Select a device" radio :options="powerUsageOptions" />
           </div>
