@@ -13,10 +13,21 @@
         <q-btn color="grey-5" outline style="margin:20px;" icon="close" v-on:click="closeModal()">
           CANCEL
         </q-btn>
-        <q-btn color="teal" icon="done" outline style="margin:20px;">
+        <q-btn v-on:click="saveSettings()" color="teal" icon="done" outline style="margin:20px;">
           SAVE
         </q-btn>
       </div>
+
+      <div class="layout-padding settings-content">
+        <div class="row">
+          <div class="col col-4">
+            <h6 color="teal">Power Usage</h6>
+            <q-select dark frame-color="white" v-model="settings.powerUsageDevice" float-label="Select a device" radio :options="powerUsageOptions" />
+          </div>
+        </div>
+      </div>
+
+
     </q-modal-layout>
   </q-modal>
 </div>
@@ -30,17 +41,40 @@ import {
 export default {
   data() {
     return {
-      modal: false
+      modal: false,
+      powerUsageOptions: []
     }
   },
-  mounted() {
+  async mounted() {
+    // Event
     EventBus.$on('openSettings', () => {
       this.modal = true;
     });
+    // Get devices
+    let devices = await this.$homey.devices.getDevices();
+    _.forEach(devices, device => {
+      if(device.capabilities.measure_power) {
+        let option = {};
+        option.label = device.name;
+        option.value = device.id;
+        this.powerUsageOptions.push(option);
+      }
+    });
   },
   methods: {
-    closeModal(){
+    closeModal() {
       this.modal = false;
+    },
+    async saveSettings(){
+      await this.$store.commit('updateSettings', this.settings)
+      location.reload();
+    }
+  },
+  computed: {
+    settings: {
+      get() {
+        return this.$store.state.settings
+      }
     }
   }
 }
@@ -53,4 +87,9 @@ export default {
   text-align center
   width 100vw
 
+.settings-content
+  color white
+
+h6
+  color #009688
 </style>
