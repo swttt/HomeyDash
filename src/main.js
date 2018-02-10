@@ -42,6 +42,13 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 
 Vue.config.productionTip = false
 
+Vue.filter('round', function(value) {
+  if (!value) return ''
+
+  value = value.toFixed(2)
+  return value;
+});
+
 Vue.use(Vuex)
 Vue.use(VueTouch, {
   name: 'v-touch'
