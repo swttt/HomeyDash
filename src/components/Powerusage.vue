@@ -141,8 +141,8 @@ export default {
       let result = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().startOf('week').utc().format(),
-        end: moment().startOf('week').add(1, 'hours').utc().format()
+        start: moment().startOf('week').add(1, 'days').utc().format(),
+        end: moment().startOf('week').add(1, 'days').add(1, 'hours').utc().format()
       });
       this.weekStart = result.split("\n")[0].split(',')[1];
 
@@ -152,14 +152,14 @@ export default {
       let start = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().startOf('week').subtract(1, 'weeks').utc().format(),
-        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'hours').utc().format()
+        start: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').utc().format(),
+        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(1, 'hours').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('week').subtract(1, 'weeks').subtract(1, 'hours').utc().format(),
-        end: moment().endOf('week').subtract(1, 'weeks').utc().format()
+        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(1, 'hours').utc().format(),
+        end: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').utc().format()
       });
       this.lastWeekStart = start.split("\n")[0].split(',')[1];
       let endLines = end.split("\n");
