@@ -1,15 +1,53 @@
 <template>
-<div class="row justify-center items-center content-center power-row">
-  <div v-show="!settings.powerUsageDevice" class="col col-4 col-xs-11 col-md-4 settings-box">
-    <p>No default power measure device found, please go to your settings and select one.</p>
-    <q-btn color="teal" style="margin: 0 auto;" v-on:click="openSettings()" icon="settings">
-      Settings
-    </q-btn>
+<div>
+  <div class="row justify-center items-center content-center power-row">
+    <div v-show="!settings.powerUsageDevice" class="col col-4 col-xs-11 col-md-4 settings-box">
+      <p>No default power measure device found, please go to your settings and select one.</p>
+      <q-btn color="teal" style="margin: 0 auto;" v-on:click="openSettings()" icon="settings">
+        Settings
+      </q-btn>
+    </div>
   </div>
-  <div v-if="settings.powerUsageDevice && this.device.id" class="col col-4 col-xs-11 col-md-4 settings-box">
-    You selected the device {{device.name}} <br/>
-    Todays total power used is {{dayUsage}} kwh. <br/>
-    This weeks total power used it {{weekUsage}} kwh.
+  <div class="row justify-center" v-if="settings.powerUsageDevice">
+
+    <div class="col-4 col-xs-11 col-md-4 info-box">
+      <div class="inner relative-position">
+        <q-spinner v-show="dayLoading" style="margin-top:25px;" color="teal-4" size="50px" />
+        <h4 v-show="!dayLoading" class="text-teal">Today</h4>
+        <p v-show="!dayLoading">{{(currentValue-todayStart) | round}} KWH <br/> <small>Yesterday: {{(yesterdayEnd-yesterdayStart) | round}} KWH</small> </p>
+      </div>
+    </div>
+
+    <div class="col-4 col-xs-11 col-md-4 info-box">
+      <div class="inner relative-position">
+        <q-spinner v-show="weekLoading" style="margin-top:25px;" color="teal-4" size="50px" />
+        <h4 v-show="!weekLoading" class="text-teal">Week</h4>
+        <p v-show="!weekLoading">{{(currentValue-weekStart) | round}} KWH <br/> <small>Last week: {{( lastWeekEnd - lastWeekStart) | round}} KWH</small> </p>
+      </div>
+    </div>
+
+    <div class="col-4 col-xs-11 col-md-4 info-box">
+      <div class="inner relative-position">
+        <q-spinner v-show="monthLoading" style="margin-top:25px;" color="teal-4" size="50px" />
+        <h4 v-show="!monthLoading" class="text-teal">Month</h4>
+        <p v-show="!monthLoading">{{(currentValue-monthStart) | round}} KWH <br/> <small>Last month: {{( lastMonthEnd - lastMonthStart) | round}} KWH</small> </p>
+      </div>
+    </div>
+
+    <!-- <div class="col-4 col-xs-11 col-md-4 info-box">
+      <div class="inner">
+        <h4 class="text-teal">Week</h4>
+        <p>{{week}} KWH<br/> <small>Last week: {{lastweek}} KWH</small></p>
+      </div>
+    </div>
+
+    <div class="col-4 col-xs-11 col-md-4 info-box">
+      <div class="inner">
+        <h4 class="text-teal">Month</h4>
+        <p>{{month}} KWH</p>
+      </div>
+    </div> -->
+
   </div>
 </div>
 </template>
@@ -24,87 +62,144 @@ export default {
   components: {},
   data() {
     return {
-      device: {},
-      insightData: {},
-      dayData: [],
-      weekData: []
+      dayLoading: true,
+      weekLoading: true,
+      monthLoading: true,
+      currentValue: "",
+      todayStart: "",
+      weekStart: "",
+      monthStart: "",
+      yesterdayStart: "",
+      lastWeekStart: "",
+      lastMonthStart: "",
+      yesterdayEnd: "",
+      lastWeekEnd: "",
+      lastMonthEnd: ""
     }
   },
   async mounted() {
-    console.log();
-    if(this.$store.state.settings.powerUsageDevice) {
-      this.device = await this.$homey.devices.getDevice({
-        id: this.$store.state.settings.powerUsageDevice
-      });
 
+    await this.getCurrentValue();
+    await this.getTodayData();
+    await this.getYesterdayData();
+    this.dayLoading = await false;
 
-      let insightDataDay = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.device.id,
-        name: 'meter_power',
-        start: moment().startOf('day').utc().format(),
-        end: moment().utc().format()
-      });
-      this.dayData = this.csvJSON(insightDataDay);
+    await this.getThisWeekData();
+    await this.getLastWeekData();
+    this.weekLoading = await false;
 
-      let insightDataWeek = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.device.id,
-        name: 'meter_power',
-        start: moment().startOf('week').utc().format(),
-        end: moment().utc().format()
-      });
-      this.weekData = this.csvJSON(insightDataWeek);
-  }
-},
-methods: {
+    await this.getThisMonthData();
+    await this.getLastMonthData();
+    this.monthLoading = false;
+
+  },
+  methods: {
     openSettings() {
       EventBus.$emit('openSettings')
     },
-    csvJSON(csv) {
-      var lines = csv.split("\n");
-      var result = [];
-      var headers = ['date', 'value'];
-      for(var i = 0; i < lines.length; i++) {
-        var obj = {};
-        var currentline = lines[i].split(",");
-        for(var j = 0; j < headers.length; j++) {
-          obj[headers[j]] = currentline[j];
-        }
-        if(currentline[0]) {
-          result.push(obj);
-        }
-      }
-      return result;
+    async getCurrentValue() {
+      await this.$homey.devices.subscribe();
+      let device = await this.$homey.devices.getDevice({
+        id: this.$store.state.settings.powerUsageDevice
+      });
+      this.currentValue = await device.state.meter_power;
+      device.on('$state', state => {
+        this.currentValue = state.meter_power;
+      });
+    },
+    async getTodayData() {
+
+      let result = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('day').utc().format(),
+        end: moment().startOf('day').add(1, 'hours').utc().format()
+      });
+      this.todayStart = result.split("\n")[0].split(',')[1];
+
+    },
+    async getYesterdayData() {
+
+      let start = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('day').subtract(1, 'days').utc().format(),
+        end: moment().startOf('day').subtract(1, 'days').add(1, 'hours').utc().format()
+      });
+      let end = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().endOf('day').subtract(1, 'days').subtract(1, 'hours').utc().format(),
+        end: moment().endOf('day').subtract(1, 'days').utc().format()
+      });
+      this.yesterdayStart = start.split("\n")[0].split(',')[1];
+      let endLines = end.split("\n");
+      this.yesterdayEnd = endLines[endLines.length-2].split(',')[1];
+    },
+    async getThisWeekData() {
+
+      let result = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('week').utc().format(),
+        end: moment().startOf('week').add(1, 'hours').utc().format()
+      });
+      this.weekStart = result.split("\n")[0].split(',')[1];
+
+    },
+    async getLastWeekData() {
+
+      let start = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('week').subtract(1, 'weeks').utc().format(),
+        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'hours').utc().format()
+      });
+      let end = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().endOf('week').subtract(1, 'weeks').subtract(1, 'hours').utc().format(),
+        end: moment().endOf('week').subtract(1, 'weeks').utc().format()
+      });
+      this.lastWeekStart = start.split("\n")[0].split(',')[1];
+      let endLines = end.split("\n");
+      this.lastWeekEnd = endLines[endLines.length-2].split(',')[1];
+    },
+    async getThisMonthData() {
+
+      let result = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('month').utc().format(),
+        end: moment().startOf('month').add(1, 'hours').utc().format()
+      });
+      this.monthStart = result.split("\n")[0].split(',')[1];
+    },
+    async getLastMonthData() {
+
+      let start = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().startOf('month').subtract(1, 'months').utc().format(),
+        end: moment().startOf('month').subtract(1, 'months').add(1, 'hours').utc().format()
+      });
+      let end = await this.$homey.insights.getEntries({
+        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        name: 'meter_power',
+        start: moment().endOf('month').subtract(1, 'months').subtract(1, 'hours').utc().format(),
+        end: moment().endOf('month').subtract(1, 'months').utc().format()
+      });
+      this.lastMonthStart = start.split("\n")[0].split(',')[1];
+      let endLines = end.split("\n");
+      this.lastMonthEnd = endLines[endLines.length-2].split(',')[1];
     }
   },
-
   computed: {
     settings: {
       get() {
         return this.$store.state.settings
       }
-    },
-    dayUsage: {
-      get() {
-        let result = '0';
-        let length = this.dayData.length - 1
-        if(this.dayData.length > 0){
-          result = this.dayData[length].value -  this.dayData[0].value
-        }
-
-        return result;
-      }
-    },
-    weekUsage: {
-      get() {
-        let result = '0';
-        let length = this.weekData.length - 1
-        if(this.weekData.length > 0){
-          result = this.weekData[length].value -  this.weekData[0].value
-        }
-
-        return result;
-      }
-    },
+    }
   }
 }
 </script>
@@ -129,5 +224,30 @@ methods: {
   h4
     width 100%
     /* text-align center */
+
+.info-box
+  padding 10px
+  .inner
+    background-color rgba(0, 0, 0, 0.5)
+    border-radius 10px
+    padding 10px
+    color white
+    text-align center
+    height 120px
+    overflow hidden
+  h4
+    width 100%
+    padding 0px
+    margin 0px
+    text-transform uppercase
+    font-weight 200
+    font-size 32px
+  p
+    text-transform uppercase
+    font-size 22px
+    padding 10px 0px 0px 0px
+    small
+      color rgb(181, 181, 181)
+      font-size 14px
 
 </style>
