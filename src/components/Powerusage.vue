@@ -80,20 +80,26 @@ export default {
     openSettings() {
       EventBus.$emit('openSettings')
     },
-    async loadDay(){
-      await this.getCurrentValue();
-      await this.getTodayData();
-      await this.getYesterdayData();
-      this.dayLoading = await false;
+    async loadDay() {
+      await Promise.all([
+        this.getCurrentValue(),
+        this.getTodayData(),
+        this.getYesterdayData()
+      ]);
+      this.dayLoading = false;
     },
-    async loadWeek(){
-      await this.getThisWeekData();
-      await this.getLastWeekData();
-      this.weekLoading = await false;
+    async loadWeek() {
+      await Promise.all([
+        this.getThisWeekData(),
+        this.getLastWeekData()
+      ]);
+      this.weekLoading = false;
     },
-    async loadMonth(){
-      await this.getThisMonthData();
-      await this.getLastMonthData();
+    async loadMonth() {
+      await Promise.all([
+        this.getThisMonthData(),
+        this.getLastMonthData()
+      ]);
       this.monthLoading = false;
     },
     async getCurrentValue() {
