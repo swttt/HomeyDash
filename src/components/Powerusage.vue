@@ -34,20 +34,6 @@
       </div>
     </div>
 
-    <!-- <div class="col-4 col-xs-11 col-md-4 info-box">
-      <div class="inner">
-        <h4 class="text-teal">Week</h4>
-        <p>{{week}} KWH<br/> <small>Last week: {{lastweek}} KWH</small></p>
-      </div>
-    </div>
-
-    <div class="col-4 col-xs-11 col-md-4 info-box">
-      <div class="inner">
-        <h4 class="text-teal">Month</h4>
-        <p>{{month}} KWH</p>
-      </div>
-    </div> -->
-
   </div>
 </div>
 </template>
@@ -79,18 +65,20 @@ export default {
   },
   async mounted() {
 
-    await this.getCurrentValue();
-    await this.getTodayData();
-    await this.getYesterdayData();
-    this.dayLoading = await false;
+    if(settings.powerUsageDevice) {
+      await this.getCurrentValue();
+      await this.getTodayData();
+      await this.getYesterdayData();
+      this.dayLoading = await false;
 
-    await this.getThisWeekData();
-    await this.getLastWeekData();
-    this.weekLoading = await false;
+      await this.getThisWeekData();
+      await this.getLastWeekData();
+      this.weekLoading = await false;
 
-    await this.getThisMonthData();
-    await this.getLastMonthData();
-    this.monthLoading = false;
+      await this.getThisMonthData();
+      await this.getLastMonthData();
+      this.monthLoading = false;
+    }
 
   },
   methods: {
@@ -113,7 +101,7 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('day').utc().format(),
-        end: moment().startOf('day').add(1, 'hours').utc().format()
+        end: moment().startOf('day').add(10, 'minutes').utc().format()
       });
       this.todayStart = result.split("\n")[0].split(',')[1];
 
@@ -134,7 +122,7 @@ export default {
       });
       this.yesterdayStart = start.split("\n")[0].split(',')[1];
       let endLines = end.split("\n");
-      this.yesterdayEnd = endLines[endLines.length-2].split(',')[1];
+      this.yesterdayEnd = endLines[endLines.length - 2].split(',')[1];
     },
     async getThisWeekData() {
 
@@ -142,7 +130,7 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('week').add(1, 'days').utc().format(),
-        end: moment().startOf('week').add(1, 'days').add(1, 'hours').utc().format()
+        end: moment().startOf('week').add(1, 'days').add(10, 'minutes').utc().format()
       });
       this.weekStart = result.split("\n")[0].split(',')[1];
 
@@ -153,17 +141,17 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').utc().format(),
-        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(1, 'hours').utc().format()
+        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(10, 'minutes').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(1, 'hours').utc().format(),
+        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').utc().format()
       });
       this.lastWeekStart = start.split("\n")[0].split(',')[1];
       let endLines = end.split("\n");
-      this.lastWeekEnd = endLines[endLines.length-2].split(',')[1];
+      this.lastWeekEnd = endLines[endLines.length - 2].split(',')[1];
     },
     async getThisMonthData() {
 
@@ -171,7 +159,7 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('month').utc().format(),
-        end: moment().startOf('month').add(1, 'hours').utc().format()
+        end: moment().startOf('month').add(10, 'minutes').utc().format()
       });
       this.monthStart = result.split("\n")[0].split(',')[1];
     },
@@ -181,17 +169,17 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('month').subtract(1, 'months').utc().format(),
-        end: moment().startOf('month').subtract(1, 'months').add(1, 'hours').utc().format()
+        end: moment().startOf('month').subtract(1, 'months').add(10, 'minutes').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('month').subtract(1, 'months').subtract(1, 'hours').utc().format(),
+        start: moment().endOf('month').subtract(1, 'months').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('month').subtract(1, 'months').utc().format()
       });
       this.lastMonthStart = start.split("\n")[0].split(',')[1];
       let endLines = end.split("\n");
-      this.lastMonthEnd = endLines[endLines.length-2].split(',')[1];
+      this.lastMonthEnd = endLines[endLines.length - 2].split(',')[1];
     }
   },
   computed: {
