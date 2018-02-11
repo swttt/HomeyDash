@@ -65,7 +65,7 @@ export default {
   },
   async mounted() {
 
-    if(settings.powerUsageDevice) {
+    if(this.settings.powerUsageDevice) {
       await this.getCurrentValue();
       await this.getTodayData();
       await this.getYesterdayData();
