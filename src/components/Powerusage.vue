@@ -67,27 +67,34 @@ export default {
       lastMonthEnd: ""
     }
   },
-  async mounted() {
+  mounted() {
 
     if(this.settings.powerUsageDevice) {
-      await this.getCurrentValue();
-      await this.getTodayData();
-      await this.getYesterdayData();
-      this.dayLoading = await false;
-
-      await this.getThisWeekData();
-      await this.getLastWeekData();
-      this.weekLoading = await false;
-
-      await this.getThisMonthData();
-      await this.getLastMonthData();
-      this.monthLoading = false;
+      this.loadDay();
+      this.loadWeek();
+      this.loadMonth()
     }
 
   },
   methods: {
     openSettings() {
       EventBus.$emit('openSettings')
+    },
+    async loadDay(){
+      await this.getCurrentValue();
+      await this.getTodayData();
+      await this.getYesterdayData();
+      this.dayLoading = await false;
+    },
+    async loadWeek(){
+      await this.getThisWeekData();
+      await this.getLastWeekData();
+      this.weekLoading = await false;
+    },
+    async loadMonth(){
+      await this.getThisMonthData();
+      await this.getLastMonthData();
+      this.monthLoading = false;
     },
     async getCurrentValue() {
       await this.$homey.devices.subscribe();
