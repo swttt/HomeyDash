@@ -14,7 +14,9 @@
       <div class="inner relative-position">
         <q-spinner v-show="dayLoading" style="margin-top:25px;" color="teal-4" size="50px" />
         <h4 v-show="!dayLoading" class="text-teal">Today</h4>
-        <p v-show="!dayLoading"><span v-if="currentValue && todayStart">{{(currentValue-todayStart) | round}} KWH </span> <span v-else> NO DATA </span> <br/> <small v-if="yesterdayEnd && yesterdayStart">Yesterday: {{(yesterdayEnd-yesterdayStart) | round}} KWH</small> <small v-else>Yesterday: No data</small> </p>
+        <p v-show="!dayLoading"><span v-if="currentValue && todayStart">{{(currentValue-todayStart) | round}} KWH </span> <span v-else> NO DATA </span> <br/> <small v-if="yesterdayEnd && yesterdayStart">Yesterday: {{(yesterdayEnd-yesterdayStart) | round}} KWH</small>
+          <small v-else>Yesterday: No data</small>
+        </p>
       </div>
     </div>
 
@@ -22,7 +24,7 @@
       <div class="inner relative-position">
         <q-spinner v-show="weekLoading" style="margin-top:25px;" color="teal-4" size="50px" />
         <h4 v-show="!weekLoading" class="text-teal">Week</h4>
-        <p v-show="!weekLoading"><span v-if="currentValue && weekStart">{{(currentValue-weekStart) | round}} KWH</span><span v-else>NO DATA</span> <br/> <small v-if="lastWeekEnd && lastWeekStart">Last week: {{( lastWeekEnd - lastWeekStart) | round}} KWH</small> <small v-else>Last week: No data</small> </p>
+        <p v-show="!weekLoading"><span v-if="currentValue && weekStart">{{(currentValue-weekStart) | round}} KWH</span><span v-else>NO DATA</span> <br/> <small v-if="lastWeekEnd && lastWeekStart">Last week: {{( lastWeekEnd - lastWeekStart) | round}} KWH</small> <small v-else>Last week: No data</small>          </p>
       </div>
     </div>
 
@@ -30,7 +32,9 @@
       <div class="inner relative-position">
         <q-spinner v-show="monthLoading" style="margin-top:25px;" color="teal-4" size="50px" />
         <h4 v-show="!monthLoading" class="text-teal">Month</h4>
-        <p v-show="!monthLoading"><span v-if="currentValue && monthStart">{{(currentValue-monthStart) | round}} KWH</span> <span v-else>NO DATA</span> <br/> <small v-if="lastMonthEnd && lastMonthStart">Last month: {{( lastMonthEnd - lastMonthStart) | round}} KWH</small> <small v-else>Last month: No data</small> </p>
+        <p v-show="!monthLoading"><span v-if="currentValue && monthStart">{{(currentValue-monthStart) | round}} KWH</span> <span v-else>NO DATA</span> <br/> <small v-if="lastMonthEnd && lastMonthStart">Last month: {{( lastMonthEnd - lastMonthStart) | round}} KWH</small>
+          <small v-else>Last month: No data</small>
+        </p>
       </div>
     </div>
 
@@ -91,6 +95,7 @@ export default {
         id: this.$store.state.settings.powerUsageDevice
       });
       this.currentValue = await device.state.meter_power;
+      console.log('Current value: ' + this.currentValue);
       device.on('$state', state => {
         this.currentValue = state.meter_power;
       });
@@ -105,6 +110,7 @@ export default {
       });
       if(result) {
         this.todayStart = await result.split("\n")[0].split(',')[1];
+        console.log('Today start: ' + this.todayStart);
       }
     },
     async getYesterdayData() {
@@ -123,10 +129,12 @@ export default {
       });
       if(start) {
         this.yesterdayStart = await start.split("\n")[0].split(',')[1];
+        console.log('Yesterday start: ' + this.yesterdayStart);
       }
       if(end) {
         let endLines = await end.split("\n");
         this.yesterdayEnd = await endLines[endLines.length - 2].split(',')[1];
+        console.log('Yesterday end: ' + this.yesterdayEnd);
       }
     },
     async getThisWeekData() {
@@ -134,11 +142,12 @@ export default {
       let result = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().startOf('week').add(1, 'days').utc().format(),
-        end: moment().startOf('week').add(1, 'days').add(1, 'hours').utc().format()
+        start: moment().startOf('isoWeek').utc().format(),
+        end: moment().startOf('isoWeek').add(1, 'hours').utc().format()
       });
       if(result) {
         this.weekStart = await result.split("\n")[0].split(',')[1];
+        console.log('Week start: ' + this.weekStart);
       }
     },
     async getLastWeekData() {
@@ -146,21 +155,23 @@ export default {
       let start = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').utc().format(),
-        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(1, 'hours').utc().format()
+        start: moment().startOf('isoWeek').subtract(1, 'weeks').utc().format(),
+        end: moment().startOf('isoWeek').subtract(1, 'weeks').add(1, 'hours').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(1, 'hours').utc().format(),
-        end: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').utc().format()
+        start: moment().endOf('isoWeek').subtract(1, 'weeks').subtract(1, 'hours').utc().format(),
+        end: moment().endOf('isoWeek').subtract(1, 'weeks').utc().format()
       });
       if(start) {
         this.lastWeekStart = await start.split("\n")[0].split(',')[1];
+        console.log('Last week start: ' + this.lastWeekStart);
       }
       if(end) {
         let endLines = await end.split("\n");
         this.lastWeekEnd = await endLines[endLines.length - 2].split(',')[1];
+        console.log('Last week end: ' + this.lastWeekEnd);
       }
     },
     async getThisMonthData() {
@@ -173,6 +184,7 @@ export default {
       });
       if(result) {
         this.monthStart = await result.split("\n")[0].split(',')[1];
+        console.log('Month start: ' + this.monthStart);
       }
     },
     async getLastMonthData() {
@@ -191,10 +203,12 @@ export default {
       });
       if(start) {
         this.lastMonthStart = await start.split("\n")[0].split(',')[1];
+        console.log('Last month start: ' + this.lastMonthStart);
       }
       if(end) {
         let endLines = end.split("\n");
         this.lastMonthEnd = await endLines[endLines.length - 2].split(',')[1];
+        console.log('Last month end: ' + this.lastMonthEnd);
       }
     }
   },
