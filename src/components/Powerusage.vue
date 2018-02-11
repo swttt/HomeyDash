@@ -101,10 +101,10 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('day').utc().format(),
-        end: moment().startOf('day').add(30, 'minutes').utc().format()
+        end: moment().startOf('day').add(1, 'hours').utc().format()
       });
       if(result) {
-        this.todayStart = result.split("\n")[0].split(',')[1];
+        this.todayStart = await result.split("\n")[0].split(',')[1];
       }
     },
     async getYesterdayData() {
@@ -113,20 +113,20 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('day').subtract(1, 'days').utc().format(),
-        end: moment().startOf('day').subtract(1, 'days').add(30, 'minutes').utc().format()
+        end: moment().startOf('day').subtract(1, 'days').add(1, 'hours').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('day').subtract(1, 'days').subtract(30, 'minutes').utc().format(),
+        start: moment().endOf('day').subtract(1, 'days').subtract(1, 'hours').utc().format(),
         end: moment().endOf('day').subtract(1, 'days').utc().format()
       });
       if(start) {
-        this.yesterdayStart = start.split("\n")[0].split(',')[1];
+        this.yesterdayStart = await start.split("\n")[0].split(',')[1];
       }
       if(end) {
-        let endLines = end.split("\n");
-        this.yesterdayEnd = endLines[endLines.length - 2].split(',')[1];
+        let endLines = await end.split("\n");
+        this.yesterdayEnd = await endLines[endLines.length - 2].split(',')[1];
       }
     },
     async getThisWeekData() {
@@ -135,10 +135,10 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('week').add(1, 'days').utc().format(),
-        end: moment().startOf('week').add(1, 'days').add(30, 'minutes').utc().format()
+        end: moment().startOf('week').add(1, 'days').add(1, 'hours').utc().format()
       });
       if(result) {
-        this.weekStart = result.split("\n")[0].split(',')[1];
+        this.weekStart = await result.split("\n")[0].split(',')[1];
       }
     },
     async getLastWeekData() {
@@ -147,20 +147,20 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').utc().format(),
-        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(30, 'minutes').utc().format()
+        end: moment().startOf('week').subtract(1, 'weeks').add(1, 'days').add(1, 'hours').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(30, 'minutes').utc().format(),
+        start: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').subtract(1, 'hours').utc().format(),
         end: moment().endOf('week').subtract(1, 'weeks').add(1, 'days').utc().format()
       });
       if(start) {
-        this.lastWeekStart = start.split("\n")[0].split(',')[1];
+        this.lastWeekStart = await start.split("\n")[0].split(',')[1];
       }
       if(end) {
-        let endLines = end.split("\n");
-        this.lastWeekEnd = endLines[endLines.length - 2].split(',')[1];
+        let endLines = await end.split("\n");
+        this.lastWeekEnd = await endLines[endLines.length - 2].split(',')[1];
       }
     },
     async getThisMonthData() {
@@ -169,10 +169,10 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('month').utc().format(),
-        end: moment().startOf('month').add(30, 'minutes').utc().format()
+        end: moment().startOf('month').add(1, 'hours').utc().format()
       });
       if(result) {
-        this.monthStart = result.split("\n")[0].split(',')[1];
+        this.monthStart = await result.split("\n")[0].split(',')[1];
       }
     },
     async getLastMonthData() {
@@ -181,20 +181,20 @@ export default {
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
         start: moment().startOf('month').subtract(1, 'months').utc().format(),
-        end: moment().startOf('month').subtract(1, 'months').add(30, 'minutes').utc().format()
+        end: moment().startOf('month').subtract(1, 'months').add(1, 'hours').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
         name: 'meter_power',
-        start: moment().endOf('month').subtract(1, 'months').subtract(30, 'minutes').utc().format(),
+        start: moment().endOf('month').subtract(1, 'months').subtract(1, 'hours').utc().format(),
         end: moment().endOf('month').subtract(1, 'months').utc().format()
       });
       if(start) {
-        this.lastMonthStart = start.split("\n")[0].split(',')[1];
+        this.lastMonthStart = await start.split("\n")[0].split(',')[1];
       }
       if(end) {
         let endLines = end.split("\n");
-        this.lastMonthEnd = endLines[endLines.length - 2].split(',')[1];
+        this.lastMonthEnd = await endLines[endLines.length - 2].split(',')[1];
       }
     }
   },
