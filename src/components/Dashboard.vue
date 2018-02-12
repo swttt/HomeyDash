@@ -3,9 +3,9 @@
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
   <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box">
-    <div class="close" v-show="editMode"><q-btn round flat small color="black" icon="close"/></div>
-    {{item.name}}
-  </div>
+    <div class="close" v-show="editMode"><q-btn round flat small color="black" icon="close" v-on:click="removeWidget(item)"/></div>
+      {{item.name}}
+    </div>
   </q-transition>
 
 </div>
@@ -13,7 +13,7 @@
 
 <script>
 import Draggabilly from "draggabilly"
-
+import _ from 'lodash';
 Draggabilly.prototype.setPosition = function (x, y) {
   this.position.x = x;
   this.position.y = y;
@@ -80,12 +80,17 @@ export default {
         })
         this.draggies.push(draggie);
       }
+    },
+    removeWidget(widget){
+
+      this.$store.commit('removeWidget', widget);
+      // this.$store.commit('updateWidgets', this.widgets);
     }
   },
   computed: {
     widgets: {
       get() {
-        return this.$store.state.widgets
+        return this.$store.getters.getWidgets
       },
       set(value) {
         this.$store.commit('updateWidgets', value)
