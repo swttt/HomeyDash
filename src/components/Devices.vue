@@ -3,7 +3,7 @@
 
   <div style="width:100%;text-align:center;" v-if="!loaded">
     <q-transition appear enter="fadeIn">
-    <q-spinner style="margin-top:50px;margin-left:0 auto;" color="teal-4" size="200px" />
+    <q-spinner style="margin-top:50px;margin-left:0 auto;" color="teal-4" size="50px" />
     </q-transition>
   </div>
 
