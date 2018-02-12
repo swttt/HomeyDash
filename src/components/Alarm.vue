@@ -2,7 +2,7 @@
 
 <div class="row justify-center items-center content-center alarm-row">
   <q-transition appear enter="fadeIn" leave="fadeOut">
-  <div class="col col-6 col-md-6 col-lg-3 col-xs-10 alarm-container">
+  <div v-if="heimdallInstalled" class="col col-6 col-md-6 col-lg-3 col-xs-10 alarm-container">
     <q-chip color="red" class="status">
       Unarmed
     </q-chip>
@@ -47,6 +47,10 @@
       </div>
     </div>
   </div>
+  <div v-else class="col col-8 col-md-8 col-lg-5 col-xs-10 alarm-container">
+    <h4>This alarm panel only works with Heimdall, and it doesn't looks like you have it installed...</h4>
+    <center><q-btn class="link" icon="apps" color="teal">Go to the appstore</q-btn></center>
+  </div>
   </q-transition>
 </div>
 
@@ -58,11 +62,12 @@ export default {
   data() {
     return {
       // initializing for second tab to be selected by default
-      code: ''
+      code: '',
+      heimdallInstalled: false
     }
   },
   mounted() {
-
+    this.checkHeimdall();
   },
   methods: {
     addPin(number){
@@ -72,6 +77,23 @@ export default {
     },
     clearPin(){
       this.code = '';
+    },
+    checkHeimdall(){
+      this.$homey.apps.subscribe();
+      this.$homey.apps.getApp({id: 'com.uc.heimdall'})
+        .then(() => {
+          console.log("Heimdall is installed.");
+          this.heimdallInstalled = true;
+        })
+        .catch((error) => {console.log(error)});
+      this.$homey.apps.on('app.update', app => {
+        this.heimdallInstalled = true;
+      });
+      this.$homey.apps.on('app.delete', app => {
+        if(app == "com.uc.heimdall"){
+          this.heimdallInstalled = false;
+        }
+      });
     }
   }
 }
@@ -98,6 +120,9 @@ export default {
   position relative
   padding 0
 
+  button.link
+    margin 10px
+
   h3
     color rgb(219, 219, 219)
     font-weight 200
@@ -108,6 +133,15 @@ export default {
     position relative
     top 30px
     margin-top 10px
+
+  h4
+    color rgb(219, 219, 219)
+    font-weight 200
+    width 100%
+    text-align center
+    line-height 28px
+    font-size 28px
+    padding 5px
 
   .number
     font-size 36px
