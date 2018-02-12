@@ -78,6 +78,7 @@ export default {
       this.code = '';
     },
     goTo(url) {
+      _paq.push(['trackEvent', 'Actions', 'Heimdall Appstore']);
       window.open(
         url,
         '_blank' // <- This is what makes it open in a new window.

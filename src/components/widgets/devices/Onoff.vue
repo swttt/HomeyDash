@@ -77,6 +77,7 @@ export default {
         this.showModal = true;
     },
     setOnoff(){
+        _paq.push(['trackEvent', 'Actions', 'On/Off']);
         this.device.setCapabilityValue('onoff', !this.device.state.onoff)
     },
     setDim: _.debounce(function(value){
