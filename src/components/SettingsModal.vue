@@ -20,9 +20,38 @@
 
       <div class="layout-padding settings-content">
         <div class="row">
-          <div class="col col-4 col-xs-12 col-md-6">
-            <h6 color="teal">Power Usage</h6>
-            <q-select dark frame-color="white" v-model="settings.powerUsageDevice" float-label="Select a device" radio :options="powerUsageOptions" />
+          <div class="col col-4 col-xs-12 col-md-4">
+            <q-list>
+
+              <!-- General Settings -->
+              <q-item ><h6 color="teal">General</h6></q-item>
+              <q-item class="subhead">Hide menu items</q-item>
+              <q-item v-for="item in settings.general.menu">
+                <q-item-main>
+                  <q-item-tile label>{{item.name}}</q-item-tile>
+                </q-item-main>
+                <q-item-side right>
+                  <q-toggle  v-model="item.hidden" color="teal" />
+                </q-item-side>
+              </q-item>
+
+              </q-list>
+
+          </div>
+
+          <div class="col col-4 col-xs-12 col-md-4">
+            <q-list>
+
+              <!-- Power usage settings -->
+              <q-item ><h6 color="teal">Power usage</h6></q-item>
+              <q-item class="subhead">Select a default power meter device</q-item>
+              <q-item>
+                <q-item-main>
+                  <q-select dark frame-color="white" v-model="settings.powerUsageDevice" float-label="Select a device" radio :options="powerUsageOptions" /></q-item-main></q-item>
+
+
+              </q-list>
+
           </div>
         </div>
       </div>
@@ -65,7 +94,7 @@ export default {
     closeModal() {
       this.modal = false;
     },
-    async saveSettings(){
+    async saveSettings() {
       await this.$store.commit('updateSettings', this.settings)
       location.reload();
     }
@@ -90,6 +119,15 @@ export default {
 .settings-content
   color white
 
+.q-list
+  border 0px
+
 h6
   color #009688
+  font-size 22px
+
+.subhead
+  color white
+  font-weight bold
+  font-size 16px
 </style>
