@@ -19,7 +19,36 @@ const store = new Vuex.Store({
   state: {
     widgets: [],
     settings: {
+      general: {
+        menu:[
+          {
+            "name": "Dashboard",
+            "url": "/",
+            "icon": "dashboard",
+            "hidden": false
+          },
+          {
+            "name": "Devices",
+            "url": "/devices",
+            "icon": "power",
+            "hidden": false
+          },
+          {
+            "name": "Alarm",
+            "url": "/alarm",
+            "icon": "security",
+            "hidden": false
+          },
+          {
+            "name": "Power usage",
+            "url": "/power-usage",
+            "icon": "fa-bolt",
+            "hidden": false
+          }
+        ]
+      },
       powerUsageDevice: ""
+
     }
   },
   mutations: {
