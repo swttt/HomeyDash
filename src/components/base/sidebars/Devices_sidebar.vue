@@ -1,7 +1,7 @@
 <template>
 <div>
   <q-inner-loading :visible="!loaded">
-    <q-spinner-puff size="100px" color="teal"></q-spinner-puff>
+    <q-spinner size="50px" color="teal" />
   </q-inner-loading>
   <q-transition appear enter="fadeIn" leave="fadeOut">
     <div v-if="loaded" v-for="zone in sortByIndex(nestedZones)">
