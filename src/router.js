@@ -93,10 +93,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  _paq.push(['setReferrerUrl', from.path]);
-  _paq.push(['setCustomUrl', to.path]);
-  _paq.push(['setDocumentTitle', 'HomeyDash - ' + to.name]);
-  _paq.push(['trackPageView']);
+  if (PROD) {
+    _paq.push(['setReferrerUrl', from.path]);
+    _paq.push(['setCustomUrl', to.path]);
+    _paq.push(['setDocumentTitle', 'HomeyDash - ' + to.name]);
+    _paq.push(['trackPageView']);
+  }
   next();
 });
 
