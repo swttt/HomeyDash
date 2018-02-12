@@ -9,11 +9,7 @@
 
       <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
-        <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
-        <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
-        <!-- <q-route-tab slot="title" icon="fa-spotify" to="/spotify" exact label="Spotify" /> -->
-        <q-route-tab slot="title" icon="security" to="/alarm" exact label="Alarm" />
-        <q-route-tab slot="title" icon="fa-bolt" to="/power-usage" exact label="Power usage" />
+        <q-route-tab v-for="item in settings.general.menu" v-show="!item.hidden" slot="title" :icon="item.icon" :to="item.url" exact :label="item.name" />
       </q-tabs>
       <div v-if="selectHomey">
         <div class="row justify-center" style="height:100vh;">
@@ -71,6 +67,13 @@ export default {
     loadHomey(id) {
       console.log(id)
       window.location.href = "/?cloudid=" + id
+    }
+  },
+  computed: {
+    settings: {
+      get() {
+        return this.$store.state.settings
+      }
     }
   }
 }
