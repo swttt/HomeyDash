@@ -3,6 +3,7 @@
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
   <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box">
+    <div class="close" v-show="editMode"><q-btn round flat small color="black" icon="close"/></div>
     {{item.name}}
   </div>
   </q-transition>
@@ -115,7 +116,6 @@ export default {
 
 .container
   position absolute
-  overflow hidden
   top 0
   bottom 0
   right 0
@@ -135,6 +135,13 @@ export default {
   background-color rgba(0, 0, 0, 0.5)
   border-radius 10px
   color white
+
+  .close
+    position relative
+    float right
+    top -2px
+    right -2px
+    text-align right
 
 
 </style>
