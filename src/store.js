@@ -5,16 +5,14 @@ import _ from 'lodash';
 
 Vue.use(Vuex);
 
-Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
-    while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
-            this.splice(ax, 1);
+function guid() {
+        function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
         }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
-    return this;
-};
 
 //VUEX Stores
 const store = new Vuex.Store({
@@ -33,15 +31,17 @@ const store = new Vuex.Store({
       newBox.h = 1;
       newBox.x = 0;
       newBox.y = 0;
-      newBox.i = state.widgets.length;
+      newBox.id = guid();
+
+
       state.widgets.push(newBox);
     },
     removeWidget(state, widget){
-      var index = state.widgets.findIndex(item => item.i === widget.i)
+      var index = state.widgets.findIndex(item => item.id === widget.id)
       state.widgets.splice(index, 1);
     },
-    updateWidgets (state, newWidgets){
-      state.widgets = newWidgets;
+    updateWidgets (state, widgets){
+      state.widgets = widgets;
     },
     // SETTINGS
     updateSettings (state, newSettings){

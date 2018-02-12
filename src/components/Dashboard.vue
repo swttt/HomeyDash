@@ -2,9 +2,11 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-  <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.i" :x="item.x" :y="item.y" class="box">
-    <div class="close" v-show="editMode"><q-btn round flat small color="black" icon="close" v-on:click="removeWidget(item)"/></div>
+    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.id" :x="item.x" :y="item.y" class="box">
+      <div class="close" v-show="editMode">
+        <q-btn round flat small color="black" icon="close" v-on:click="removeWidget(item)" /></div>
       {{item.name}}
+      {{item.id}}
     </div>
   </q-transition>
 
@@ -74,17 +76,18 @@ export default {
           draggie.disable();
         }
         draggie.on('dragEnd', (event, pointer) => {
-          this.widgets[event.target.getAttribute("itemId")].x = this.draggies[event.target.getAttribute("itemId")].position.x;
-          this.widgets[event.target.getAttribute("itemId")].y = this.draggies[event.target.getAttribute("itemId")].position.y;
+          var index = this.widgets.findIndex(item => item.id === event.target.getAttribute("itemId"))
+          this.widgets[index].x = this.draggies[index].position.x;
+          this.widgets[index].y = this.draggies[index].position.y;
           this.$store.commit('updateWidgets', this.widgets);
         })
         this.draggies.push(draggie);
       }
     },
-    removeWidget(widget){
+    removeWidget(widget) {
 
       this.$store.commit('removeWidget', widget);
-      // this.$store.commit('updateWidgets', this.widgets);
+
     }
   },
   computed: {
@@ -100,12 +103,11 @@ export default {
   watch: {
     // whenever question changes, this function will run
     editMode: function () {
-      if(this.editMode){
+      if(this.editMode) {
         _.forEach(this.draggies, box => {
           box.enable();
         })
-      }
-      else{
+      } else {
         _.forEach(this.draggies, box => {
           box.disable();
         })
