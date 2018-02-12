@@ -92,7 +92,14 @@ const router = new VueRouter({
   }]
 });
 
+_paq.push(['setCustomUrl', router.currentRoute.path]);
+_paq.push(['setDocumentTitle', 'HomeyDash - ' + router.currentRoute.name]);
 
+router.afterEach(( to, from ) => {
+  console.log(to);
+  _paq.push(['setCustomUrl', to.path]);
+  _paq.push(['setDocumentTitle', 'HomeyDash - ' + to.name]);
+});
 
 
 export default router
