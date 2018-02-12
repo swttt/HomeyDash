@@ -65,7 +65,7 @@ export default {
       heimdallInstalled: false
     }
   },
-  mounted() {
+  created() {
     this.checkHeimdall();
   },
   methods: {
