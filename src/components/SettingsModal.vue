@@ -120,7 +120,7 @@ export default {
   color white
 
 .q-list
-  border 0px
+  border 0px!important
 
 h6
   color #009688
