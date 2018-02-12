@@ -3,8 +3,8 @@
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
     <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.id" :x="item.x" :y="item.y" class="box">
-      <div class="close" v-show="editMode">
-        <q-btn round flat small color="black" icon="close" v-on:click="removeWidget(item)" /></div>
+      <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
+        <q-btn round flat small color="black" icon="close"  /></v-touch>
       {{item.name}}
       {{item.id}}
     </div>
