@@ -47,6 +47,27 @@
                 <div :is="plugins[plugin.id].settings" :plugin="plugin" :settings="settings"> </div>
               </q-tab-pane>
 
+              <q-tab default slot="title" label="Info" name="info" />
+              <q-tab-pane name="info">
+                <q-item class="subhead text-teal">
+                  Patreon
+                  </q-item>
+                <q-item >
+                  <q-item-main>
+                  If you like my project, please consider becoming a Patron! With your support i can keep the server and coffee running.
+                  <br/><br/>
+                  <center><a href="https://www.patreon.com/bePatron?u=9768305" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
+                  <br/>
+                  </q-item-main>
+                </q-item>
+                <q-item class="subhead text-teal">
+                  Privacy & Cookies
+                  </q-item>
+                  <q-item>
+                    HomeyDash is using analytic cookies to see how the dashboard is used and where it could improved. I do care about your privacy, so no personal information is stored. For that same reason i am not using Google analytics but Matomo.
+                    </q-item>
+              </q-tab-pane>
+
             </template>
 
             </q-tabs>
