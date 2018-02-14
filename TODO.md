@@ -17,9 +17,9 @@
 
 ## General
 
-- [ ] Find a solution to modular widgets and plugins
+- [ ] Find a solution to modular widgets
 - [ ] When stable enough try to port to PhoneGap
 
 ## Settings
 
-- [ ] Grab settings from a JSON file or make it more flexible in another way
+- [x] Grab settings from a JSON file or make it more flexible in another way

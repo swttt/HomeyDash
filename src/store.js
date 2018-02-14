@@ -3,6 +3,19 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate'
 import _ from 'lodash';
 
+import plugins from '@/plugins/'
+
+let pluginObject = {}
+_.forEach(plugins, plugin => {
+  var obj = {}
+  obj.hidden = plugin.hidden || false;
+  _.forEach(plugin.store, (setting, key) => {
+    obj[key] = setting;
+  });
+  pluginObject[plugin.id] = obj;
+});
+
+
 Vue.use(Vuex);
 
 function guid() {
@@ -19,36 +32,7 @@ const store = new Vuex.Store({
   state: {
     widgets: [],
     settings: {
-      general: {
-        menu:[
-          {
-            "name": "Dashboard",
-            "url": "/",
-            "icon": "dashboard",
-            "hidden": false
-          },
-          {
-            "name": "Devices",
-            "url": "/devices",
-            "icon": "power",
-            "hidden": false
-          },
-          {
-            "name": "Alarm",
-            "url": "/alarm",
-            "icon": "security",
-            "hidden": false
-          },
-          {
-            "name": "Power usage",
-            "url": "/power-usage",
-            "icon": "fa-bolt",
-            "hidden": false
-          }
-        ]
-      },
-      powerUsageDevice: ""
-
+      plugins: pluginObject
     }
   },
   mutations: {

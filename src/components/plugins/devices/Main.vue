@@ -48,11 +48,11 @@
 </template>
 
 <script>
-import onoff from '@/widgets/devices/Onoff'
-import lock from '@/widgets/devices/Lock'
-import motion from '@/widgets/devices/Motion'
-import windowblinds from '@/widgets/devices/Windowblinds'
-import sensor from '@/widgets/devices/Sensor'
+import onoff from '@/devices/Onoff'
+import lock from '@/devices/Lock'
+import motion from '@/devices/Motion'
+import windowblinds from '@/devices/Windowblinds'
+import sensor from '@/devices/Sensor'
 
 export default {
   components: {

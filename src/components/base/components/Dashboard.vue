@@ -40,16 +40,24 @@ export default {
   mounted() {
     EventBus.$on('editModeOff', () => {
       this.editMode = false;
+      _.forEach(this.draggies, box => {
+        box.disable();
+      });
     });
     EventBus.$on('editModeOn', () => {
       this.editMode = true;
+      _.forEach(this.draggies, box => {
+        box.enable();
+      });
     });
 
     EventBus.$on('widgetAdded', () => {
+      _.forEach(this.draggies, box => {
+        box.destroy();
+      });
       setTimeout(() => {
         this.createDrag();
       }, 100);
-
     });
 
     this.createDrag();
@@ -72,7 +80,10 @@ export default {
 
         draggie.setPosition(draggableElem.getAttribute("x"), draggableElem.getAttribute("y"))
         draggie.id = draggableElem.getAttribute("itemId");
-        if(!this.editMode) {
+        if(this.editMode){
+          draggie.enable()
+        }
+        else{
           draggie.disable();
         }
         draggie.on('dragEnd', (event, pointer) => {
@@ -99,21 +110,7 @@ export default {
         this.$store.commit('updateWidgets', value)
       }
     }
-  },
-  watch: {
-    // whenever question changes, this function will run
-    editMode: function () {
-      if(this.editMode) {
-        _.forEach(this.draggies, box => {
-          box.enable();
-        })
-      } else {
-        _.forEach(this.draggies, box => {
-          box.disable();
-        })
-      }
-    }
-  },
+  }
 }
 </script>
 

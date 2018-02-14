@@ -1,14 +1,19 @@
 <template>
 <div>
+
+  <q-transition appear enter="fadeIn" leave="fadeOut">
   <div class="row justify-center items-center content-center power-row">
-    <div v-show="!settings.powerUsageDevice" class="col col-4 col-xs-11 col-md-4 settings-box">
+    <div v-show="!settings.plugins['powerUsage'].defaultDevice.length" class="col col-4 col-xs-11 col-md-4 settings-box">
       <p>No default power measure device found, please go to your settings and select one.</p>
       <q-btn color="teal" style="margin: 0 auto;" v-on:click="openSettings()" icon="settings">
         Settings
       </q-btn>
     </div>
   </div>
-  <div class="row justify-center" v-if="settings.powerUsageDevice">
+  </q-transition>
+
+  <q-transition appear enter="fadeIn" leave="fadeOut">
+  <div class="row justify-center" v-if="settings.plugins['powerUsage'].defaultDevice.length">
 
     <div class="col-4 col-xs-11 col-md-4 info-box">
       <div class="inner relative-position">
@@ -39,6 +44,7 @@
     </div>
 
   </div>
+  </q-transition>
 </div>
 </template>
 
@@ -69,7 +75,7 @@ export default {
   },
   mounted() {
 
-    if(this.settings.powerUsageDevice) {
+    if(this.settings.plugins['powerUsage'].defaultDevice.length) {
       this.loadDay();
       this.loadWeek();
       this.loadMonth()
@@ -105,7 +111,7 @@ export default {
     async getCurrentValue() {
       await this.$homey.devices.subscribe();
       let device = await this.$homey.devices.getDevice({
-        id: this.$store.state.settings.powerUsageDevice
+        id: this.$store.state.settings.plugins['powerUsage'].defaultDevice
       });
       this.currentValue = await device.state.meter_power;
       console.log('Current value: ' + this.currentValue);
@@ -116,7 +122,7 @@ export default {
     async getTodayData() {
 
       let result = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('day').utc().format(),
         end: moment().startOf('day').add(10, 'minutes').utc().format()
@@ -129,13 +135,13 @@ export default {
     async getYesterdayData() {
 
       let start = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('day').subtract(1, 'days').utc().format(),
         end: moment().startOf('day').subtract(1, 'days').add(10, 'minutes').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('day').subtract(1, 'days').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('day').subtract(1, 'days').utc().format()
@@ -153,7 +159,7 @@ export default {
     async getThisWeekData() {
 
       let result = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('isoWeek').utc().format(),
         end: moment().startOf('isoWeek').add(10, 'minutes').utc().format()
@@ -166,13 +172,13 @@ export default {
     async getLastWeekData() {
 
       let start = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('isoWeek').subtract(1, 'weeks').utc().format(),
         end: moment().startOf('isoWeek').subtract(1, 'weeks').add(10, 'minutes').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('isoWeek').subtract(1, 'weeks').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('isoWeek').subtract(1, 'weeks').utc().format()
@@ -190,7 +196,7 @@ export default {
     async getThisMonthData() {
 
       let result = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('month').utc().format(),
         end: moment().startOf('month').add(10, 'minutes').utc().format()
@@ -203,13 +209,13 @@ export default {
     async getLastMonthData() {
 
       let start = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('month').subtract(1, 'months').utc().format(),
         end: moment().startOf('month').subtract(1, 'months').add(10, 'minutes').utc().format()
       });
       let end = await this.$homey.insights.getEntries({
-        uri: 'homey:device:' + this.$store.state.settings.powerUsageDevice,
+        uri: 'homey:device:' + this.$store.state.settings.plugins['powerUsage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('month').subtract(1, 'months').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('month').subtract(1, 'months').utc().format()
