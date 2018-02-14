@@ -12,7 +12,7 @@ HomeyDash is a dashboard that can be used to control devices paired to Homey  ([
 
 Current release isn't considered stable yet.
 
-#### Becom a Patron!
+#### Become a Patron!
 
 https://www.patreon.com/homeydash
 
