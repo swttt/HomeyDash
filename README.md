@@ -10,7 +10,11 @@ HomeyDash is a dashboard that can be used to control devices paired to Homey  ([
 
 #### Work in progress
 
-Current release isn't considered stable and functional yet.
+Current release isn't considered stable yet.
+
+#### Becom a Patron!
+
+https://www.patreon.com/homeydash
 
 ## Contributing
 
@@ -27,13 +31,12 @@ Pull requests can be done on the develop branch. Until the master branch isn't s
 
 ## Build Setup
 
+Make sure to add this to your HOSTS file: `127.0.0.1     homeydash.local`
+
 ``` bash
 # install dependencies
 $ npm install
 
 # serve with hot reload at localhost:8081
 $ npm run dev
-
-# build for production with minification
-$ npm run build
 ```
