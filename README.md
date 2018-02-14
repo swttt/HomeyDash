@@ -27,7 +27,13 @@ And if you already know a good solution, feel free to make a [Pull Request](http
 
 Pull requests can be done on the develop branch. Until the master branch isn't stable enough (and is considered alpha/beta) the develop branch won't get build and pushed for now. After the master branch is more stable, i will auto build the develop branch to a seperate sub-domain.
 
+#### Plug-ins
 
+Currently there isn't any documentation yet on how to create plugins. Plug-ins are functional, and will be merged once aproved.
+
+A good example of a plug-in is the `power-usage` plugin that you can find in `/src/components/plugins/power-usage`.
+
+Don't forget to add your plugin to the `/src/components/plugins/index.js`!
 
 ## Build Setup
 
