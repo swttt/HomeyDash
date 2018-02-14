@@ -1,9 +1,9 @@
 // DEFINE PLUGIN COMPONENTS AND NAME
 // By importing as sidebar and toolbar you can overwrite them
 import settings from './Settings'
-import main from './Main'
+import main from './Main' // REQUIRED!
 
-// MANDATORY!
+// REQUIRED!
 const id = "powerUsage"; // SHOULD BE UNIQUE
 const name = "Power Usage";
 const icon = "fa-bolt";
