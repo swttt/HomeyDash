@@ -1,16 +1,9 @@
 <template>
-<v-touch v-on:press="longPress" class="device">
+<v-touch v-on:press="longPress" v-on:tap="setLock" class="device">
 
-  <div class="icon" v-bind:class="[device.state.alarm_motion ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div class="icon" v-bind:class="[device.state.locked ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
-  <div class="info" v-if="device.state.alarm_motion">MOTION DETECTED</div>
-  <div class="info" v-else-if="device.state.alarm_tamper">TAMPER DETECTED</div>
-  <div class="info" v-else-if="device.state.alarm_battery">BATTERY LOW</div>
-  <div class="info" v-else>
-    <span v-if="device.capabilities.measure_temperature && device.state.measure_temperature">{{device.state.measure_temperature}} {{device.capabilities.measure_temperature.units.en}}</span>
-    <span v-if="device.capabilities.measure_temperature && device.state.measure_temperature  && device.capabilities.measure_luminance && device.state.measure_luminance"> - </span>
-    <span v-if="device.capabilities.measure_luminance && device.state.measure_luminance">{{device.state.measure_luminance}} {{device.capabilities.measure_luminance.units.en}}</span>
-  </div>
+  <div class="info">{{device.state.locked ? 'LOCKED' : 'UNLOCKED'}}</div>
   <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
     <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-4" />
     <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-3" />
@@ -25,16 +18,24 @@
 
       <q-list-header class="text-teal">{{device.name}}</q-list-header>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
+      <q-item v-if="device.capabilities.locked">
         <q-item-side class="text-white">
-          {{value.title.en}}
+          Lock state
         </q-item-side>
-        <q-item-main class="text-right text-white">
-          <span>{{device.state[key] || '-' }} <span v-if="value.units">{{value.units.en}}</span></span>
-          <!-- <span v-else>-</span> -->
+        <q-item-main class="text-right">
+          <q-toggle unchecked-icon="fa-unlock"
+  checked-icon="fa-lock" color="teal" v-model="device.state.locked" @blur="setLock" @focus="setLock" />
         </q-item-main>
       </q-item>
 
+      <q-item v-if="device.capabilities.lock_mode">
+        <q-item-side class="text-white">
+          Lock mode
+        </q-item-side>
+        <q-item-main class="text-right text-white">
+          {{device.state.lock_mode.en}}
+        </q-item-main>
+      </q-item>
 
     </q-list>
     <center><q-btn style="margin-top:50px;" v-on:click="modalState(false)" icon="close" outline color="white">close</q-btn></center>
@@ -58,6 +59,9 @@ export default {
           navigator.vibrate(150);
         }
         this.showModal = true;
+    },
+    setLock(){
+        this.device.setCapabilityValue('locked', !this.device.state.locked)
     },
     modalState(state){
       this.showModal = state
@@ -89,7 +93,7 @@ export default {
       top 7px
       left 7px
       -webkit-mask-size contain
-      -webkit-mask-position top left
+      -webkit-mask-position top center
       -webkit-mask-repeat no-repeat
     .info
       position absolute
@@ -98,15 +102,20 @@ export default {
       font-size 0.8em
       color $secondary
       font-weight 300
+      max-width 100%
+      overflow hidden
+      text-align left
+      text-overflow ellipsis
+      white-space nowrap
     .battery
       position absolute
       top 3px
       right 7px
     .off
-      background-color $teal
-      opacity 1
-    .on
       background-color $red
+      opacity 0.7
+    .on
+      background-color $teal
     .name
       position absolute
       bottom 24px

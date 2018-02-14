@@ -26,6 +26,13 @@ import {
 } from 'quasar'
 AddressbarColor.set('#4f4f4f')
 
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import store from './store';
+
+
+
+
 const {
   AthomCloudAPI,
   HomeyAPI
@@ -35,10 +42,17 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 
 Vue.config.productionTip = false
 
+Vue.filter('round', function(value) {
+  if (!value) return ''
+
+  value = value.toFixed(2)
+  return value;
+});
+
+Vue.use(Vuex)
 Vue.use(VueTouch, {
   name: 'v-touch'
 })
-
 // Vue.use(VueLodash, lodash)
 Vue.use(Quasar, {
   components: All,
@@ -53,11 +67,13 @@ import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 import 'quasar-extras/animate'
 
+
+
 if (DEV) {
   Vue.prototype.$athomCloud = new AthomCloudAPI({
     clientId: '59e881ac57256a350db0fcf8',
     clientSecret: 'daJ0BQBWd1Jq1eIwU8msjS4qg0hM0YYLPhoLAE5U',
-    redirectUrl: 'http://localhost:8081',
+    redirectUrl: 'http://homeydash.local:8081',
   });
 }
 if (PROD) {
@@ -79,7 +95,7 @@ async function init() {
     })
   let token = window.localStorage.getItem('token');
   if (token) {
-    token = await Vue.prototype.$athomCloud.setAuthState(JSON.parse(token))
+    token = await Vue.prototype.$athomCloud.setToken(JSON.parse(token))
   }
   let qs = queryString.parse(window.location.search);
   if (qs.code) {
@@ -90,16 +106,17 @@ async function init() {
     document.location.href = Vue.prototype.$athomCloud.getLoginUrl();
   }
 
-  Vue.prototype.$athomCloud.getHomeys()
+  Vue.prototype.$athomCloud.getAuthenticatedUser()
+    .then( user => user.getHomeys() )
     .then(result => {
       if (result.length === 1) {
         Vue.prototype.$homeyAPI.forHomeyObject(result[0])
           .then(result => {
             Vue.prototype.$homey = result;
-
             new Vue({
               el: '#q-app',
               router,
+              store,
               render: h => h(require('./App').default)
             });
           });
@@ -115,6 +132,7 @@ async function init() {
               new Vue({
                 el: '#q-app',
                 router,
+                store,
                 render: h => h(require('./App').default)
               })
             });
@@ -123,6 +141,7 @@ async function init() {
           new Vue({
             el: '#q-app',
             router,
+            store,
             render: h => h(require('./App').default)
           })
         }

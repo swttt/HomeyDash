@@ -4,24 +4,13 @@
   <header></header>
   <main>
     <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
-      <q-toolbar v-if="!selectHomey" slot="header">
-        <q-btn v-if="$route.matched[0].components.sidebar" flat @click="$refs.layout.toggleLeft()">
-          <q-icon name="menu" />
-        </q-btn>
-        <q-toolbar-title>
-          {{$route.name}}
-        </q-toolbar-title>
-        <q-btn flat>
-          <q-icon name="settings" />
-        </q-btn>
-      </q-toolbar>
-      <router-view id="sidebar" v-if="$route.matched[0].components.sidebar && !selectHomey" slot="left" name="sidebar"></router-view>
-      </router-view>
+      <router-view slot="header" v-if="!selectHomey" name="toolbar"></router-view>
+      <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey" name="sidebar"></router-view>
+
       <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
-        <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
-        <q-route-tab slot="title" icon="power" :to="{ name: 'Devices'}" replace exact label="Devices" />
-        <q-route-tab slot="title" icon="fa-spotify" to="/spotify" exact label="Spotify" />
+          <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
+        <q-route-tab v-for="plugin in plugins" :key="plugin.id" v-if="!settings.plugins[plugin.id].hidden" slot="title" :icon="plugin.icon" :to="plugin.link" exact :label="plugin.name" />
       </q-tabs>
       <div v-if="selectHomey">
         <div class="row justify-center" style="height:100vh;">
@@ -34,7 +23,7 @@
                     <img src="/statics/img/icon.svg" style="padding:5px;"/>
                   </q-item-tile>
                 </q-item-side> -->
-                <q-item-main :label="homey.name"/>
+                <q-item-main :label="homey.name" />
 
               </q-item>
             </q-list>
@@ -42,6 +31,7 @@
           </div>
         </div>
       </div>
+      <settings/>
     </q-layout>
   </main>
 </div>
@@ -51,26 +41,43 @@
 /*
  * Root component
  */
+
+import settings from '@/base/components/Settings'
+import plugins from '@/plugins/'
 export default {
   data() {
     return {
       // initializing for second tab to be selected by default
       selectHomey: true,
-      homeys: []
+      homeys: [],
+      plugins: plugins
     }
+  },
+  components: {
+    settings,
+    plugins
   },
   async created() {
     if(this.$homey) {
       this.selectHomey = false;
     } else {
-      this.homeys = await this.$athomCloud.getHomeys()
+
+      let user = await this.$athomCloud.getAuthenticatedUser()
+      this.homeys = user.getHomeys();
       // console.log(this.homeys)
     }
   },
   methods: {
-    loadHomey(id){
+    loadHomey(id) {
       console.log(id)
-      window.location.href = "/?cloudid="+id
+      window.location.href = "/?cloudid=" + id
+    }
+  },
+  computed: {
+    settings: {
+      get() {
+        return this.$store.state.settings
+      }
     }
   }
 }
@@ -78,57 +85,45 @@ export default {
 
 <style>
 * {
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: -moz-none;
-    -o-user-select: none;
-    user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
 }
 
-html, body{
-  margin: 0!important;
-  padding: 0!important;
-  width:100%!important;
-  height:100%!important;
-  overflow: hidden!important;
-  background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover!important;
-  -moz-background-size: cover!important;
-  -o-background-size: cover!important;
-  background-size: cover!important;
-  /*position: absolute!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  bottom:0!important;*/
+html,
+body {
+  position: fixed !important;
+  top: 0;
+  bottom: 0;
+  overflow: hidden !important;
 }
+
 #layout {
-  min-height: 100%;
-  min-width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover!important;
-  -moz-background-size: cover!important;
-  -o-background-size: cover!important;
-  background-size: cover!important;
-  position: absolute!important;
-  top:0!important;
-  left:0!important;
-  right:0!important;
-  bottom:0!important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
 }
 
 .layout-aside {
   background-color: #E0E1E2;
-  border: 0!important;
+  border: 0 !important;
 }
 
 .layout-footer {
-  border: 0!important;
-}
-
-.layout-header,
-.q-toolbar {
-  border: 0!important;
-  background: rgba(255, 255, 255, 0)!important;
+  border: 0 !important;
+  position: fixed;
+  bottom: 0;
+  /* Status bar height on iOS 11.0 */
+  padding-bottom: constant(safe-area-inset-bottom);
+  /* Status bar height on iOS 11+ */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

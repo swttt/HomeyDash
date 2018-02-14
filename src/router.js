@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Devices from '@/Devices'
-import Devices_sidebar from '@/Devices_sidebar'
-import Dashboard from '@/Dashboard'
-import Spotify from '@/Spotify'
+// Base Components
+import DashboardToolbar from '@/base/toolbars/DashboardToolbar'
+import BasicToolbar from '@/base/toolbars/BasicToolbar'
+import Dashboard from '@/base/components/Dashboard'
+
+
+
+import plugins from '@/plugins/'
 
 const {
   AthomCloudAPI,
@@ -12,6 +16,11 @@ const {
 } = require('athom-api')
 
 Vue.use(VueRouter)
+
+
+
+
+
 
 /*
  * Uncomment this section and use "load()" if you want
@@ -21,45 +30,42 @@ function load (component) {
   return () => import(`@/${component}.vue`)
 }
 */
-
-const router = new VueRouter({
-  /*
-   * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
-   * it is only to be used only for websites.
-   *
-   * If you decide to go with "history" mode, please also open /config/index.js
-   * and set "build.publicPath" to something other than an empty string.
-   * Example: '/' instead of current ''
-   *
-   * If switching back to default "hash" mode, don't forget to set the
-   * build publicPath back to '' so Cordova builds work again.
-   */
-  // mode: 'history',
-  routes: [
-  {
-    name: 'Devices',
-    path: '/devices/:zone?',
-    components: {
-      main: Devices,
-      sidebar: Devices_sidebar
-    }
-  },
+const routes = [
   {
     name: 'Dashboard',
     path: '/',
     components: {
       main: Dashboard,
-      sidebar: null
-    }
-  },
-  {
-    name: 'Spotify',
-    path: '/spotify',
-    components: {
-      main: Spotify,
+      toolbar: DashboardToolbar,
       sidebar: null
     }
   }]
+
+  _.forEach(plugins, plugin => {
+    var obj = {};
+    obj.name = plugin.name;
+    obj.path = plugin.route;
+    obj.components = {};
+    obj.components.main = plugin.main;
+    obj.components.sidebar = plugin.sidebar || null;
+    obj.components.toolbar = plugin.toolbar || BasicToolbar;
+
+
+    routes.push(obj);
+  });
+
+const router = new VueRouter({
+   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (PROD) {
+    _paq.push(['setReferrerUrl', from.path]);
+    _paq.push(['setCustomUrl', to.path]);
+    _paq.push(['setDocumentTitle', 'HomeyDash - ' + to.name]);
+    _paq.push(['trackPageView']);
+  }
+  next();
 });
 
 

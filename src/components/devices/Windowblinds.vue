@@ -1,9 +1,11 @@
 <template>
-<v-touch v-on:press="longPress" v-on:tap="setOnoff" class="device">
+<v-touch v-on:press="longPress" v-on:tap="setBlind" class="device">
 
-  <div class="icon" v-bind:class="[device.state.onoff ? 'on' : 'off']" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
+  <div class="icon on" :style="'-webkit-mask-image: url('+$homey._baseUrl+device.icon+')'"></div>
   <div class="name">{{device.name}}</div>
-  <div class="info">{{device.state.onoff ? 'ON' : 'OFF'}} <span v-if="device.state.dim"> - {{Number((device.state.dim*100).toFixed(0))}}%</span></div>
+
+  <div class="info" v-if="device.capabilities.dim">{{device.state.dim > 0 ? 'OPEN' : 'CLOSED'}} <span v-if="device.state.dim"> - {{Number((device.state.dim*100).toFixed(0))}}%</span></div>
+  <div class="info" style="text-transform:uppercase;" v-else>{{device.state.windowcoverings_state || 'Idle'}}</div>
 <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
     <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-4" />
     <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-3" />
@@ -33,12 +35,36 @@
         </q-item-main>
       </q-item>
 
-      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable  && value.units">
+      <q-item v-if="device.capabilities.windowcoverings_state">
         <q-item-side class="text-white">
+          {{device.capabilities.windowcoverings_state.title.en}}
+        </q-item-side>
+        <q-item-main class="text-right" style="">
+
+        </q-item-main>
+      </q-item>
+      <q-item v-if="device.capabilities.windowcoverings_state">
+        <q-item-side class="text-white">
+            <q-btn small @click="setState('up')" :color="device.state.windowcoverings_state === 'up' ? 'teal' : 'neutral'"><q-icon name="fa-chevron-up" /></q-btn> <q-btn @click="setState('idle')" :color="device.state.windowcoverings_state === 'idle' ? 'teal' : 'neutral'" small><q-icon name="fa-pause" /></q-btn> <q-btn @click="setState('down')" small :color="device.state.windowcoverings_state === 'down' ? 'teal' : 'neutral'"><q-icon name="fa-chevron-down" /></q-btn>
+        </q-item-side>
+        <q-item-main class="text-right" style="">
+
+        </q-item-main>
+      </q-item>
+
+      <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && value.units || key.substring(0, 5) == 'alarm'">
+        <q-item-side class="text-white" v-if="!device.driver.metadata || !device.driver.metadata.capabilitiesOption">
+          {{value.title.en}}
+        </q-item-side>
+        <q-item-side class="text-white" v-else-if="device.driver.metadata.capabilitiesOption[key]">
+          {{device.driver.metadata.capabilitiesOptions[key].title.en}}
+        </q-item-side>
+        <q-item-side class="text-white" v-else>
           {{value.title.en}}
         </q-item-side>
         <q-item-main class="text-right text-white">
-          <span>{{device.state[key] || '-' }} <span v-if="value.units">{{value.units.en}}</span></span>
+          <span v-if="typeof(device.state[key]) === 'boolean'"><q-icon v-if="!device.state[key]" color="green" name="fa-check" /><q-icon v-else color="red" name="fa-exclamation-triangle" /></span>
+          <span v-else> <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span></span>
           <!-- <span v-else>-</span> -->
         </q-item-main>
       </q-item>
@@ -68,8 +94,18 @@ export default {
         }
         this.showModal = true;
     },
-    setOnoff(){
-        this.device.setCapabilityValue('onoff', !this.device.state.onoff)
+    setBlind(){
+      if(this.device.capabilities.dim){
+        if(this.device.state.dim > 0){
+          this.device.setCapabilityValue('dim', 0)
+        }
+        else{
+          this.device.setCapabilityValue('dim', 1)
+        }
+      }
+    },
+    setState(value){
+      this.device.setCapabilityValue('windowcoverings_state', value)
     },
     setDim: _.debounce(function(value){
       console.log(value)
@@ -81,6 +117,16 @@ export default {
   },
   mounted(){
 
+  },
+  computed:{
+    blindState(){
+      if(this.device.state.dim > 0){
+        return 'OPEN'
+      }
+      else{
+        return 'CLOSED'
+      }
+    }
   }
 }
 
@@ -114,6 +160,11 @@ export default {
       font-size 0.8em
       color $secondary
       font-weight 300
+      max-width 100%
+      overflow hidden
+      text-align left
+      text-overflow ellipsis
+      white-space nowrap
     .battery
       position absolute
       top 3px
