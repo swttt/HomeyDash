@@ -57,7 +57,7 @@
                   <q-item-main>
                   If you like my project, please consider becoming a Patron! With your support i can keep the server and coffee running.
                   <br/><br/>
-                  <center><a href="https://www.patreon.com/bePatron?u=9768305" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
+                  <center><a href="https://www.patreon.com/bePatron?u=9768305" target="_blank" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
                   <br/>
                   </q-item-main>
                 </q-item>
