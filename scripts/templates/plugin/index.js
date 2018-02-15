@@ -4,7 +4,7 @@ import settings from './Settings'
 
 // VARS
 const icon = "fa-bolt";
-const hidden = false;
+const enabled = true;
 const route = "/PLUGIN_ID";
 
 // NORMALLY YOU DON'T NEED TO TOUCH THESE!

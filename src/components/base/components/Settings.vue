@@ -29,19 +29,19 @@
               <q-tab default slot="title" label="General" name="general" />
               <q-tab-pane name="general">
                 <q-item class="subhead text-teal">
-                  Disable plugins
+                  Plugins
                   </q-item>
                 <q-item v-for="plugin in plugins" :key="plugin.id">
                   <q-item-main>
                     <q-item-tile label>{{plugin.name}}</q-item-tile>
                   </q-item-main>
                   <q-item-side right>
-                    <q-toggle  v-model="settings.plugins[plugin.id].hidden" color="teal" />
+                    <q-toggle  v-model="settings.plugins[plugin.id].enabled" color="teal" />
                   </q-item-side>
                 </q-item>
               </q-tab-pane>
               <!-- Load tabs based on available plugins -->
-              <template v-for="plugin in plugins" v-if="plugin.settings">
+              <template v-for="plugin in plugins" v-if="plugin.settings && settings.plugins[plugin.id].enabled">
               <q-tab slot="title" :label="plugin.name" :name="plugin.id" />
               <q-tab-pane :name="plugin.id">
                 <div :is="plugins[plugin.id].settings" :plugin="plugin" :settings="settings"> </div>

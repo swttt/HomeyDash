@@ -12,15 +12,12 @@ Vue.use(Vuex);
 let pluginObject = {}
 _.forEach(plugins, plugin => {
   var obj = {}
-  obj.hidden = plugin.hidden || false;
+  obj.enabled = plugin.enabled || true;
   _.forEach(plugin.store, (setting, key) => {
     obj[key] = setting;
   });
   pluginObject[plugin.id] = obj;
 });
-
-
-
 
 const state = {
   widgets: [],
