@@ -46,8 +46,9 @@
               <q-tab-pane :name="plugin.id">
                 <div :is="plugins[plugin.id].settings" :plugin="plugin" :settings="settings"> </div>
               </q-tab-pane>
+              </template>
 
-              <q-tab default slot="title" label="Info" name="info" />
+              <q-tab slot="title" label="Info" name="info" />
               <q-tab-pane name="info">
                 <q-item class="subhead text-teal">
                   Patreon
@@ -64,11 +65,9 @@
                   Privacy & Cookies
                   </q-item>
                   <q-item>
-                    HomeyDash is using analytic cookies to see how the dashboard is used and where it could improved. I do care about your privacy, so no personal information is stored. For that same reason i am not using Google analytics but Matomo.
+                    HomeyDash is using analytic cookies to see how the dashboard is used and where it could improve. I do care about your privacy, so no personal information is stored. For that same reason i am not using Google analytics but Matomo.
                     </q-item>
               </q-tab-pane>
-
-            </template>
 
             </q-tabs>
           </div>
