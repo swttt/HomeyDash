@@ -29,19 +29,19 @@
               <q-tab default slot="title" label="General" name="general" />
               <q-tab-pane name="general">
                 <q-item class="subhead text-teal">
-                  Disable plugins
+                  Plugins
                   </q-item>
                 <q-item v-for="plugin in plugins" :key="plugin.id">
                   <q-item-main>
                     <q-item-tile label>{{plugin.name}}</q-item-tile>
                   </q-item-main>
                   <q-item-side right>
-                    <q-toggle  v-model="settings.plugins[plugin.id].hidden" color="teal" />
+                    <q-toggle  v-model="settings.plugins[plugin.id].enabled" color="teal" />
                   </q-item-side>
                 </q-item>
               </q-tab-pane>
               <!-- Load tabs based on available plugins -->
-              <template v-for="plugin in plugins" v-if="plugin.settings">
+              <template v-for="plugin in plugins" v-if="plugin.settings && settings.plugins[plugin.id].enabled">
               <q-tab slot="title" :label="plugin.name" :name="plugin.id" />
               <q-tab-pane :name="plugin.id">
                 <div :is="plugins[plugin.id].settings" :plugin="plugin" :settings="settings"> </div>
@@ -57,7 +57,7 @@
                   <q-item-main>
                   If you like my project, please consider becoming a Patron! With your support i can keep the server and coffee running.
                   <br/><br/>
-                  <center><a href="https://www.patreon.com/bePatron?u=9768305" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
+                  <center><a href="https://www.patreon.com/bePatron?u=9768305" target="_blank" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
                   <br/>
                   </q-item-main>
                 </q-item>

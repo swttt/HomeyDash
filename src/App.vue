@@ -10,7 +10,7 @@
       <router-view v-if="!selectHomey" name="main"></router-view>
       <q-tabs v-if="!selectHomey" slot="navigation">
           <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
-        <q-route-tab v-for="plugin in plugins" :key="plugin.id" v-if="!settings.plugins[plugin.id].hidden" slot="title" :icon="plugin.icon" :to="plugin.link" exact :label="plugin.name" />
+        <q-route-tab v-for="plugin in plugins" :key="plugin.id" v-if="settings.plugins[plugin.id].enabled" slot="title" :icon="plugin.icon" :to="plugin.link" exact :label="plugin.name" />
       </q-tabs>
       <div v-if="selectHomey">
         <div class="row justify-center" style="height:100vh;">

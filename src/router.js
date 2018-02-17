@@ -17,11 +17,6 @@ const {
 
 Vue.use(VueRouter)
 
-
-
-
-
-
 /*
  * Uncomment this section and use "load()" if you want
  * to lazy load routes.

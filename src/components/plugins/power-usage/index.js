@@ -9,7 +9,7 @@ const name = "Power Usage";
 const icon = "fa-bolt";
 const route = "/power-usage";
 const link = "/power-usage";
-const hidden = false;
+const enabled = true;
 
 // STORE IS USED TO SAVE SETTINGS TO
 // MAKE SURE YOU DEFINE THE RIGHT TYPE E.G. OBJECT, STRING ETC.
@@ -24,7 +24,7 @@ export default {
   icon,
   route,
   link,
-  hidden,
+  enabled,
   store,
   settings,
   main
