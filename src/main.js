@@ -13,8 +13,8 @@ require(`./themes/app.ios.styl`)
 import Vue from 'vue'
 import Quasar, * as All from 'quasar'
 import router from './router'
-// import lodash from 'lodash'
-// import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
+import VueLodash from 'vue-lodash'
 window._ = require('lodash');
 import VueTouch from 'vue-touch'
 import queryString from 'query-string'

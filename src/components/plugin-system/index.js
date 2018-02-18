@@ -34,7 +34,7 @@ function importAll(r) {
       link: pluginData.link,
       path: pluginData.path,
       icon: pluginData.icon,
-      enabled: pluginData.enabled || true,
+      enabled: pluginData.enabled || false,
       components: pluginData.components,
       settings: pluginData.settings
     };
