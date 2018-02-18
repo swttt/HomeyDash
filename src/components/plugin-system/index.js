@@ -40,7 +40,6 @@ function importAll(r) {
     };
 
     plugins[createPlugin.id] = createPlugin;
-    console.log(createPlugin);
   });
 }
 
