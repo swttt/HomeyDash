@@ -4,6 +4,7 @@
   "icon": "power",
   "link": "/devices",
   "path": "/devices/:zone?",
+  "enabled": true,
   "components": {
     "sidebar": "Sidebar"
   },
