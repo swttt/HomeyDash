@@ -13,18 +13,15 @@ require(`./themes/app.ios.styl`)
 import Vue from 'vue'
 import Quasar, * as All from 'quasar'
 import router from './router'
-import lodash from 'lodash'
-import VueLodash from 'vue-lodash'
+// import lodash from 'lodash'
+// import VueLodash from 'vue-lodash'
 window._ = require('lodash');
 import VueTouch from 'vue-touch'
 import queryString from 'query-string'
 import {
   Platform
 } from 'quasar'
-import {
-  AddressbarColor
-} from 'quasar'
-AddressbarColor.set('#4f4f4f')
+
 
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
@@ -59,15 +56,10 @@ Vue.use(Quasar, {
   directives: All
 }) // Install Quasar Framework
 
-if (__THEME === 'mat') {
-  // require('quasar-extras/roboto-font')
-}
 import 'quasar-extras/material-icons'
 import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 import 'quasar-extras/animate'
-
-
 
 if (DEV) {
   Vue.prototype.$athomCloud = new AthomCloudAPI({
@@ -152,4 +144,4 @@ async function init() {
     });
 }
 
-init()
+init();

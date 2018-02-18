@@ -41,10 +41,10 @@
                 </q-item>
               </q-tab-pane>
               <!-- Load tabs based on available plugins -->
-              <template v-for="plugin in plugins" v-if="plugin.settings && settings.plugins[plugin.id].enabled">
+              <template v-for="plugin in plugins" v-if="plugin.components.settings && settings.plugins[plugin.id].enabled">
               <q-tab slot="title" :label="plugin.name" :name="plugin.id" />
               <q-tab-pane :name="plugin.id">
-                <div :is="plugins[plugin.id].settings" :plugin="plugin" :settings="settings"> </div>
+                <div :is="plugins[plugin.id].components.settings" :plugin="plugin" :settings="settings.plugins[plugin.id]"> </div>
               </q-tab-pane>
               </template>
 
@@ -85,7 +85,7 @@ import {
   EventBus
 } from 'src/eventBus';
 
-import plugins from '@/plugins/'
+import plugins from '@/plugin-system/'
 
 
 export default {

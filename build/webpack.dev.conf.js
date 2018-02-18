@@ -18,7 +18,7 @@ module.exports = merge(baseWebpackConfig, {
   // eval-source-map is faster for development
   devtool: '#cheap-module-eval-source-map',
   devServer: {
-    historyApiFallback: true,
+    historyApiFallback: false,
     noInfo: true,
     hot: true
   },
@@ -30,6 +30,7 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',

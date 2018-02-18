@@ -3,7 +3,7 @@
   <q-transition appear enter="fadeIn" leave="fadeOut">
     <div v-if="heimdallInstalled" class="col col-6 col-md-6 col-lg-3 col-xs-10 alarm-container">
       <q-chip color="red" class="status">
-        Work in progress!
+        Not working yet!!
       </q-chip>
       <h3 v-if="code.length == 0" style="font-size:28px;">Enter PIN...</h3>
       <h3 v-else style="font-size:32px;font-weight:300;"><span v-for="n in code.length" style="padding: 0px 5px 0px 5px;position:relative;top:5px;">*</span></h3>

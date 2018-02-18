@@ -9,16 +9,19 @@ function guid() {
     }
 
 // WIDGETS
-export const addWidget = (state) => {
+export const addWidget = (state, widget) => {
+  console.log(widget);
   let newBox = {};
-  newBox.name = "Box " + state.widgets.length;
+  newBox.name = widget.name;
+  newBox.type = widget.id;
+  newBox.options = widget.options;
+  newBox.main = widget.main;
   newBox.w = 1;
   newBox.h = 1;
   newBox.x = 0;
   newBox.y = 0;
   newBox.id = guid();
-
-
+  console.log(newBox);
   state.widgets.push(newBox);
 }
 

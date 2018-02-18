@@ -1,0 +1,10 @@
+{
+  "id": "PLUGIN_ID",
+  "name": "PLUGIN_NAME",
+  "icon": "power",
+  "link": "/PLUGIN_ID",
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": []
+}

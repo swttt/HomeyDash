@@ -1,0 +1,11 @@
+{
+  "id": "devices",
+  "name": "Devices",
+  "icon": "power",
+  "link": "/devices",
+  "path": "/devices/:zone?",
+  "components": {
+    "sidebar": "Sidebar"
+  },
+  "settings": []
+}

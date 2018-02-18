@@ -3,7 +3,7 @@
   <q-list v-if="!loading">
     <q-item>
       <q-item-main>
-        <q-select dark frame-color="white" v-model="settings.plugins[plugin.id].defaultDevice" float-label="Select a default power meter device" radio :options="powerUsageOptions" />
+        <q-select dark frame-color="white" v-model="settings.defaultDevice" float-label="Select a default power meter device" radio :options="powerUsageOptions" />
       </q-item-main>
     </q-item>
   </q-list>
