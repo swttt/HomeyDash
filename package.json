@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "athom-api": "^2.0.24",
+    "axios": "^0.17.1",
     "babel-runtime": "^6.25.0",
     "draggabilly": "^2.1.1",
     "lodash": "^4.17.4",
@@ -21,6 +22,7 @@
     "query-string": "^5.0.0",
     "vue": "^2.5.2",
     "vue-async-computed": "^3.3.1",
+    "vue-axios": "^2.0.2",
     "vue-grid-layout": "^2.1.10",
     "vue-lodash": "^1.0.4",
     "vue-router": "^2.7.0",

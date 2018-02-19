@@ -27,8 +27,10 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import store from './store';
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-
+Vue.use(VueAxios, axios)
 
 const {
   AthomCloudAPI,
