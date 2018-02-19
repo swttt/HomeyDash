@@ -5,7 +5,7 @@
     <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box" >
         <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
           <q-btn small color="red" icon="close" /></v-touch>
-        <div :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item" ></div>
+        <div v-bind:style="{ width: item.w + 'px', height: item.h + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item" ></div>
     </div>
   </q-transition>
   <widgetsmodal />

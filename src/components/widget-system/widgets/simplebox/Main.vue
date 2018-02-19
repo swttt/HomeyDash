@@ -1,5 +1,5 @@
 <template>
-<div class="content" v-bind:style="{ width: widget.w + 'px', height: widget.h + 'px'  }">
+<div class="content">
   {{widget.options.text}}
 </div>
 </template>
