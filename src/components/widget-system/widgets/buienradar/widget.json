@@ -4,6 +4,5 @@
   "description": "Buienradar widget to show when it is going to rain!",
   "width": 250,
   "height": 300,
-  "components": {},
-  "settings": []
+  "components": {}
 }
