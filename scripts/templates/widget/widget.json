@@ -4,6 +4,5 @@
   "description": "Your new widget!",
   "width": 300,
   "height": 50,
-  "components": {},
-  "settings": []
+  "components": {}
 }
