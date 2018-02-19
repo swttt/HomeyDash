@@ -21,8 +21,6 @@ if (module.hot) {
   })
 }
 
-//
-
 let pluginObject = {}
 _.forEach(plugins, plugin => {
   var obj = {}
@@ -54,7 +52,6 @@ _.forEach(plugins, plugin => {
       }
     }
 
-
   });
   pluginObject[plugin.id] = obj;
 });
@@ -72,7 +69,5 @@ const store = new Vuex.Store({
   getters,
   plugins: [createPersistedState()]
 });
-
-
 
 export default store;

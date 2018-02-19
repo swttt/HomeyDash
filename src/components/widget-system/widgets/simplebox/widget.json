@@ -1,0 +1,8 @@
+{
+  "id": "simplebox",
+  "name": "Simple Box",
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": []
+}

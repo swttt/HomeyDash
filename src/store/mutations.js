@@ -15,7 +15,7 @@ export const addWidget = (state, widget) => {
   newBox.name = widget.name;
   newBox.type = widget.id;
   newBox.options = widget.options;
-  newBox.main = widget.main;
+  newBox.main = widget.components.main;
   newBox.w = 1;
   newBox.h = 1;
   newBox.x = 0;

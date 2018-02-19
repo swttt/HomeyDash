@@ -2,18 +2,19 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.id" :x="item.x" :y="item.y" class="box">
+    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box">
       <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
         <q-btn round flat small color="black" icon="close"  /></v-touch>
-      {{item.name}}
-      {{item.id}}
+      <div :is="widgettypes[item.type].components.main" :widget="item"></div>
     </div>
   </q-transition>
-
+  <widgetsmodal />
 </div>
 </template>
 
 <script>
+import widgetsmodal from '@/base/components/Widgets'
+import widgettypes from '@/widget-system/'
 import Draggabilly from "draggabilly"
 import _ from 'lodash';
 Draggabilly.prototype.setPosition = function (x, y) {
@@ -30,12 +31,12 @@ export default {
   data() {
     return {
       editMode: false,
-      draggies: []
+      draggies: [],
+      widgettypes: widgettypes
     }
   },
   components: {
-    // GridLayout,
-    // GridItem
+    widgetsmodal
   },
   mounted() {
     EventBus.$on('editModeOff', () => {
