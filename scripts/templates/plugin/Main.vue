@@ -1,7 +1,7 @@
 <template>
 <div>
   <q-transition appear enter="fadeIn" leave="fadeOut">
-    <center><h1>PLUGIN_NAME</h1></center>
+    <center><h1>SCAFFOLD_NAME</h1></center>
   </q-transition>
 </div>
 </template>

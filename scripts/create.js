@@ -38,11 +38,6 @@ prompt.get([{
   }
 }], (err, result) => {
   type = result.type;
-  if(type == "widget"){
-    // WIDGETS NOT SUPPORTED YET!
-    console.log(colors.red("I am sooooo sorry...but widgets aren't supported yet!"));
-  }
-  else{
   console.log(colors.cyan('Okay, so you want to create a ' + type + "...now let's get started!"));
   prompt.get([
   {
@@ -86,13 +81,13 @@ prompt.get([{
           }
       });
   });
-}
+
 });
 
 
 function scaffold(){
-  shell.cp('-R', 'scripts/templates/'+type+'/', 'src/components/plugin-system/'+type+'s/'+id);
-  shell.sed('-i', 'PLUGIN_ID', id , 'src/components/plugin-system/'+type+'s/'+id+'/plugin.json');
-  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/plugin-system/'+type+'s/'+id+'/plugin.json');
-  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/plugin-system/'+type+'s/'+id+'/Main.vue');
+  shell.cp('-R', 'scripts/templates/'+type+'/', 'src/components/'+type+'-system/'+type+'s/'+id);
+  shell.sed('-i', 'SCAFFOLD_ID', id , 'src/components/'+type+'-system/'+type+'s/'+id+'/'+type+'.json');
+  shell.sed('-i', 'SCAFFOLD_NAME', name , 'src/components/'+type+'-system/'+type+'s/'+id+'/'+type+'.json');
+  shell.sed('-i', 'SCAFFOLD_NAME', name , 'src/components/'+type+'-system/'+type+'s/'+id+'/Main.vue');
 }
