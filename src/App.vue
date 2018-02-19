@@ -99,6 +99,7 @@ body {
   top: 0;
   bottom: 0;
   overflow: hidden !important;
+  height: 100%;
 }
 
 #layout {

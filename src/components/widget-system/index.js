@@ -16,6 +16,9 @@ function importAll(r) {
     const createWidget = {
       id: widgetData.id,
       name: widgetData.name,
+      description: widgetData.description,
+      width: widgetData.width,
+      height: widgetData.height,
       components: widgetData.components,
       settings: widgetData.settings
     };

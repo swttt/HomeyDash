@@ -38,6 +38,9 @@
       <div class="widgets-content" v-if="widgetSelected">
         <div class="row justify-center" style="position:absolute;top:50px;bottom:50px;left:10px;right:10px;">
           <div class="col col-4 col-xs-12 col-md-4 col-lg-4">
+            <h4>{{widgetSelected.name}}</h4>
+            <p>{{widgetSelected.description}}</p>
+            <h5 v-if="widgetSelected.components.settings">Settings</h5>
               <div :is="widgets[widgetSelected.id].components.settings" :widget.sync="widgetSelected"> </div>
             </div>
         </div>
@@ -83,10 +86,9 @@ export default {
         this.modal = false;
     },
     async addWidget(widget){
-      console.log(widget);
-      this.$store.commit('addWidget', widget)
-      EventBus.$emit('widgetAdded')
-      this.modal = false;
+      await this.$store.commit('addWidget', widget);
+      await EventBus.$emit('widgetAdded');
+      this.modal = await false;
       this.widgetSelected = null;
     }
   }
@@ -106,9 +108,8 @@ export default {
 .q-list
   border 0px!important
 
-h6
+h6, h4, h5
   color #009688
-  font-size 22px
 
 .subhead
   color white

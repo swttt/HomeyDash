@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="content" v-bind:style="{ width: widget.w + 'px', height: widget.h + 'px'  }">
   {{widget.options.text}}
 </div>
 </template>
@@ -10,6 +10,17 @@ export default {
   data() {
     return {
     }
+  },
+  created(){
+    console.log(this.widget);
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+@import '~variables'
+
+.content
+  padding 10px
+
+  </style>
