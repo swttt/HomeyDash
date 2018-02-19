@@ -38,7 +38,7 @@ export default {
 
 h1
   margin 0px
-  padding-left 10px
+  padding-left 20px
   width 100%
   text-align left
 
