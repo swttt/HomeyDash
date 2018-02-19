@@ -1,0 +1,13 @@
+{
+  "id": "powerusage",
+  "name": "Power Usage",
+  "icon": "power",
+  "link": "/power-usage",
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [{
+    "id": "defaultDevice",
+    "type": "object"
+  }]
+}

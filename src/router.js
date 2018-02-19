@@ -8,7 +8,7 @@ import Dashboard from '@/base/components/Dashboard'
 
 
 
-import plugins from '@/plugins/'
+import plugins from '@/plugin-system/'
 
 const {
   AthomCloudAPI,
@@ -39,13 +39,8 @@ const routes = [
   _.forEach(plugins, plugin => {
     var obj = {};
     obj.name = plugin.name;
-    obj.path = plugin.route;
-    obj.components = {};
-    obj.components.main = plugin.main;
-    obj.components.sidebar = plugin.sidebar || null;
-    obj.components.toolbar = plugin.toolbar || BasicToolbar;
-
-
+    obj.components = plugin.components;
+    obj.path = plugin.path;
     routes.push(obj);
   });
 

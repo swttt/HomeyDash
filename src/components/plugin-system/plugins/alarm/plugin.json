@@ -1,0 +1,10 @@
+{
+  "id": "alarm",
+  "name": "Alarm",
+  "icon": "security",
+  "link": "/alarm",
+  "components": {
+
+  },
+  "settings": []
+}

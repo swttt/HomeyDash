@@ -2,18 +2,19 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.name" :itemId="item.id" :x="item.x" :y="item.y" class="box">
-      <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
-        <q-btn round flat small color="black" icon="close"  /></v-touch>
-      {{item.name}}
-      {{item.id}}
+    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box" >
+        <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
+          <q-btn small color="red" icon="close" /></v-touch>
+        <div v-bind:style="{ width: item.w + 'px', height: item.h + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item" ></div>
     </div>
   </q-transition>
-
+  <widgetsmodal />
 </div>
 </template>
 
 <script>
+import widgetsmodal from '@/base/components/Widgets'
+import widgettypes from '@/widget-system/'
 import Draggabilly from "draggabilly"
 import _ from 'lodash';
 Draggabilly.prototype.setPosition = function (x, y) {
@@ -30,14 +31,15 @@ export default {
   data() {
     return {
       editMode: false,
-      draggies: []
+      draggies: [],
+      widgettypes: widgettypes
     }
   },
   components: {
-    // GridLayout,
-    // GridItem
+    widgetsmodal
   },
   mounted() {
+    console.log(this.widgets);
     EventBus.$on('editModeOff', () => {
       this.editMode = false;
       _.forEach(this.draggies, box => {
@@ -80,10 +82,9 @@ export default {
 
         draggie.setPosition(draggableElem.getAttribute("x"), draggableElem.getAttribute("y"))
         draggie.id = draggableElem.getAttribute("itemId");
-        if(this.editMode){
+        if(this.editMode) {
           draggie.enable()
-        }
-        else{
+        } else {
           draggie.disable();
         }
         draggie.on('dragEnd', (event, pointer) => {
@@ -130,10 +131,8 @@ export default {
   background-color rgba(255, 0, 0, 0.29)!important
 
 .box
-  padding 5px
-  width 300px
-  height 150px
   position absolute
+  overflow hidden
   top 0
   left 0
   background-color rgba(0, 0, 0, 0.5)
@@ -141,11 +140,11 @@ export default {
   color white
 
   .close
-    position relative
-    float right
+    position absolute
     top -2px
     right -2px
     text-align right
+    z-index 10
 
 
 </style>

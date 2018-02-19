@@ -31,6 +31,7 @@
           </div>
         </div>
       </div>
+      <!-- Add settings modal -->
       <settings/>
     </q-layout>
   </main>
@@ -43,7 +44,7 @@
  */
 
 import settings from '@/base/components/Settings'
-import plugins from '@/plugins/'
+import plugins from '@/plugin-system/'
 export default {
   data() {
     return {
@@ -84,7 +85,7 @@ export default {
 </script>
 
 <style>
-* {
+body, html, .box {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: -moz-none;
@@ -98,6 +99,7 @@ body {
   top: 0;
   bottom: 0;
   overflow: hidden !important;
+  height: 100%;
 }
 
 #layout {

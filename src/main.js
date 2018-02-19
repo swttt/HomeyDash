@@ -21,17 +21,16 @@ import queryString from 'query-string'
 import {
   Platform
 } from 'quasar'
-import {
-  AddressbarColor
-} from 'quasar'
-AddressbarColor.set('#4f4f4f')
+
 
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 import store from './store';
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-
+Vue.use(VueAxios, axios)
 
 const {
   AthomCloudAPI,
@@ -59,15 +58,10 @@ Vue.use(Quasar, {
   directives: All
 }) // Install Quasar Framework
 
-if (__THEME === 'mat') {
-  // require('quasar-extras/roboto-font')
-}
 import 'quasar-extras/material-icons'
 import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 import 'quasar-extras/animate'
-
-
 
 if (DEV) {
   Vue.prototype.$athomCloud = new AthomCloudAPI({
@@ -152,4 +146,4 @@ async function init() {
     });
 }
 
-init()
+init();

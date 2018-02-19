@@ -77,8 +77,7 @@ prompt.get([{
       }], (err, result) => {
           //WIDGETS NOT WORKING YET!
           if(result.correct.toLowerCase() == "yes"){
-            console.log(colors.cyan("Cool! You can find your " + type + " in /src/components/" + type + "s/" + id));
-            console.log(colors.cyan("Make sure you add your plugin to /src/components/plugins/index.js otherwise it won't show in HomeyDash!"));
+            console.log(colors.cyan("Cool! You can find your " + type + " in /src/components/" + type + "-system/" + type + "s/" + id));
             console.log(colors.cyan("Happy coding! <3"));
             scaffold();
           }
@@ -92,8 +91,8 @@ prompt.get([{
 
 
 function scaffold(){
-  shell.cp('-R', 'scripts/templates/'+type+'/', 'src/components/'+type+'s/'+id);
-  shell.sed('-i', 'PLUGIN_ID', id , 'src/components/'+type+'s/'+id+'/index.js');
-  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/'+type+'s/'+id+'/index.js');
-  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/'+type+'s/'+id+'/Main.vue');
+  shell.cp('-R', 'scripts/templates/'+type+'/', 'src/components/plugin-system/'+type+'s/'+id);
+  shell.sed('-i', 'PLUGIN_ID', id , 'src/components/plugin-system/'+type+'s/'+id+'/plugin.json');
+  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/plugin-system/'+type+'s/'+id+'/plugin.json');
+  shell.sed('-i', 'PLUGIN_NAME', name , 'src/components/plugin-system/'+type+'s/'+id+'/Main.vue');
 }
