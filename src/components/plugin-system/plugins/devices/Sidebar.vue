@@ -88,9 +88,6 @@ export default {
     sortByIndex(list) {
       return _.orderBy(list, 'index', 'asc');
     }
-  },
-  computed() {
-
   }
 }
 </script>
