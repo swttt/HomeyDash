@@ -2,10 +2,12 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box" >
+    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box">
+      <div v-bind:style="{ width: item.w + 'px', height: item.h + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item"></div>
+      <div :itemId="item.id" class="edit-mode" v-if="editMode">
         <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
           <q-btn small color="red" icon="close" /></v-touch>
-        <div v-bind:style="{ width: item.w + 'px', height: item.h + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item" ></div>
+      </div>
     </div>
   </q-transition>
   <widgetsmodal />
@@ -128,7 +130,7 @@ export default {
   margin 0px 10px 10px 10px
 
 .edit
-  background-color rgba(255, 0, 0, 0.29)!important
+  /* background-color rgba(255, 0, 0, 0.29)!important */
 
 .box
   position absolute
@@ -139,6 +141,17 @@ export default {
   border-radius 10px
   color white
 
+.edit-mode
+  position absolute
+  /* overflow hidden */
+  background-color rgba(255, 0, 0, 0.29)!important
+  top 0
+  left 0
+  right 0
+  bottom 0
+  background-color rgba(0, 0, 0, 0.5)
+  border-radius 10px
+  color white
   .close
     position absolute
     top -2px

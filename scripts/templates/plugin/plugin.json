@@ -1,8 +1,8 @@
 {
-  "id": "PLUGIN_ID",
-  "name": "PLUGIN_NAME",
+  "id": "SCAFFOLD_ID",
+  "name": "SCAFFOLD_ID",
   "icon": "power",
-  "link": "/PLUGIN_ID",
+  "link": "/SCAFFOLD_ID",
   "components": {
     "settings": "Settings"
   },
