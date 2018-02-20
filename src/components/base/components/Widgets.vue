@@ -31,18 +31,49 @@
         <div class="row justify-center items-center gutters-md" style="position:absolute;top:30px;bottom:50px;left:10px;right:10px;">
           <div class="col-2" v-for="widget in widgets" style="padding:10px;">
             <q-btn color="teal" class="widget" v-on:click="selectWidget(widget)" outline>{{widget.name}}</q-btn>
-            </div>
+          </div>
         </div>
       </div>
 
       <div class="widgets-content" v-if="widgetSelected">
         <div class="row justify-center" style="position:absolute;top:50px;bottom:50px;left:10px;right:10px;">
-          <div class="col col-4 col-xs-12 col-md-4 col-lg-4">
-            <h4>{{widgetSelected.name}}</h4>
-            <p>{{widgetSelected.description}}</p>
-            <h5 v-if="widgetSelected.components.settings">Settings</h5>
-              <div :is="widgets[widgetSelected.id].components.settings" :widget.sync="widgetSelected"> </div>
-            </div>
+          <div class="col col-4 col-xs-12 col-md-4 col-lg-4" >
+            <!-- <h4>{{widgetSelected.name}}</h4>
+            <span class="label">Author</span>
+            <p>{{widgetSelected.description}}</p> -->
+
+            <q-list style="padding-bottom: 100px;">
+              <q-item>
+                <q-item-main>
+                  <q-item-tile label>
+                    <h5>{{widgetSelected.name}}</h5></q-item-tile>
+                </q-item-main>
+              </q-item>
+              <q-item>
+                <q-item-side left icon="fa-user" color="teal" />
+                <q-item-main>
+                  {{widgetSelected.author}}
+                </q-item-main>
+              </q-item>
+              <q-item>
+                <q-item-side left icon="info" color="teal" />
+                <q-item-main>
+                  {{widgetSelected.description}}
+                </q-item-main>
+              </q-item>
+              <q-item v-if="widgetSelected.components.settings">
+                <q-item-main>
+                  <q-item-tile label>
+                    <h5>Settings</h5></q-item-tile>
+                </q-item-main>
+              </q-item>
+              <q-item>
+                <q-item-main>
+                  <div :is="widgets[widgetSelected.id].components.settings" :widget.sync="widgetSelected"> </div>
+                </q-item-main>
+              </q-item>
+            </q-list>
+          </div>
         </div>
       </div>
 
@@ -79,13 +110,13 @@ export default {
     });
   },
   methods: {
-    selectWidget(widget){
+    selectWidget(widget) {
       this.widgetSelected = widget;
     },
     closeWidgets() {
-        this.modal = false;
+      this.modal = false;
     },
-    async addWidget(widget){
+    async addWidget(widget) {
       await this.$store.commit('addWidget', widget);
       await EventBus.$emit('widgetAdded');
       this.modal = await false;
@@ -108,7 +139,7 @@ export default {
 .q-list
   border 0px!important
 
-h6, h4, h5
+h4, h5, h6
   color #009688
 
 .subhead
