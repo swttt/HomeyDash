@@ -1,0 +1,10 @@
+{
+    "id": "ipwebcam",
+    "name": "IP Webcam",
+    "description": "Support for IP Webcams",
+    "width": 400,
+    "height": 300,
+    "components": {
+        "settings": "Settings"
+    }
+}
