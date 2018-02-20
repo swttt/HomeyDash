@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-  {{widget.options.text}}
+  {{widget.settings.text}}
 </div>
 </template>
 

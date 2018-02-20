@@ -1,6 +1,11 @@
 <template>
-<div>
-  <h1>{{time}}<br/><small>{{day}}</small></h1>
+<div class="row">
+  <div class="col-12" style="text-align:center;">
+    <span class="time">{{time}}</span>
+  </div>
+  <div class="col-12">
+    <span class="day" v-if="widget.settings.showDay">{{day}}</span>
+  </div>
 </div>
 </template>
 
@@ -23,7 +28,7 @@ export default {
   methods:{
     getTime(){
       this.interval = setTimeout(() => {
-        this.time = moment().format('H:mm:ss');
+        this.time = moment().format('HH:mm:ss');
         this.day = moment().format('D. MMMM YYYY');
         this.getTime();
     }, 1000);
@@ -38,14 +43,21 @@ export default {
 <style lang="stylus" scoped>
 @import '~variables'
 
-h1
-  margin 0px
-  padding-left 15px
-  padding-top 30px
-  padding-bottom 15px
-  width 100%
+.time
+  font-size 64px
+  font-weight 200
+  margin-left 0 auto
+  display inline-block
   text-align left
-  line-height 30px
+  width 230px
+
+.day
+  font-size 20px
+  width 100%
+  text-align center
+  display inline-block
+  margin-top -10px
+  padding-bottom 10px
 
   small
     font-size 30px

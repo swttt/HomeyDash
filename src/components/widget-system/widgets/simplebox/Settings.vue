@@ -1,6 +1,6 @@
 <template>
 <div class="col-12">
-  <q-input v-model="widget.options.text" type="textarea" float-label="Box content" :max-height="100" :min-rows="7" dark></q-input>
+  <q-input v-model="widget.settings.text" type="textarea" float-label="Box content" :max-height="100" :min-rows="7" dark></q-input>
 </div>
 </template>
 
@@ -12,8 +12,8 @@ export default {
     }
   },
   created() {
-    this.widget.options = {};
-    this.widget.options.text = "This text will show up in your simple box (:";
+    this.widget.settings = {};
+    this.widget.settings.text = "This text will show up in your simple box (:";
   }
 }
 </script>

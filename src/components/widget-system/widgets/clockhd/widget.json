@@ -3,5 +3,7 @@
   "name": "Clock",
   "description": "A standard (digital)clock to show on your dashboard.",
   "width": 280,
-  "components": {}
+  "components": {
+    "settings": "Settings"
+  }
 }
