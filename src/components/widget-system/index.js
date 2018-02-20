@@ -20,7 +20,7 @@ function importAll(r) {
       width: widgetData.width,
       height: widgetData.height,
       components: widgetData.components,
-      settings: widgetData.settings
+      settings: {}
     };
 
     widgets[createWidget.id] = createWidget;
