@@ -14,19 +14,18 @@
 <style lang="stylus" scoped>
     @import '~variables'
 
-    .ipwebcam img {
-        width: 100%;
-        height: auto;
-    }
-    .ipwebcam .name {
+    .ipwebcam img
+        width: 100%
+        height: auto
+
+    .ipwebcam .name
         display: block
-        width: 100%;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        padding: 8px;
-        color: #fff;
-        font-size: 12px;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+        width: 100%
+        position: absolute
+        left: 0
+        bottom: 0
+        padding: 8px
+        color: #fff
+        font-size: 12px
+        background-color: rgba(0, 0, 0, 0.5)
 </style>
