@@ -12,8 +12,8 @@ export default {
     }
   },
   created() {
-    this.widget.settings = {};
-    this.widget.settings.text = "This text will show up in your simple box (:";
+    if(!this.widget.settings)
+      this.widget.settings = {};
   }
 }
 </script>
