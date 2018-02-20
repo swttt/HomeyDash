@@ -2,6 +2,7 @@
   "id": "buienradar",
   "name": "Buienradar",
   "description": "Buienradar widget to show when it is going to rain!",
+  "author": "Bas Jansen",
   "width": 250,
   "height": 300,
   "components": {}
