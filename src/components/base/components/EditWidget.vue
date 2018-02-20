@@ -38,7 +38,7 @@
               <q-item>
                 <q-item-side left icon="fa-user" color="teal" />
                 <q-item-main>
-                  {{widget.author}} {{widget.type}}
+                  {{widget.author}}
                 </q-item-main>
               </q-item>
               <q-item>
