@@ -3,19 +3,23 @@
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
     <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box">
-      <div v-bind:style="{ width: item.w + 'px', height: item.h + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item"></div>
+      <div v-bind:style="{ width: item.width + 'px', height: item.height + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item"></div>
       <div :itemId="item.id" class="edit-mode" v-if="editMode">
         <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
-          <q-btn small color="red" icon="close" /></v-touch>
+          <q-btn round color="red" icon="delete" /></v-touch>
+          <v-touch class="edit" v-show="editMode" v-on:tap="editWidget(item)">
+            <q-btn round color="orange" icon="edit" /></v-touch>
       </div>
     </div>
   </q-transition>
   <widgetsmodal />
+  <editwidget />
 </div>
 </template>
 
 <script>
 import widgetsmodal from '@/base/components/Widgets'
+import editwidget from '@/base/components/EditWidget'
 import widgettypes from '@/widget-system/'
 import Draggabilly from "draggabilly"
 import _ from 'lodash';
@@ -34,11 +38,13 @@ export default {
     return {
       editMode: false,
       draggies: [],
-      widgettypes: widgettypes
+      widgettypes: widgettypes,
+      widgetEditted: {}
     }
   },
   components: {
-    widgetsmodal
+    widgetsmodal,
+    editwidget
   },
   mounted() {
     console.log(this.widgets);
@@ -53,6 +59,11 @@ export default {
       _.forEach(this.draggies, box => {
         box.enable();
       });
+    });
+
+    EventBus.$on('saveWidget', (widget) => {
+      this.$store.commit('saveWidget', widget);
+
     });
 
     EventBus.$on('widgetAdded', () => {
@@ -102,6 +113,9 @@ export default {
 
       this.$store.commit('removeWidget', widget);
 
+    },
+    editWidget(widget){
+      EventBus.$emit('editWidget', widget.id);
     }
   },
   computed: {
@@ -144,19 +158,24 @@ export default {
 .edit-mode
   position absolute
   /* overflow hidden */
-  background-color rgba(255, 0, 0, 0.29)!important
+  background-color rgba(#009688, 0.29)!important
   top 0
   left 0
   right 0
   bottom 0
-  background-color rgba(0, 0, 0, 0.5)
   border-radius 10px
   color white
   .close
     position absolute
-    top -2px
-    right -2px
+    top -6px
+    right -6px
     text-align right
+    z-index 10
+  .edit
+    position absolute
+    top -6px
+    left -6px
+    text-align left
     z-index 10
 
 
