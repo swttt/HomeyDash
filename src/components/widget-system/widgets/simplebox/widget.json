@@ -2,6 +2,7 @@
   "id": "simplebox",
   "name": "Simple Box",
   "description": "This widget just adds a simple box to put in some text.",
+  "author": "Bas Jansen",
   "width": 200,
   "components": {
     "settings": "Settings"

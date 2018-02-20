@@ -49,7 +49,7 @@ export default {
   margin-left 0 auto
   display inline-block
   text-align left
-  width 230px
+  width 240px
 
 .day
   font-size 20px

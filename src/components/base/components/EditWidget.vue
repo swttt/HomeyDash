@@ -2,42 +2,28 @@
 <div>
   <q-modal v-model="modal" no-backdrop-dismiss maximized :content-css="{background: 'rgba(0, 0, 0, 0.9)'}">
 
-    <q-modal-layout footer-class="widgets">
+    <q-modal-layout footer-class="widgets" v-if="widget">
 
       <!-- Widgets header -->
       <q-toolbar slot="header">
-        <q-toolbar-title v-if="!widgetSelected">
-          Select a widget type
-        </q-toolbar-title>
-        <q-toolbar-title v-if="widgetSelected">
-          Widget info
+        <q-toolbar-title>
+          Edit Widget
         </q-toolbar-title>
       </q-toolbar>
 
       <!-- Widgets footer -->
       <div slot="footer">
-        <q-btn v-if="!widgetSelected" color="grey-5" outline style="margin:20px;" icon="close" v-on:click="closeWidgets()">
+        <q-btn color="grey-5" outline style="margin:20px;" icon="close" v-on:click="modal = false">
           CANCEL
         </q-btn>
-        <q-btn v-if="widgetSelected" color="grey-5" outline style="margin:20px;" icon="arrow_back" v-on:click="widgetSelected = null">
-          BACK
-        </q-btn>
-        <q-btn v-if="widgetSelected" color="teal" outline style="margin:20px;" icon="add" v-on:click="addWidget(widgetSelected)">
-          ADD
+        <q-btn color="teal" outline style="margin:20px;" icon="add" v-on:click="saveWidget()">
+          SAVE
         </q-btn>
       </div>
 
-      <div class="widgets-content" v-if="!widgetSelected">
-        <div class="row justify-center items-center gutters-md" style="position:absolute;top:30px;bottom:50px;left:10px;right:10px;">
-          <div class="col-2" v-for="widget in widgets" style="padding:10px;">
-            <q-btn color="teal" class="widget" v-on:click="selectWidget(widget)" outline>{{widget.name}}</q-btn>
-          </div>
-        </div>
-      </div>
-
-      <div class="widgets-content" v-if="widgetSelected">
+      <div class="widgets-content">
         <div class="row justify-center" style="position:absolute;top:50px;bottom:50px;left:10px;right:10px;">
-          <div class="col col-4 col-xs-12 col-md-4 col-lg-4" >
+          <div class="col col-4 col-xs-12 col-md-4 col-lg-4">
             <!-- <h4>{{widgetSelected.name}}</h4>
             <span class="label">Author</span>
             <p>{{widgetSelected.description}}</p> -->
@@ -46,22 +32,22 @@
               <q-item>
                 <q-item-main>
                   <q-item-tile label>
-                    <h5>{{widgetSelected.name}}</h5></q-item-tile>
+                    <h5>{{widget.name}}</h5></q-item-tile>
                 </q-item-main>
               </q-item>
               <q-item>
                 <q-item-side left icon="fa-user" color="teal" />
                 <q-item-main>
-                  {{widgetSelected.author}}
+                  {{widget.author}} {{widget.type}}
                 </q-item-main>
               </q-item>
               <q-item>
                 <q-item-side left icon="info" color="teal" />
                 <q-item-main>
-                  {{widgetSelected.description}}
+                  {{widget.description}}
                 </q-item-main>
               </q-item>
-              <q-item v-if="widgetSelected.components.settings">
+              <q-item v-if="widget.settingsview">
                 <q-item-main>
                   <q-item-tile label>
                     <h5>Settings</h5></q-item-tile>
@@ -69,7 +55,7 @@
               </q-item>
               <q-item>
                 <q-item-main>
-                  <div :is="widgets[widgetSelected.id].components.settings" :widget.sync="widgetSelected"> </div>
+                  <div :is="widgets[widget.type].components.settings" :widget.sync="widget"> </div>
                 </q-item-main>
               </q-item>
             </q-list>
@@ -89,38 +75,32 @@
 import {
   EventBus
 } from 'src/eventBus';
-
 import widgets from '@/widget-system/'
 
 export default {
   data() {
     return {
       modal: false,
-      widgetSelected: null,
+      widget: {},
       widgets: widgets
     }
   },
   components: {
 
   },
-  async mounted() {
+  mounted() {
     // Event
-    EventBus.$on('openWidgets', () => {
+    EventBus.$on('editWidget', (id) => {
+
+      this.widget = this.$store.getters.getWidget(id);
       this.modal = true;
     });
   },
   methods: {
-    selectWidget(widget) {
-      this.widgetSelected = widget;
-    },
-    closeWidgets() {
+    saveWidget() {
+      this.$store.commit('editWidget', this.widget);
       this.modal = false;
-    },
-    async addWidget(widget) {
-      await this.$store.commit('addWidget', widget);
-      await EventBus.$emit('widgetAdded');
-      this.modal = await false;
-      this.widgetSelected = null;
+      console.log('widget update: ', this.widget);
     }
   }
 }
