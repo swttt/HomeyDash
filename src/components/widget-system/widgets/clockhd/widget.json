@@ -2,6 +2,7 @@
   "id": "clockhd",
   "name": "Clock",
   "description": "A standard (digital)clock to show on your dashboard.",
+  "author": "Bas Jansen",
   "width": 280,
   "components": {
     "settings": "Settings"

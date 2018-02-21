@@ -16,8 +16,11 @@ export const addWidget = (state, widget) => {
   newBox.type = widget.id;
   newBox.settings = widget.settings;
   newBox.main = widget.components.main;
-  newBox.w = widget.width;
-  newBox.h = widget.height;
+  newBox.settingsview = widget.components.settings;
+  newBox.author = widget.author;
+  newBox.description = widget.description;
+  newBox.width = widget.width;
+  newBox.height = widget.height;
   newBox.x = 0;
   newBox.y = 0;
   newBox.id = guid();
@@ -28,6 +31,11 @@ export const addWidget = (state, widget) => {
 export const removeWidget =(state, widget) => {
   var index = state.widgets.findIndex(item => item.id === widget.id)
   state.widgets.splice(index, 1);
+}
+
+export const editWidget =(state, widget) => {
+  var index = state.widgets.findIndex(item => item.id === widget.id)
+  state.widgets[index] = widget;
 }
 
 export const updateWidgets = (state, widgets) => {

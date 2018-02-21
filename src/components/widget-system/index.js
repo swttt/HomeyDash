@@ -17,6 +17,7 @@ function importAll(r) {
       id: widgetData.id,
       name: widgetData.name,
       description: widgetData.description,
+      author: widgetData.author,
       width: widgetData.width,
       height: widgetData.height,
       components: widgetData.components,
