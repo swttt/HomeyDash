@@ -1,7 +1,8 @@
 {
     "id": "ipwebcam",
     "name": "IP Webcam",
-    "description": "Support for IP Webcams",
+    "description": "Basic IP Webcam support for HomeyDash.",
+    "author": "Jelger Haanstra (Phuturist)",
     "width": 400,
     "height": 300,
     "components": {
