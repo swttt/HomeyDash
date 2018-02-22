@@ -1,6 +1,6 @@
 <template>
     <div class="ipwebcam">
-        <img id="stream" v-bind:src="webcamUrl()" v-bind:alt="widget.settings.name" border="0" onLoad="webcamUrl()" />
+        <img id="stream" v-bind:src="webcamUrl()" v-bind:alt="widget.settings.name" border="0" />
         <div class="name" v-if="widget.settings.showname">{{ widget.settings.name }}</div>
     </div>
 </template>
@@ -16,79 +16,25 @@
                 } else {
                     url = 'http://'+ this.widget.settings.url;
                 }
-                /*if (this.widget.settings.username && this.widget.settings.password) {
-                    console.log('using credentials');
-                    var options = {
-                        url: url,
-                        method: 'GET',
-                        headers: {
-                            'Authorization': "Basic " + btoa(this.widget.settings.username + ":" + this.widget.settings.password),
-                            'Access-Control-Allow-Origin':  'http://homeydash.local:8081',
-                            'Access-Control-Allow-Methods': 'GET',
-                            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                            'Access-Control-Allow-Credentials': 'true'
-                        }
-                    }
-                } else {
-                    console.log('not using credentials');
-                    var options = {
-                        url: url,
-                        method: 'GET',
-                        headers: {
-                            'Access-Control-Allow-Origin':  'http://homeydash.local:8081',
-                            'Access-Control-Allow-Methods': 'GET',
-                            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                            'Access-Control-Allow-Credentials': 'true'
-                        }
-                    }
-                }
-
-                this.$http(options)
-                    .then((response) => {
-                        console.log('success');
-                        return response.body;
-                    }, (error) => { console.log('whoops'); console.log(error); });*/
-
-                /*this.axios.defaults.withCredentials = true;
-
-                let axiosConfig = {
-                    headers: {
-                        'crossdomain': 'true',
-                        'Access-Control-Allow-Origin':  'http://homeydash.local:8081',
-                        'Access-Control-Allow-Methods': 'GET',
-                        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-                        'Access-Control-Allow-Credentials': true
-                    }
-                };
-
-                this.axios.get(url)
-                    .then((response) => {
-                      console.log("RESPONSE RECEIVED: ", response);
-                      return response.body;
-                    })
-                    .catch((error) => {
-                      console.log("AXIOS ERROR: ", error);
-                  })*/
 
                 fetch(url, {
-                       method: 'GET',
-                       mode: 'no-cors',
-                       credentials: 'same-origin',
-                       headers: {
-                           'Authorization': "Basic " + btoa(this.widget.settings.username + ":" + this.widget.settings.password),
-                           'Access-Control-Allow-Origin':  'http://homeydash.local:8081',
-                           'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
-                           'Access-Control-Allow-Credentials': true
-                       }
-                   }
-                )
-                    .then(response => response.json())
-                    .then(json => {
-                        return json.body;
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': 'http://homeydash.local:8081',
+                        'Authorization': 'Basic ' + btoa(this.widget.settings.username + ':' + this.widget.settings.password),
+                        'Access-Control-Allow-Methods': 'GET',
+                        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+                        'Access-Control-Max-Age': 86400
+                    }
+                })
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
             }
         }
     }
