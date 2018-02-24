@@ -48,7 +48,7 @@
                 </q-item-side>
             </q-item>
         </q-list>
-        <q-input dark v-model="widget.width" type="number" stack-label="Width" />
+        <q-input dark v-model="widget.width" type="number" stack-label="Widget Width" />
     </div>
 </template>
 

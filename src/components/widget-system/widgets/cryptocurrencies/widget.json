@@ -4,7 +4,6 @@
     "description": "View cryptocurrencies statistics",
     "author": "Jelger Haanstra (Phuturist)",
     "width": 500,
-    "height": 321,
     "components": {
         "settings": "Settings"
     }

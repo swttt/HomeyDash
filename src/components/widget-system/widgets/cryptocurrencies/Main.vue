@@ -73,7 +73,6 @@
                             });
                         }
                         this.coins = list;
-                        this.widget.height = ((list.length + 1) * 29) + 2;
                     })
                     .catch((err) => {
                         console.error(err);
