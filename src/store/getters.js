@@ -6,3 +6,8 @@ export const getWidget = (state) => (id) => {
   console.log(state.widgets.find(widget => widget.id === id))
   return state.widgets.find(widget => widget.id === id)
 }
+
+
+export const getWidgetsSettings = (state) => {
+  return state.settings.widgets;
+}

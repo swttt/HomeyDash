@@ -1,8 +1,8 @@
 <template>
 <div>
-  <q-modal v-model="modal" no-backdrop-dismiss maximized :content-css="{background: 'rgba(0, 0, 0, 0.9)'}">
+  <q-modal v-if="widget" v-model="editModal" no-backdrop-dismiss maximized :content-css="{background: 'rgba(0, 0, 0, 0.9)'}">
 
-    <q-modal-layout footer-class="widgets" v-if="widget">
+    <q-modal-layout footer-class="widgets">
 
       <!-- Widgets header -->
       <q-toolbar slot="header">
@@ -13,7 +13,7 @@
 
       <!-- Widgets footer -->
       <div slot="footer">
-        <q-btn color="grey-5" outline style="margin:20px;" icon="close" v-on:click="modal = false">
+        <q-btn color="grey-5" outline style="margin:20px;" icon="close" v-on:click="closeModal()">
           CANCEL
         </q-btn>
         <q-btn color="teal" outline style="margin:20px;" icon="add" v-on:click="saveWidget()">
@@ -47,15 +47,15 @@
                   {{widget.description}}
                 </q-item-main>
               </q-item>
-              <q-item v-if="widget.settingsview">
+              <q-item v-if="widget">
                 <q-item-main>
                   <q-item-tile label>
                     <h5>Settings</h5></q-item-tile>
                 </q-item-main>
               </q-item>
-              <q-item>
+              <q-item v-if="widget">
                 <q-item-main>
-                  <div :is="widgets[widget.type].components.settings" :widget.sync="widget"> </div>
+                  <component :is="widgets[widget.id].components.settings" :key="widget.guid" :widget.sync="widget" :settings.sync="settings[widget.guid]"> </component>
                 </q-item-main>
               </q-item>
             </q-list>
@@ -80,27 +80,43 @@ import widgets from '@/widget-system/'
 export default {
   data() {
     return {
-      modal: false,
-      widget: {},
-      widgets: widgets
+      editModal: false,
+      widgets: widgets,
+      widget: null
     }
   },
   components: {
 
   },
-  mounted() {
-    // Event
-    EventBus.$on('editWidget', (id) => {
+  created() {
 
-      this.widget = this.$store.getters.getWidget(id);
-      this.modal = true;
+
+  },
+  mounted(){
+    // Event
+    EventBus.$on('editWidget', async (widget) => {
+      console.log('edit this: ', widget)
+      this.widget = await widget;
+      this.editModal = true;
     });
   },
   methods: {
     saveWidget() {
-      this.$store.commit('editWidget', this.widget);
-      this.modal = false;
+      this.$store.commit('editWidgetSettings', this.settings);
+      this.closeModal();
       console.log('widget update: ', this.widget);
+    },
+    closeModal(){
+      EventBus.$emit('exitEdit');
+      this.editModal = false;
+      console.log('editModal: '+ this.editModal)
+    }
+  },
+  computed: {
+    settings: {
+      get() {
+        return this.$store.getters.getWidgetsSettings
+      }
     }
   }
 }

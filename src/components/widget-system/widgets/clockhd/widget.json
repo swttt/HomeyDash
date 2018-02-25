@@ -6,5 +6,6 @@
   "width": 280,
   "components": {
     "settings": "Settings"
-  }
+  },
+  "settings": []
 }

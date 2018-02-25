@@ -12,8 +12,7 @@ export default {
     }
   },
   created() {
-    if(!this.widget.settings)
-      this.widget.settings = {};
+    console.log('Open settings Simple Box: ', this.widget);
   }
 }
 </script>

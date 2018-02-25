@@ -2,9 +2,9 @@
 <div class="container">
 
   <q-transition group appear enter="fadeIn" leave="fadeOut">
-    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.id" :itemId="item.id" :x="item.x" :y="item.y" class="box">
-      <div v-bind:style="{ width: item.width + 'px', height: item.height + 'px'  }" :is="widgettypes[item.type].components.main" :itemId="item.id" :widget="item"></div>
-      <div :itemId="item.id" class="edit-mode" v-if="editMode">
+    <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.guid" :itemId="item.guid" :x="item.x" :y="item.y" class="box">
+      <div v-bind:style="{ width: item.width + 'px', height: item.height + 'px'  }" :key="item.guid" :is="item.components.main" :itemId="item.guid" :widget="item"></div>
+      <div :itemId="item.guid" class="edit-mode" v-if="editMode">
         <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
           <q-btn round color="red" icon="delete" /></v-touch>
           <v-touch class="edit" v-show="editMode" v-on:tap="editWidget(item)">
@@ -13,14 +13,15 @@
     </div>
   </q-transition>
   <widgetsmodal />
-  <editwidget />
+  <editwidget/>
 </div>
 </template>
 
 <script>
+import widgettypes from '@/widget-system/'
 import widgetsmodal from '@/base/components/Widgets'
 import editwidget from '@/base/components/EditWidget'
-import widgettypes from '@/widget-system/'
+
 import Draggabilly from "draggabilly"
 import _ from 'lodash';
 Draggabilly.prototype.setPosition = function (x, y) {
@@ -38,8 +39,7 @@ export default {
     return {
       editMode: false,
       draggies: [],
-      widgettypes: widgettypes,
-      widgetEditted: {}
+      widgettypes: widgettypes
     }
   },
   components: {
@@ -47,23 +47,19 @@ export default {
     editwidget
   },
   mounted() {
-    console.log(this.widgets);
-    EventBus.$on('editModeOff', () => {
-      this.editMode = false;
+    EventBus.$on('editMode', (value) => {
+      this.editMode = value;
       _.forEach(this.draggies, box => {
-        box.disable();
+        if(value){
+          box.enable();
+        }
+        else{
+          box.disable();
+        }
       });
     });
-    EventBus.$on('editModeOn', () => {
-      this.editMode = true;
-      _.forEach(this.draggies, box => {
-        box.enable();
-      });
-    });
-
     EventBus.$on('saveWidget', (widget) => {
       this.$store.commit('saveWidget', widget);
-
     });
 
     EventBus.$on('widgetAdded', () => {
@@ -101,7 +97,7 @@ export default {
           draggie.disable();
         }
         draggie.on('dragEnd', (event, pointer) => {
-          var index = this.widgets.findIndex(item => item.id === event.target.getAttribute("itemId"))
+          var index = this.widgets.findIndex(item => item.guid === event.target.getAttribute("itemId"))
           this.widgets[index].x = this.draggies[index].position.x;
           this.widgets[index].y = this.draggies[index].position.y;
           this.$store.commit('updateWidgets', this.widgets);
@@ -114,17 +110,15 @@ export default {
       this.$store.commit('removeWidget', widget);
 
     },
-    editWidget(widget){
-      EventBus.$emit('editWidget', widget.id);
+    async editWidget(widget){
+      this.editing = true;
+      EventBus.$emit('editWidget', widget);
     }
   },
   computed: {
     widgets: {
       get() {
         return this.$store.getters.getWidgets
-      },
-      set(value) {
-        this.$store.commit('updateWidgets', value)
       }
     }
   }

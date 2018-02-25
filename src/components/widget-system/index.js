@@ -10,8 +10,37 @@ function importAll(r) {
     else
       widgetData.components.main = require('./widgets/' + widgetData.id + '/' + widgetData.components.main).default;
 
-      if (widgetData.components.settings)
-        widgetData.components.settings = require('./widgets/' + widgetData.id + '/' + widgetData.components.settings).default;
+    if (widgetData.components.settings)
+      widgetData.components.settings = require('./widgets/' + widgetData.id + '/' + widgetData.components.settings).default;
+
+    let settingsObj = {};
+    widgetData.settings.forEach((setting) => {
+      // check settings type
+      if (setting.type == "string") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = "";
+        }
+      }
+      else if (setting.type == "object") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = {};
+        }
+      }
+      else if (settings.type == "array") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = [];
+        }
+      }
+    });
 
     const createWidget = {
       id: widgetData.id,
@@ -21,7 +50,7 @@ function importAll(r) {
       width: widgetData.width,
       height: widgetData.height,
       components: widgetData.components,
-      settings: {}
+      settings: settingsObj
     };
 
     widgets[createWidget.id] = createWidget;

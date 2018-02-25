@@ -1,19 +1,14 @@
 <template>
-<div class="content">
-  {{widget.guid}}
-  {{widget.settings.text}}
+<div>
+  <h1>Switches list</h1>
 </div>
 </template>
 
 <script>
 export default {
   props: ['widget'],
-  data() {
-    return {
-    }
-  },
   mounted(){
-  
+    
   }
 }
 </script>
@@ -21,7 +16,4 @@ export default {
 <style lang="stylus" scoped>
 @import '~variables'
 
-.content
-  padding 10px
-
-  </style>
+</style>
