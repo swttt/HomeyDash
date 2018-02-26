@@ -34,5 +34,4 @@ export default {
 
 .buienradar
   position relative
-  /* background url(https://api.buienradar.nl/image/1.0/RadarMapNL?w=250&h=300) */
 </style>
