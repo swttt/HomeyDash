@@ -7,7 +7,7 @@
       toggle
 
       color="teal"
-      v-model="settings.devices"
+      v-model="widget.settings.devices"
       :options="switches"
     />
 </div>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  props: ['widget', 'settings'],
+  props: ['widget'],
   data() {
     return {
       switches: [],
@@ -33,6 +33,7 @@ export default {
       let devices = await this.$homey.devices.getDevices();
       _.forEach(devices, device => {
         if(device.capabilities.onoff){
+          this.widget.settings.homeyDevices[device.id] = device;
           let option = {}
           option.label = device.name;
           option.value = device.id;

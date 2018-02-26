@@ -1,6 +1,5 @@
 <template>
 <div class="content">
-  {{widget.guid}}
   {{widget.settings.text}}
 </div>
 </template>
@@ -11,9 +10,6 @@ export default {
   data() {
     return {
     }
-  },
-  mounted(){
-  
   }
 }
 </script>

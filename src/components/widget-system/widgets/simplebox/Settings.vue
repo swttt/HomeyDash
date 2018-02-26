@@ -6,13 +6,6 @@
 
 <script>
 export default {
-  props: ['widget'],
-  data() {
-    return {
-    }
-  },
-  created() {
-    console.log('Open settings Simple Box: ', this.widget);
-  }
+  props: ['widget']
 }
 </script>
