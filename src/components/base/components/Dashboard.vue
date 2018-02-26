@@ -1,9 +1,8 @@
 <template>
 <div class="container">
-
   <q-transition group appear enter="fadeIn" leave="fadeOut">
     <div v-for="item in widgets" v-bind:class="{ edit: editMode }" :key="item.guid" :itemId="item.guid" :x="item.x" :y="item.y" class="box">
-      <div v-bind:style="{ width: item.width + 'px', height: item.height + 'px'  }" :key="item.guid" :is="item.components.main" :itemId="item.guid" :widget="item"></div>
+      <div v-bind:style="{ width: item.width + 'px', height: item.height + 'px'  }" :key="item.guid" :is="widgettypes[item.type].components.main" :itemId="item.guid" :widget="item"></div>
       <div :itemId="item.guid" class="edit-mode" v-if="editMode">
         <v-touch class="close" v-show="editMode" v-on:tap="removeWidget(item)">
           <q-btn round color="red" icon="delete" /></v-touch>
@@ -34,6 +33,7 @@ import {
   EventBus
 } from 'src/eventBus';
 
+
 export default {
   data() {
     return {
@@ -60,6 +60,10 @@ export default {
     });
     EventBus.$on('saveWidget', (widget) => {
       this.$store.commit('saveWidget', widget);
+    });
+
+    EventBus.$on('exitEdit', () => {
+      this.widgets = this.$store.getters.getWidgets;
     });
 
     EventBus.$on('widgetAdded', () => {
@@ -111,7 +115,6 @@ export default {
 
     },
     async editWidget(widget){
-      this.editing = true;
       EventBus.$emit('editWidget', widget);
     }
   },
@@ -119,6 +122,10 @@ export default {
     widgets: {
       get() {
         return this.$store.getters.getWidgets
+      },
+      set(value) {
+        console.log('set new widgets!')
+        this.$store.commit('updateWidgets', value);
       }
     }
   }

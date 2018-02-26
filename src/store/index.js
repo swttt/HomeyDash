@@ -64,16 +64,7 @@ const state = {
   }
 }
 
-function guid() {
-  return new Promise((resolve, reject) => {
-        function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-        }
-        resolve(s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4());
-    });
-  };
+
 
 
 //VUEX Stores
@@ -85,8 +76,8 @@ const store = new Vuex.Store({
   actions: {
     addWidget({ commit, state }, widget) {
       return new Promise(async (resolve, reject) => {
-          let id = await guid();
-          widget.guid = id;
+          widget.guid = '';
+
           commit('addWidget', widget);
           resolve(widget);
       })

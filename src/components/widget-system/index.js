@@ -32,7 +32,7 @@ function importAll(r) {
           settingsObj[setting.id] = {};
         }
       }
-      else if (settings.type == "array") {
+      else if (setting.type == "array") {
         if (setting.default) {
           settingsObj[setting.id] = setting.default;
         }
@@ -40,22 +40,30 @@ function importAll(r) {
           settingsObj[setting.id] = [];
         }
       }
+      else if (setting.type == "boolean") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = false;
+        }
+      }
     });
 
-    const createWidget = {
-      id: widgetData.id,
-      name: widgetData.name,
-      description: widgetData.description,
-      author: widgetData.author,
-      width: widgetData.width,
-      height: widgetData.height,
-      components: widgetData.components,
-      settings: settingsObj
-    };
-
-    widgets[createWidget.id] = createWidget;
-  });
-}
+    widgets.__defineGetter__(widgetData.id, function() {
+      const createWidget = {
+        type: widgetData.id,
+        name: widgetData.name,
+        description: widgetData.description,
+        author: widgetData.author,
+        width: widgetData.width,
+        height: widgetData.height,
+        components: widgetData.components,
+        settings: Object.assign({}, settingsObj)
+      };
+      return createWidget;
+    });
+})}
 
 importAll(require.context('./widgets/', true, /\.json$/));
 

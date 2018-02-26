@@ -37,7 +37,7 @@
 
       <div class="widgets-content" v-if="widget">
         <div class="row justify-center" style="position:absolute;top:50px;bottom:50px;left:10px;right:10px;">
-          <div class="col col-4 col-xs-12 col-md-4 col-lg-4" >
+          <div class="col col-4 col-xs-12 col-md-4 col-lg-4">
             <!-- <h4>{{widget.name}}</h4>
             <span class="label">Author</span>
             <p>{{widget.description}}</p> -->
@@ -61,15 +61,15 @@
                   {{widget.description}}
                 </q-item-main>
               </q-item>
-              <q-item v-if="widget.id">
+              <q-item v-if="widget.type">
                 <q-item-main>
                   <q-item-tile label>
                     <h5>Settings</h5></q-item-tile>
                 </q-item-main>
               </q-item>
-              <q-item v-if="widget.id">
+              <q-item v-if="widget.type">
                 <q-item-main>
-                  <component :is="widget.components.settings" :key="widget.index" :widget="widget"> </component>
+                  <component :is="widget.components.settings" :widget="widget"> </component>
                 </q-item-main>
               </q-item>
             </q-list>
@@ -104,40 +104,35 @@ export default {
 
   },
   async mounted() {
+
+    // Object.defineProperty(this.widgets, 'simplebox', { configurable: false });
+    console.log(this.widgets);
     // Event
     EventBus.$on('openWidgets', () => {
       this.modal = true;
-      this.widgets = widgets;
+      // this.widgets = widgets;
     });
   },
   methods: {
-    async selectWidget(widget) {
-      this.widget = await widget
-      console.log(this.widget);
+    selectWidget(widget) {
+      this.widget = widget
+
 
       // this.$store.dispatch('addWidget')
     },
     async closeWidgets() {
       this.modal = await false;
       console.log('Modal: ' + this.modal);
-      this.widgets = null;
     },
     async addWidget(widget) {
-      this.$store.dispatch('addWidget', widget);
-      EventBus.$emit('widgetAdded');
+      await this.$store.dispatch('addWidget', widget)
       await this.closeWidgets();
       this.widget = null;
+      EventBus.$emit('widgetAdded');
     },
-    async modalBack(){
+    async modalBack() {
       // await this.$store.commit('removeWidget', this.widget);
       this.widget = null;
-    }
-  },
-  computed: {
-    settings: {
-      get() {
-        return this.$store.getters.getWidgetsSettings
-      }
     }
   }
 }

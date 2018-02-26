@@ -55,7 +55,7 @@
               </q-item>
               <q-item v-if="widget">
                 <q-item-main>
-                  <component :is="widgets[widget.id].components.settings" :key="widget.guid" :widget.sync="widget" :settings.sync="settings[widget.guid]"> </component>
+                  <component :is="widgets[widget.type].components.settings" :key="widget.guid" :widget.sync="widget"> </component>
                 </q-item-main>
               </q-item>
             </q-list>
@@ -102,21 +102,15 @@ export default {
   },
   methods: {
     saveWidget() {
-      this.$store.commit('editWidgetSettings', this.settings);
+      this.$store.commit('updateWidget', this.widget);
       this.closeModal();
       console.log('widget update: ', this.widget);
+
     },
     closeModal(){
       EventBus.$emit('exitEdit');
       this.editModal = false;
       console.log('editModal: '+ this.editModal)
-    }
-  },
-  computed: {
-    settings: {
-      get() {
-        return this.$store.getters.getWidgetsSettings
-      }
     }
   }
 }
