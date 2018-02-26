@@ -27,27 +27,27 @@ _.forEach(plugins, plugin => {
   obj.enabled = plugin.enabled;
   plugin.settings.forEach((setting) => {
     // check settings type
-    if(setting.type == "string"){
-      if(setting.default){
+    if (setting.type == "string") {
+      if (setting.default) {
         obj[setting.id] = setting.default;
       }
-      else{
+      else {
         obj[setting.id] = "";
       }
     }
-    else if(setting.type == "object"){
-      if(setting.default){
+    else if (setting.type == "object") {
+      if (setting.default) {
         obj[setting.id] = setting.default;
       }
-      else{
+      else {
         obj[setting.id] = {};
       }
     }
-    else if(settings.type == "array"){
-      if(setting.default){
+    else if (settings.type == "array") {
+      if (setting.default) {
         obj[setting.id] = setting.default;
       }
-      else{
+      else {
         obj[setting.id] = [];
       }
     }
@@ -55,19 +55,34 @@ _.forEach(plugins, plugin => {
   });
   pluginObject[plugin.id] = obj;
 });
-console.log(pluginObject);
+
 const state = {
   widgets: [],
   settings: {
-    plugins: pluginObject
+    plugins: pluginObject,
+    widgets: {}
   }
 }
+
+
+
+
 //VUEX Stores
 const store = new Vuex.Store({
   mutations,
   state,
   getters,
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState()],
+  actions: {
+    addWidget({ commit, state }, widget) {
+      return new Promise(async (resolve, reject) => {
+          widget.guid = '';
+
+          commit('addWidget', widget);
+          resolve(widget);
+      })
+    }
+  }
 });
 
 export default store;

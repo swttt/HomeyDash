@@ -6,14 +6,6 @@
 
 <script>
 export default {
-  props: ['widget'],
-  data() {
-    return {
-    }
-  },
-  created() {
-    if(!this.widget.settings)
-      this.widget.settings = {};
-  }
+  props: ['widget']
 }
 </script>

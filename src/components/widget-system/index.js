@@ -10,23 +10,60 @@ function importAll(r) {
     else
       widgetData.components.main = require('./widgets/' + widgetData.id + '/' + widgetData.components.main).default;
 
-      if (widgetData.components.settings)
-        widgetData.components.settings = require('./widgets/' + widgetData.id + '/' + widgetData.components.settings).default;
+    if (widgetData.components.settings)
+      widgetData.components.settings = require('./widgets/' + widgetData.id + '/' + widgetData.components.settings).default;
 
-    const createWidget = {
-      id: widgetData.id,
-      name: widgetData.name,
-      description: widgetData.description,
-      author: widgetData.author,
-      width: widgetData.width,
-      height: widgetData.height,
-      components: widgetData.components,
-      settings: {}
-    };
+    let settingsObj = {};
+    widgetData.settings.forEach((setting) => {
+      // check settings type
+      if (setting.type == "string") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = "";
+        }
+      }
+      else if (setting.type == "object") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = {};
+        }
+      }
+      else if (setting.type == "array") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = [];
+        }
+      }
+      else if (setting.type == "boolean") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = false;
+        }
+      }
+    });
 
-    widgets[createWidget.id] = createWidget;
-  });
-}
+    widgets.__defineGetter__(widgetData.id, function() {
+      const createWidget = {
+        type: widgetData.id,
+        name: widgetData.name,
+        description: widgetData.description,
+        author: widgetData.author,
+        width: widgetData.width,
+        height: widgetData.height,
+        components: widgetData.components,
+        settings: Object.assign({}, settingsObj)
+      };
+      return createWidget;
+    });
+})}
 
 importAll(require.context('./widgets/', true, /\.json$/));
 

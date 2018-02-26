@@ -41,22 +41,19 @@ export default {
 
   },
   mounted() {
-    EventBus.$on('editModeOn', () => {
-      this.editMode = true;
-    });
-    EventBus.$on('editModeOff', () => {
-      this.editMode = false;
-    });
+
   },
   created() {
 
   },
   methods: {
     startEdit() {
-      EventBus.$emit('editModeOn')
+      EventBus.$emit('editMode', true)
+      this.editMode = true;
     },
     quitEdit() {
-      EventBus.$emit('editModeOff')
+      EventBus.$emit('editMode', false)
+      this.editMode = false;
     },
     openSettings(){
       EventBus.$emit('openSettings')

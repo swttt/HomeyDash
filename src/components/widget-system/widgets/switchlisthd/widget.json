@@ -1,0 +1,19 @@
+{
+  "id": "switchlisthd",
+  "name": "Switches list",
+  "description": "Create a list with switches.",
+  "author": "Bas Jansen",
+  "width": 300,
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [{
+      "id": "devices",
+      "type": "array"
+    },
+    {
+      "id": "homeyDevices",
+      "type": "object"
+    }
+  ]
+}
