@@ -6,5 +6,9 @@
   "width": 280,
   "components": {
     "settings": "Settings"
-  }
+  },
+  "settings": [{
+    "id": "showDay",
+    "type": "boolean"
+  }]
 }
