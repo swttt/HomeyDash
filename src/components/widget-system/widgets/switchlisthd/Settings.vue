@@ -1,11 +1,12 @@
 <template>
 <div class="col-12">
-  <p>Select devices for in your widget</p>
+  <q-toggle label="Show title" dark color="teal" v-model="widget.settings.showHeader" />
+  <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.headerName" />
+  <br/><br/><small>Select devices for in your widget</small>
   <q-select
       dark
       multiple
       toggle
-
       color="teal"
       v-model="widget.settings.devices"
       :options="switches"
