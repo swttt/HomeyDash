@@ -1,6 +1,11 @@
 <template>
 <div>
   <q-list v-if="!loading">
+    <q-item >
+      <q-item-main v-if="widget.settings.showHeader">
+         <h5>{{widget.settings.headerName}}</h5>
+        </q-item-main>
+    </q-item>
     <q-item v-for="device in widget.settings.devices" :key="device">
       <q-item-main>
         {{widget.settings.homeyDevices[device].name}}<br/><small class="text-grey">{{widget.settings.homeyDevices[device].zone.name}}</small>
@@ -48,5 +53,9 @@ export default {
 
 <style lang="stylus" scoped>
 @import '~variables'
+
+h5
+  margin 0px
+  padding 0px
 
 </style>
