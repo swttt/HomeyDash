@@ -2,11 +2,15 @@
     <div class="col-12">
         <q-input dark v-model="widget.settings.refresh" type="number" stack-label="Refresh rate in seconds" />
         <!--<q-btn-toggle dark v-model="widget.settings.currency" toggle-color="primary" :options="[{label: 'USD', value: 'USD'}, {label: 'EUR', value: 'EUR'}]" />-->
+        <q-field dark label="Select mode">
+            <q-radio left-label v-model="widget.settings.mode" val="single" label="Single mode" color="teal" />
+            <q-radio left-label v-model="widget.settings.mode" val="multiple" label="Multiple mode" color="teal" />
+        </q-field>
         <q-field dark label="Select currency">
             <q-radio left-label v-model="widget.settings.currency" val="USD" label="USD" color="teal" />
             <q-radio left-label v-model="widget.settings.currency" val="EUR" label="EUR" color="teal" />
         </q-field>
-        <q-select dark multiple v-model="crypto" :options="selectCrypto" stack-label="Select which crypto currencies to show" />
+        <q-select dark multiple v-model="widget.settings.crypto" :options="selectCrypto" stack-label="Select which crypto currencies to show, in single mode select only one currency" />
         <q-list link sparse separator no-border>
             <q-list-header>Details to show</q-list-header>
             <q-item tag="label">
@@ -14,7 +18,7 @@
                     <q-item-tile label>Show Logo</q-item-tile>
                 </q-item-main>
                 <q-item-side right>
-                    <q-toggle dark v-model="showLogo" color="teal" />
+                    <q-toggle dark v-model="widget.settings.showLogo" color="teal" />
                 </q-item-side>
             </q-item>
             <q-item tag="label">
@@ -22,7 +26,7 @@
                     <q-item-tile label>Show Symbol</q-item-tile>
                 </q-item-main>
                 <q-item-side right>
-                    <q-toggle dark v-model="showSymbol" color="teal" />
+                    <q-toggle dark v-model="widget.settings.showSymbol" color="teal" />
                 </q-item-side>
             </q-item>
             <q-item tag="label">
@@ -30,7 +34,7 @@
                     <q-item-tile label>Show change percentage hour</q-item-tile>
                 </q-item-main>
                 <q-item-side right>
-                        <q-toggle dark v-model="showHour" color="teal" />
+                        <q-toggle dark v-model="widget.settings.showHour" color="teal" />
                 </q-item-side>
             </q-item>
             <q-item tag="label">
@@ -38,7 +42,7 @@
                     <q-item-tile label>Show change percentage day</q-item-tile>
                 </q-item-main>
                 <q-item-side right>
-                        <q-toggle dark v-model="showDay" color="teal" />
+                        <q-toggle dark v-model="widget.settings.showDay" color="teal" />
                 </q-item-side>
             </q-item>
             <q-item tag="label">
@@ -46,7 +50,7 @@
                     <q-item-tile label>Show change percentage week</q-item-tile>
                 </q-item-main>
                 <q-item-side right>
-                        <q-toggle dark v-model="showWeek" color="teal" />
+                        <q-toggle dark v-model="widget.settings.showWeek" color="teal" />
                 </q-item-side>
             </q-item>
         </q-list>
@@ -59,14 +63,6 @@
         props: ['widget'],
         data: function () {
             return {
-                refresh: 60,
-                currency: "USD",
-                showLogo: false,
-                showSymbol: false,
-                showHour: false,
-                showDay: false,
-                showWeek: false,
-                crypto: [],
                 selectCrypto: this.getCoinSelect()
             }
         },
@@ -86,36 +82,6 @@
                         console.error(err);
                     });
                 return list;
-            }
-        },
-        created: function () {
-            this.refresh = this.widget.settings.refresh || 60;
-            this.currency = this.widget.settings.currency || "USD";
-            this.crypto = this.widget.settings.crypto || ["BTC", "ETH"];
-            this.showLogo = this.widget.settings.showLogo || false;
-            this.showSymbol = this.widget.settings.showSymbol || false;
-            this.showHour = this.widget.settings.showHour || false;
-            this.showDay = this.widget.settings.showDay || false;
-            this.showWeek = this.widget.settings.showWeek || false;
-        },
-        watch: {
-            showLogo: function (newVal) {
-                this.widget.settings.showLogo = newVal;
-            },
-            showSymbol: function (newVal) {
-                this.widget.settings.showSymbol = newVal;
-            },
-            showHour: function (newVal) {
-                this.widget.settings.showHour = newVal;
-            },
-            showDay: function (newVal) {
-                this.widget.settings.showDay = newVal;
-            },
-            showWeek: function (newVal) {
-                this.widget.settings.showWeek = newVal;
-            },
-            crypto: function (newVal) {
-                this.widget.settings.crypto = newVal;
             }
         }
     }

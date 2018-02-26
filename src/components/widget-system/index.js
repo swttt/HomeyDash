@@ -48,6 +48,14 @@ function importAll(r) {
           settingsObj[setting.id] = false;
         }
       }
+      else if (setting.type == "number") {
+        if (setting.default) {
+          settingsObj[setting.id] = setting.default;
+        }
+        else {
+          settingsObj[setting.id] = false;
+        }
+      }
     });
 
     widgets.__defineGetter__(widgetData.id, function() {

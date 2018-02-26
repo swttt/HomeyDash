@@ -1,6 +1,38 @@
 <template>
-    <div class="cryptocurrencies">
-        <table class="table table-hover">
+    <div class="cryptocurrencies" v-if="widget.settings.mode === 'single'">
+        <ul>
+            <li v-cloak v-for="coin in coins">
+                <div class="single">
+                    <div class="data">
+                        <h5 class="name">{{ coin.name }}<span class="symbol" v-if="widget.settings.showSymbol"> [ {{ coin.symbol }} ]</span></h5>
+                        <div class="price" v-if="widget.settings.currency === 'USD'">&#36; {{ formatPrice(coin.price_usd) }}</div>
+                        <div class="price" v-if="widget.settings.currency === 'EUR'">&euro; {{ formatPrice(coin.price_eur) }}</div>
+                    </div>
+                    <div class="image">
+                        <img v-bind:src="getCoinImage(coin.symbol)" v-if="widget.settings.showLogo" />
+                    </div>
+                </div>
+                <table class="singletable" v-if="widget.settings.showHour || widget.settings.showDay || widget.settings.showWeek">
+                    <thead>
+                        <tr>
+                            <td v-if="widget.settings.showHour">1H</td>
+                            <td v-if="widget.settings.showDay">1D</td>
+                            <td v-if="widget.settings.showWeek">1W</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="1h center" v-bind:style="getColor(coin.percent_change_1h)" v-if="widget.settings.showHour"><span v-if="coin.percent_change_1h > 0">+</span>{{ coin.percent_change_1h }}%</td>
+                            <td class="24h center" v-bind:style="getColor(coin.percent_change_24h)" v-if="widget.settings.showDay"><span v-if="coin.percent_change_24h > 0">+</span>{{ coin.percent_change_24h }}%</td>
+                            <td class="1w center" v-bind:style="getColor(coin.percent_change_7d)" v-if="widget.settings.showWeek"><span v-if="coin.percent_change_7d > 0">+</span>{{ coin.percent_change_7d }}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+    <div class="cryptocurrencies multiple" v-else="widget.settings.mode === 'multiple'">
+        <table class="multipletable">
             <thead>
                 <tr>
                     <td>Name</td>
@@ -13,10 +45,10 @@
             </thead>
             <tbody>
                 <tr v-cloak v-for="coin in coins">
-                    <td class="name"><img v-bind:src="getCoinImage(coin.symbol)" v-if="widget.settings.showLogo"> {{ coin.name }}</td>
+                    <td class="name"><img v-bind:src="getCoinImage(coin.symbol)" v-if="widget.settings.showLogo" /> {{ coin.name }}</td>
                     <td class="symbol center" v-if="widget.settings.showSymbol">{{ coin.symbol }}</td>
-                    <td class="price center" v-if="widget.settings.currency === 'USD'">{{ formatPrice(coin.price_usd) }}</td>
-                    <td class="price center" v-if="widget.settings.currency === 'EUR'">{{ formatPrice(coin.price_eur) }}</td>
+                    <td class="price center" v-if="widget.settings.currency === 'USD'">&#36; {{ formatPrice(coin.price_usd) }}</td>
+                    <td class="price center" v-if="widget.settings.currency === 'EUR'">&euro; {{ formatPrice(coin.price_eur) }}</td>
                     <td class="1h center" v-bind:style="getColor(coin.percent_change_1h)" v-if="widget.settings.showHour"><span v-if="coin.percent_change_1h > 0">+</span>{{ coin.percent_change_1h }}%</td>
                     <td class="24h center" v-bind:style="getColor(coin.percent_change_24h)" v-if="widget.settings.showDay"><span v-if="coin.percent_change_24h > 0">+</span>{{ coin.percent_change_24h }}%</td>
                     <td class="1w center" v-bind:style="getColor(coin.percent_change_7d)" v-if="widget.settings.showWeek"><span v-if="coin.percent_change_7d > 0">+</span>{{ coin.percent_change_7d }}%</td>
@@ -47,6 +79,10 @@
             this.interval = setInterval(() => {
                 this.getCoinData();
             }, UPDATE_INTERVAL)
+
+            if (widget.settings.mode === 'single') {
+                this.widget.width = 300;
+            }
         },
         methods: {
             getCoinData() {
@@ -115,20 +151,50 @@
 <style lang="stylus" scoped>
     @import '~variables'
 
+    .cryptocurrencies ul
+        list-style-type: none
+        margin: 0
+        padding: 4px
+
+    .cryptocurrencies ul .single .data
+        float: left
+        width: 60%
+        text-align: center
+
+    .cryptocurrencies ul .single .image
+        float: left
+        width: 38%
+        margin-left: 2%
+        padding: 4px
+
+    .cryptocurrencies ul .single .name
+        white-space: nowrap
+
+    .cryptocurrencies ul .price
+        white-space: nowrap
+        font-size: 24px
+        border-top: 1px solid #ccc
+        border-bottom: 1px solid #ccc
+        margin: 8px 0
+        padding: 8px 0
+
+    .cryptocurrencies ul img
+        width: 100%
+        height: auto
+        padding: 8px
+
     .cryptocurrencies table
         width: 100%
 
     .cryptocurrencies table thead td
         background-color: rgba(0, 0, 0, 0.5)
         text-align: center
-        font-size: 14px
         font-weight: 700
         padding: 4px
 
     .cryptocurrencies table td
         height: 27px
         background-color: rgba(0, 0, 0, 0.3)
-        font-size: 13px
         padding: 4px
 
     .cryptocurrencies table td.center
@@ -140,5 +206,15 @@
         max-width: 16px
         margin-right: 6px
 
+    .cryptocurrencies table.singletable thead td
+        font-size: 24px
 
+    .cryptocurrencies table.singletable td
+        font-size: 20px
+
+    .cryptocurrencies table.multipletable thead td
+        font-size: 14px
+
+    .cryptocurrencies table.multipletable td
+        font-size: 13px
 </style>
