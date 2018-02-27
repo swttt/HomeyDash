@@ -1,7 +1,7 @@
 <template>
     <div class="cryptocurrencies" v-if="widget.settings.mode === 'single'">
         <ul>
-            <li v-cloak v-for="coin in coins">
+            <li v-cloak v-for="coin, index in coins" :key="coin.id" v-if="index < 1">
                 <div class="single">
                     <div class="data">
                         <h5 class="name">{{ coin.name }}<span class="symbol" v-if="widget.settings.showSymbol"> [ {{ coin.symbol }} ]</span></h5>
