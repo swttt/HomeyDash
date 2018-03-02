@@ -1,0 +1,62 @@
+{
+    "id": "cryptocurrencies",
+    "name": "Cryptocurrencies",
+    "description": "View cryptocurrencies statistics",
+    "author": "Jelger Haanstra (Phuturist)",
+    "width": 500,
+    "components": {
+        "settings": "Settings"
+    },
+    "settings": [
+        {
+          "id": "refresh",
+          "type": "number",
+          "default": 60
+        },
+        {
+          "id": "mode",
+          "type": "string",
+          "default": "multiple"
+        },
+        {
+          "id": "currency",
+          "type": "string",
+          "default": "USD"
+        },
+        {
+          "id": "crypto",
+          "type": "array",
+          "default": []
+        },
+        {
+          "id": "showLogo",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "id": "showSymbol",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "id": "showHour",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "id": "showDay",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "id": "showWeek",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "id": "width",
+          "type": "number",
+          "default": 500
+        }
+    ]
+}
