@@ -53,9 +53,7 @@ export default {
     .thermometer .temperature
         font-size: 2.2rem
 
-
     .thermometer .unit
         font-size: 1rem
-
         padding-left: 6px
 </style>
