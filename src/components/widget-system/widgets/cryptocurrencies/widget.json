@@ -52,11 +52,6 @@
           "id": "showWeek",
           "type": "boolean",
           "default": true
-        },
-        {
-          "id": "width",
-          "type": "number",
-          "default": 500
         }
     ]
 }
