@@ -1,16 +1,7 @@
 <template>
 <div>
 
-  <q-transition appear enter="fadeIn" leave="fadeOut">
-    <div class="row justify-center items-center content-center power-row">
-      <div v-show="!settings.plugins['weatherbyevad'].apiKey.length" class="col col-4 col-xs-11 col-md-4 settings-box">
-        <p>No apikey found, please go to weather undergroud and get your apikey and enter your apikey in the settings.</p>
-        <q-btn color="teal" style="margin: 0 auto;" v-on:click="openSettings()" icon="settings">
-          Settings
-        </q-btn>
-      </div>
-    </div>
-  </q-transition>
+
 
   <q-transition appear enter="fadeIn" leave="fadeOut">
     <div class="row justify-center" v-if="settings.plugins['weatherbyevad'].apiKey.length">
@@ -137,7 +128,7 @@ export default {
       this.expected = result1.data.forecast;
       this.units =  result2.units;
 
-console.log("units", this.units);
+console.log("unitss", units);
 
     }
   },
