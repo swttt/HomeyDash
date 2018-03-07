@@ -80,7 +80,7 @@
                 this.getCoinData();
             }, UPDATE_INTERVAL)
 
-            if (widget.settings.mode === 'single') {
+            if (this.widget.settings.mode === 'single') {
                 this.widget.width = 300;
             }
         },
