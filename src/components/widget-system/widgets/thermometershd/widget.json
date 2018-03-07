@@ -1,0 +1,31 @@
+{
+    "id": "thermometershd",
+    "name": "Thermometers",
+    "description": "Thermometers Homey devices",
+    "author": "Jelger Haanstra (Phuturist)",
+    "width": 175,
+    "components": {
+        "settings": "Settings"
+    },
+    "settings": [
+        {
+            "id": "name",
+            "type": "string"
+        },
+        {
+            "id": "room",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "icon",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "thermometer",
+            "type": "array",
+            "default": []
+        }
+    ]
+}
