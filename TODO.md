@@ -8,16 +8,16 @@
 
 ## Dashboard
 
-- [ ] Create add widget dialog
+- [x] Create add widget dialog
 - [ ] Find a solution for dashboard view on mobile devices (smaller screens)
 - [ ] Create a setting to keep the dashboard persistent on different devices. (instead of localstorage)
-- [ ] Load widget type from JSON
-- [ ] Let widgets have their own settings
-- [ ] Widgets need their own settings wizard or screen
+- [x] Load widget type from JSON
+- [x] Let widgets have their own settings
+- [x] Widgets need their own settings wizard or screen
 
 ## General
 
-- [ ] Find a solution to modular widgets
+- [x] Find a solution to modular widgets
 - [ ] When stable enough try to port to PhoneGap
 
 ## Settings
