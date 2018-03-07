@@ -51,6 +51,14 @@ _.forEach(plugins, plugin => {
         obj[setting.id] = [];
       }
     }
+    else if (settings.type == "number") {
+      if (setting.default) {
+        obj[setting.id] = setting.default;
+      }
+      else {
+        obj[setting.id] = 0;
+      }
+    }
 
   });
   pluginObject[plugin.id] = obj;
