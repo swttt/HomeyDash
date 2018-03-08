@@ -7,7 +7,8 @@
         {{widget.settings.homeyUsers[user].name}}
         </q-item-main>
       <q-item-side right>
-      {{widget.settings.homeyUsers[user].icon}}
+      <img v-bind:src="widget.settings.homeyUsers[user].avatar" />
+
       </q-item-side>
     </q-item>
   </q-list>

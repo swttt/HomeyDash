@@ -31,6 +31,10 @@
     {
       "id": "icon",
       "type": "boolean"
+    },
+    {
+      "id": "avatar",
+      "type": "string"
     }
   ]
 }

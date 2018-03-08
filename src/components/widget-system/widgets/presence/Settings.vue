@@ -3,14 +3,7 @@
 
 
   <br/><br/><small>Select Users for in your widget</small>
-  <q-select
-      dark
-      multiple
-      toggle
-      color="teal"
-      v-model="widget.settings.users"
-      :options="users"
-    />
+  <q-select dark multiple toggle color="teal" v-model="widget.settings.users" :options="users" />
 </div>
 </template>
 
@@ -28,19 +21,19 @@ export default {
     this.getUsers();
     console.log(this.users)
   },
-  methods:{
-    async getUsers(){
+  methods: {
+    async getUsers() {
       await this.$homey.users.subscribe();
       let users = await this.$homey.users.getUsers();
-      _.forEach(users, user=> {
+      _.forEach(users, user => {
+        this.widget.settings.homeyUsers[user.id] = user;
+        let option = {}
+        option.label = user.name;
+        option.value = user.id;
+        option.avatar = user.avatar;
+        this.users.push(option);
 
-          this.widget.settings.homeyUsers[user.id] = user;
-          let option = {}
-          option.label = user.name;
-          option.value = user.id;
-          this.users.push(option);
-        }
-      );
+      });
     }
   }
 }
