@@ -1,7 +1,7 @@
 <template>
-
+<div class="powermeter" v-if="!loading">
 <q-list no-border>
-<q-list-header class="text-teal" v-if="widget.settings.room">{{ device.zone.name }}</small></q-list-header>
+<q-list-header class="text-teal" v-if="widget.settings.room">{{device.zone.name}}</q-list-header>
   <q-list-header class="text-white">{{device.name}}<i class="fa fa-bolt fa-2x icon" aria-hidden="true" v-if="widget.settings.icon"></i></q-list-header>
 
   <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && !value.setable">
@@ -19,7 +19,7 @@
   </q-item>
 
 </q-list>
-
+</div>
 
 </template>
 
