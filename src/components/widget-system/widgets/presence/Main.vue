@@ -5,9 +5,9 @@
     <q-item v-for="user in widget.settings.users" :key="user">
       <q-item-main>
         {{widget.settings.homeyUsers[user].name}}
-        </q-item-main>
+      </q-item-main>
       <q-item-side right>
-      <img v-bind:src="widget.settings.homeyUsers[user].avatar" />
+        <img v-bind:src="widget.settings.homeyUsers[user].avatar" />
 
       </q-item-side>
     </q-item>
@@ -36,7 +36,7 @@ export default {
         });
         await this.$homey.users.subscribe();
         this.widget.settings.homeyUsers[user].on('$state', state => {
-           console.log(state);
+          console.log(state);
         });
       })
     },
