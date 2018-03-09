@@ -12,6 +12,9 @@ HomeyDash is a dashboard that can be used to control devices paired to Homey  ([
 #### Support this project, become a Patron!
 
 To keep the server and coffee running, please consider becoming a patron!
+
+<a href="https://www.patreon.com/bePatron?u=9768305" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+
 https://www.patreon.com/homeydash
 
 ## Contributing
@@ -24,12 +27,6 @@ And if you already know a good solution, feel free to make a [Pull Request](http
 #### Pull Requests
 
 Pull requests can be done on the develop branch. Until the master branch isn't stable enough (and is considered alpha/beta) the develop branch won't get build and pushed for now. After the master branch is more stable, i will auto build the develop branch to a seperate sub-domain.
-
-#### Plug-ins
-
-Currently there isn't any documentation yet on how to create plugins. Plug-ins are functional, and will be merged once aproved.
-
-A good example of a plug-in is the `power-usage` plugin that you can find in `/src/components/plugins/power-usage`.
 
 ## Build Setup
 
