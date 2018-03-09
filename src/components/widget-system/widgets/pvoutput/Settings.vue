@@ -1,12 +1,24 @@
 <template>
     <div class="col-12">
-        <q-input dark v-model="widget.settings.apikey" type="text" stack-label="API Key (read only)" />
-        <q-input dark v-model="widget.settings.systemid" type="text" stack-label="System ID" />
-        <q-field dark label="Number formatting">
-            <q-radio left-label v-model="widget.settings.numberformat" val="us" label="1,000.00" color="teal" />
-            <q-radio left-label v-model="widget.settings.numberformat" val="other" label="1.000,00" color="teal" />
-        </q-field>
-        <q-list link sparse separator no-border>
+        <q-list link no-border>
+            <q-item tag="label">
+                <q-item-main>
+                    <q-input dark v-model="widget.settings.apikey" type="text" stack-label="API Key (read only)" />
+                </q-item-main>
+            </q-item>
+            <q-item tag="label">
+                <q-item-main>
+                    <q-input dark v-model="widget.settings.systemid" type="text" stack-label="System ID" />
+                </q-item-main>
+            </q-item>
+            <q-item tag="label">
+                <q-item-main>
+                    <q-field dark label="Number formatting">
+                        <q-radio left-label v-model="widget.settings.numberformat" val="us" label="1,000.00" color="teal" />
+                        <q-radio left-label v-model="widget.settings.numberformat" val="other" label="1.000,00" color="teal" />
+                    </q-field>
+                </q-item-main>
+            </q-item>
             <q-item tag="label">
                 <q-item-main>
                     <q-item-tile label>Show Current Generation</q-item-tile>

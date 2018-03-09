@@ -20,10 +20,10 @@
                 <q-item-main>Lifetime<br/><small class="text-grey">Record Efficiency</small></q-item-main>
                 <q-item-side right>{{ megaWattHour(statistics.energy_generated) }} <small class="measure">MWh</small><br/><small class="text-grey">{{ formatNumber(statistics.record_efficiency) }} kWh/kW</small></q-item-side>
             </q-item>
-            <q-item v-if="this.widget.settings.showCurrentConsumption">
+            <q-item v-if="this.widget.settings.showCurrentConsumption || this.widget.settings.showTodayConsumption">
                 <q-item-main><h5>Consumption</h5></q-item-main>
             </q-item>
-            <q-item v-if="this.widget.settings.showCurrentGeneration || this.widget.settings.showTodayConsumption">
+            <q-item v-if="this.widget.settings.showCurrentConsumption">
                 <q-item-main>Current</q-item-main>
                 <q-item-side right>{{ formatNumber(status.power_consumption) }} <small class="measure">Watt</small></q-item-side>
             </q-item>
