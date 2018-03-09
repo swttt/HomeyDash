@@ -1,5 +1,5 @@
 <template>
-    <div class="powermeter" v-if="!loading">
+<div class="powermeter" v-if="!loading">
         <h5>{{ widget.settings.name }}</h5>
         <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
         <div class="data">

@@ -2,7 +2,7 @@
     <div class="col-12">
         <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.name" />
         <q-toggle label="Show room" dark color="teal" v-model="widget.settings.room" />
-        <q-toggle label="Show thermometer icon" dark color="teal" v-model="widget.settings.icon" />
+        <q-toggle label="Show power icon" dark color="teal" v-model="widget.settings.icon" />
         <q-select dark v-model="widget.settings.pusage" :options="powermeter" stack-label="Select which powermeter to show" />
         <q-input dark v-model="widget.width" type="number" stack-label="Widget Width" />
     </div>
