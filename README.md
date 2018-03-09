@@ -1,8 +1,8 @@
-[![buddy pipeline](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598/badge.svg?token=b5c7fb0214da03ae94a8712a40a923eb562bb9b669ed01659718444eaac60a1b "buddy pipeline")](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598)
-
 <p align="center">
 <img src="https://github.com/swttt/HomeyDash/raw/master/.github/logo.png" alt="HomeyDash Logo"/>
 </p>
+
+[![buddy pipeline](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598/badge.svg?token=b5c7fb0214da03ae94a8712a40a923eb562bb9b669ed01659718444eaac60a1b "buddy pipeline")](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598)
 
 # HomeyDash
 
