@@ -1,0 +1,40 @@
+{
+  "id": "presence",
+  "name": "Presence",
+  "description": "Create a list with Users.",
+  "author": "Evad",
+  "width": 300,
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [{
+      "id": "users",
+      "type": "array",
+      "default": []
+    },
+    {
+      "id": "homeyUsers",
+      "type": "object"
+    },
+    {
+      "id": "showHeader",
+      "type": "boolean"
+    },
+    {
+      "id": "headerName",
+      "type": "string"
+    },
+    {
+      "id": "name",
+      "type": "string"
+    },
+    {
+      "id": "icon",
+      "type": "boolean"
+    },
+    {
+      "id": "avatar",
+      "type": "string"
+    }
+  ]
+}

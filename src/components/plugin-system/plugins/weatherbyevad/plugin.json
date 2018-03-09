@@ -1,0 +1,19 @@
+{
+  "id": "weatherbyevad",
+  "name": "Weatherbyevad",
+  "icon": "wb_sunny",
+  "link": "/weatherbyevad",
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [
+  {
+    "id": "apiKey",
+    "type": "string"
+  },
+  {
+    "id": "refresh",
+    "type": "string",
+    "default": 60
+  }]
+}
