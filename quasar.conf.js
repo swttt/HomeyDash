@@ -35,7 +35,7 @@ module.exports = function (ctx) {
       } : { // and on build (production):
         CLIENT: JSON.stringify('59e881ac57256a350db0fcf8'),
         SECRET: JSON.stringify('daJ0BQBWd1Jq1eIwU8msjS4qg0hM0YYLPhoLAE5U'),
-        // CALLBACK: JSON.stringify('http://homeyda.sh')
+        CALLBACK: JSON.stringify('https://' + process.env.URL)
       },
       scopeHoisting: true,
       vueRouterMode: 'history',
