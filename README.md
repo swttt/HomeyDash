@@ -8,12 +8,10 @@
 
 HomeyDash is a dashboard that can be used to control devices paired to Homey  ([Athom.com](http://athom.com)) and show information like weather, news, media etc.
 
-#### Work in progress
 
-Current release isn't considered stable yet.
+#### Support this project, become a Patron!
 
-#### Become a Patron!
-
+To keep the server and coffee running, please consider becoming a patron!
 https://www.patreon.com/homeydash
 
 ## Contributing
@@ -33,14 +31,15 @@ Currently there isn't any documentation yet on how to create plugins. Plug-ins a
 
 A good example of a plug-in is the `power-usage` plugin that you can find in `/src/components/plugins/power-usage`.
 
-Don't forget to add your plugin to the `/src/components/plugins/index.js`!
-
 ## Build Setup
 
 Make sure to add this to your HOSTS file: `127.0.0.1     homeydash.local`
 
 ``` bash
-# install dependencies
+# you need the quasar-cli
+$ npm install -g quasar-cli
+
+# install all other dependencies
 $ npm install
 
 # serve with hot reload at localhost:8081
