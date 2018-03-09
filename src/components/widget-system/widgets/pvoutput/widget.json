@@ -1,0 +1,51 @@
+{
+    "id": "pvoutput",
+    "name": "PVOutput Dashboard",
+    "description": "View statistics from PVOutput.org",
+    "author": "Jelger Haanstra (Phuturist)",
+    "width": 400,
+    "components": {
+        "settings": "Settings"
+    },
+    "settings": [
+        {
+            "id": "apikey",
+            "type": "string"
+        },
+        {
+            "id": "systemid",
+            "type": "number",
+            "default": 0
+        },
+        {
+            "id": "numberformat",
+            "type": "string",
+            "default": "other"
+        },
+        {
+            "id": "showCurrentGeneration",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "showTodayGeneration",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "showWeekGeneration",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "showCurrentConsumption",
+            "type": "boolean",
+            "default": false
+        },
+        {
+            "id": "showTodayConsumption",
+            "type": "boolean",
+            "default": false
+        }
+    ]
+}
