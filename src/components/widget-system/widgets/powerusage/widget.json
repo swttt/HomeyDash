@@ -14,18 +14,22 @@
         },
         {
             "id": "room",
-            "type": "string",
+            "type": "boolean",
             "default": true
         },
         {
             "id": "icon",
-            "type": "string",
+            "type": "boolean",
             "default": true
         },
         {
             "id": "pusage",
             "type": "array",
             "default": []
+        },
+        {
+           "id": "id",
+           "type": "string"      
         }
     ]
 }

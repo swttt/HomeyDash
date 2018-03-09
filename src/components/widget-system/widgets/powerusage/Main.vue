@@ -1,19 +1,26 @@
 <template>
-<div class="powermeter" v-if="!loading">
-        <h5>{{ widget.settings.name }}</h5>
-        <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
-        <div class="data">
-            <i class="fa fa-bolt fa-2x icon" aria-hidden="true" v-if="widget.settings.icon"></i><br>
-            <span class="powermeter">Power  {{ device.state.measure_power }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-            <span class="powermeter">Off-peak {{ device.state.meter_power.offPeak }}</span><span class="unit">{{ device.capabilities.meter_power.en }}</span><br>
-            <span class="powermeter">Gas{{ device.state.measure_gas }}</span><span class="unit">{{ device.capabilities.measure_gas.units.en }}</span><br>
-            <span class="powermeter">Power Meter{{ device.state.meter_power }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-            <span class="powermeter">Power meter peak{{ device.state.meter_power.peak }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-            <span class="powermeter">power meter off-peak{{ device.state.meter_power.offpeak }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-            <span class="powermeter">Production peak{{ device.state.meter_power.producesPeak }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-            <span class="powermeter">Production off-peak{{ device.state.meter_power.producesOffPeak }}</span><span class="unit">{{ device.capabilities.meter_power.units.en }}</span><br>
-        </div>
-    </div>
+
+<q-list no-border>
+<q-list-header class="text-teal" v-if="widget.settings.room">{{ device.zone.name }}</small></q-list-header>
+  <q-list-header class="text-white">{{device.name}}<i class="fa fa-bolt fa-2x icon" aria-hidden="true" v-if="widget.settings.icon"></i></q-list-header>
+
+  <q-item v-for="(value, key) in device.capabilities" :key="key" v-if="value.getable && !value.setable">
+    <q-item-side class="text-white" v-if="device.capabilitiesOptions[key].title">
+      {{device.capabilitiesOptions[key].title.en}}
+    </q-item-side>
+    <q-item-side class="text-white" v-else>
+      {{value.title.en}}
+    </q-item-side>
+    <q-item-main class="text-right text-white">
+      <span v-if="typeof(device.state[key]) === 'boolean' && key.substring(0, 5) == 'alarm'"><q-icon v-if="!device.state[key]" color="green" name="fa-check" /><q-icon v-else color="red" name="fa-exclamation-triangle" /></span>
+      <span v-else> <span v-if="device.state[key] != null">{{device.state[key]}}</span><span v-else>-</span> <span v-if="value.units">{{value.units.en}}</span></span>
+      <!-- <span v-else>-</span> -->
+    </q-item-main>
+  </q-item>
+
+</q-list>
+
+
 </template>
 
 
@@ -46,23 +53,30 @@ export default {
 <style lang="stylus" scoped>
     @import '~variables'
 
-    .powermeter
-        text-align: left
-        padding: 20px
 
-    .powermeter h5
-        margin: 0
+      .icon
+        height 38px
+        width 38px
+        font-size 38px
+        line-height 30px
+        vertial-align text-top
+        position relative
+        top 7px
+        left 7px
+        -webkit-mask-size contain
+        -webkit-mask-position top left
+        -webkit-mask-repeat no-repeat
+        .on
+          color $red
+        .off
+          color $teal
 
-    .powermeter .data
-        padding-top: 5px
 
-    .powermeter .icon
-        padding-right: 10px
+      .icon.off
+        background-color $teal
+        opacity 1
+      .icon.on
+        background-color $red
 
-    .powermeter .temperature
-        font-size: 2.2rem
 
-    .powermeter .unit
-        font-size: 1rem
-        padding-left: 6px
 </style>
