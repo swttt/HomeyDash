@@ -29,7 +29,7 @@
         },
         {
            "id": "id",
-           "type": "string"      
+           "type": "string"
         }
     ]
 }

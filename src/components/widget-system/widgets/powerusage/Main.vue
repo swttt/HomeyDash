@@ -52,8 +52,6 @@ export default {
 
 <style lang="stylus" scoped>
     @import '~variables'
-
-
       .icon
         height 38px
         width 38px
@@ -70,13 +68,9 @@ export default {
           color $red
         .off
           color $teal
-
-
       .icon.off
         background-color $teal
         opacity 1
       .icon.on
         background-color $red
-
-
 </style>
