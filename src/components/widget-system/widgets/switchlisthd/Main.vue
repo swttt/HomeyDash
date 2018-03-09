@@ -21,31 +21,31 @@
 <script>
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
       devices: {},
       loading: true
     }
   },
-  async mounted() {
-    await this.loopDevices();
-    this.loading = false;
+  async mounted () {
+    await this.loopDevices()
+    this.loading = false
   },
   methods: {
-    async loopDevices() {
+    async loopDevices () {
       this.widget.settings.devices.forEach(async (device) => {
         this.widget.settings.homeyDevices[device] = await this.$homey.devices.getDevice({
           id: device
-        });
-        await this.$homey.devices.subscribe();
+        })
+        await this.$homey.devices.subscribe()
         this.widget.settings.homeyDevices[device].on('$state', state => {
           // console.log(state);
-        });
+        })
       })
     },
-    switchDevice(device){
-      console.log(this.widget.settings.homeyDevices[device].state.onoff);
-        this.widget.settings.homeyDevices[device].setCapabilityValue('onoff', this.widget.settings.homeyDevices[device].state.onoff)
+    switchDevice (device) {
+      console.log(this.widget.settings.homeyDevices[device].state.onoff)
+      this.widget.settings.homeyDevices[device].setCapabilityValue('onoff', this.widget.settings.homeyDevices[device].state.onoff)
     }
   }
 }

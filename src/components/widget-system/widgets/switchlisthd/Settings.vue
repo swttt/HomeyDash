@@ -15,32 +15,33 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
       switches: [],
       selected: []
     }
   },
-  created() {
-
-    this.getSwitches();
+  created () {
+    this.getSwitches()
     console.log(this.switches)
   },
-  methods:{
-    async getSwitches(){
-      await this.$homey.devices.subscribe();
-      let devices = await this.$homey.devices.getDevices();
+  methods: {
+    async getSwitches () {
+      await this.$homey.devices.subscribe()
+      let devices = await this.$homey.devices.getDevices()
       _.forEach(devices, device => {
-        if(device.capabilities.onoff){
-          this.widget.settings.homeyDevices[device.id] = device;
+        if (device.capabilities.onoff) {
+          this.widget.settings.homeyDevices[device.id] = device
           let option = {}
-          option.label = device.name;
-          option.value = device.id;
-          this.switches.push(option);
+          option.label = device.name
+          option.value = device.id
+          this.switches.push(option)
         }
-      });
+      })
     }
   }
 }

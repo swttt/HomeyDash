@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    export default {
-        props: ['widget']
-    }
+export default {
+  props: ['widget']
+}
 </script>

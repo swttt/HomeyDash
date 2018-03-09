@@ -7,12 +7,12 @@
 <script>
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
 
     }
   },
-  created(){
+  created () {
 
   }
 }

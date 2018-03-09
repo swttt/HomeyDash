@@ -14,26 +14,28 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   props: ['plugin', 'settings'],
-  data() {
+  data () {
     return {
       powerUsageOptions: [],
       loading: true
     }
   },
-  async created() {
+  async created () {
     // Get devices
-    let devices = await this.$homey.devices.getDevices();
+    let devices = await this.$homey.devices.getDevices()
     await _.forEach(devices, device => {
-      if(device.capabilities.measure_power) {
-        let option = {};
-        option.label = device.name;
-        option.value = device.id;
-        this.powerUsageOptions.push(option);
+      if (device.capabilities.measure_power) {
+        let option = {}
+        option.label = device.name
+        option.value = device.id
+        this.powerUsageOptions.push(option)
       }
-    });
-    this.loading = false;
+    })
+    this.loading = false
   }
 }
 </script>

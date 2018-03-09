@@ -7,12 +7,12 @@
 <script>
 export default {
   props: ['plugin', 'settings'],
-  data() {
+  data () {
     return {
 
     }
   },
-  created() {
+  created () {
 
   }
 }

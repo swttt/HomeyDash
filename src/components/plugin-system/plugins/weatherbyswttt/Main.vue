@@ -1,6 +1,8 @@
 <template>
 <div>
-  <q-transition appear enter="fadeIn" leave="fadeOut">
+  <transition appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut">
     <div class="row">
       <div class="col-6 weather">
         <div class="inner-content">
@@ -15,37 +17,33 @@
         </div>
       </div>
     </div>
-  </q-transition>
+  </transition>
 </div>
 </template>
 
-
 <script>
-import {
-  EventBus
-} from 'src/eventBus';
 
 export default {
   components: {},
-  data() {
+  data () {
     return {
-      today: "",
-      expected: ""
+      today: '',
+      expected: ''
     }
   },
-  mounted() {
-    this.getData();
+  mounted () {
+    this.getData()
   },
   methods: {
-    async getData() {
-      let result = await this.axios.get('https://api.buienradar.nl/data/public/1.1/jsonfeed');
-      this.today = result.data.buienradarnl.weergegevens.verwachting_vandaag.samenvatting;
-      this.expected = result.data.buienradarnl.weergegevens.verwachting_meerdaags.tekst_lang['#text'];
+    async getData () {
+      let result = await this.axios.get('https://api.buienradar.nl/data/public/1.1/jsonfeed')
+      this.today = result.data.buienradarnl.weergegevens.verwachting_vandaag.samenvatting
+      this.expected = result.data.buienradarnl.weergegevens.verwachting_meerdaags.tekst_lang['#text']
     }
   },
   computed: {
     settings: {
-      get() {
+      get () {
         return this.$store.state.settings
       }
     }
@@ -68,6 +66,5 @@ export default {
       font-weight 200
       font-size 30px
       text-transform uppercase
-
 
 </style>
