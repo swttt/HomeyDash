@@ -13,7 +13,7 @@ HomeyDash is a dashboard that can be used to control devices paired to Homey  ([
 
 To keep the server and coffee running, please consider becoming a patron!
 
-<a href="https://www.patreon.com/bePatron?u=9768305" data-patreon-widget-type="become-patron-button"><img src="https://github.com/swttt/HomeyDash/raw/next/.github/patreon.png" alt="HomeyDash Logo"/></a>
+<a href="https://www.patreon.com/bePatron?u=9768305" data-patreon-widget-type="become-patron-button"><img style="width:150px;" src="https://github.com/swttt/HomeyDash/raw/next/.github/patreon.png" alt="HomeyDash Logo"/></a>
 
 https://www.patreon.com/homeydash
 
