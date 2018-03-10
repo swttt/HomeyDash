@@ -31,10 +31,8 @@
                 <q-item class="subhead text-teal">
                   Plugins
                 </q-item>
-                <q-item v-for="plugin in plugins" :key="plugin.id">
-                  <q-item-main>
-                    <q-item-tile label>{{plugin.name}}</q-item-tile>
-                  </q-item-main>
+                <q-item v-for="plugin in plugins" tag="label" :key="plugin.id">
+                  <q-item-main :label="plugin.name" />
                   <q-item-side right>
                     <q-toggle v-model="settings.plugins[plugin.id].enabled" color="teal" />
                   </q-item-side>
@@ -57,7 +55,7 @@
                   <q-item-main>
                     If you like my project, please consider becoming a Patron! With your support i can keep the server and coffee running.
                     <br/><br/>
-                    <center><a href="https://www.patreon.com/bePatron?u=9768305" target="_blank" class="text-teal" style="font-size:20px;">Become a Patron now!</a></center>
+                    <a href="https://www.patreon.com/bePatron?u=9768305" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
                     <br/>
                   </q-item-main>
                 </q-item>
