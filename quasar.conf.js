@@ -89,13 +89,13 @@ module.exports = function (ctx) {
     pwa: {
       cacheExt: 'js,html,css,ttf,eot,otf,woff,woff2,json,svg,gif,jpg,jpeg,png,wav,ogg,webm,flac,aac,mp4,mp3',
       manifest: {
-        // name: 'Quasar App',
-        // short_name: 'Quasar-PWA',
-        // description: 'Best PWA App in town!',
+        name: 'HomeyDash',
+        short_name: 'HomeyDash-PWA',
+        description: 'Dashboard app for Homey',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        background_color: '#396976',
+        theme_color: '#009688',
         icons: [{
             'src': 'statics/icons/icon-128x128.png',
             'sizes': '128x128',
