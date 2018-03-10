@@ -46,9 +46,7 @@ export default {
         return homey.id === id
       }))
       Vue.prototype.$homey = await selectedHomey
-      setTimeout(() => {
-        this.loading = false
-      }, 1000)
+      this.loading = false
     }
   },
   async created () {
@@ -72,14 +70,10 @@ export default {
       this.multipleHomeys = false
       let firstHomey = await this.$homeyAPI.forHomeyObject(userHomeys[0])
       Vue.prototype.$homey = await firstHomey
-      setTimeout(() => {
-        this.loading = false
-      }, 1000)
+      this.loading = false
     } else {
       this.multipleHomeys = true
-      setTimeout(() => {
-        this.loading = false
-      }, 1000)
+      this.loading = false
     }
   }
 }
