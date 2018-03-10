@@ -26,21 +26,20 @@ body, html, .box
     margin-top constant(safe-area-inset-top)
     margin-top env(safe-area-inset-top)
 
-
 .q-layout-footer
   .q-tab
     padding-bottom constant(safe-area-inset-bottom)
-    /* Status bar height on iOS 11+ */
     padding-bottom env(safe-area-inset-bottom)
 
+.q-layout-page-container
+  padding-left constant(safe-area-inset-left)
+  padding-left env(safe-area-inset-left)
+  padding-right constant(safe-area-inset-right)
+  padding-right env(safe-area-inset-right)
 
 .q-layout-header, .q-toolbar
   border 0!important
   background rgba(255, 255, 255, 0)!important
-
-.q-layout-header
-  // padding-top constant(safe-area-inset-top)
-  // padding-top env(safe-area-inset-top)
 
 .q-list-header
   color #009688
