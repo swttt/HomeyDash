@@ -19,7 +19,10 @@ body, html
   overflow: hidden !important;
   height: 100%;
 
-// .layout
+body
+  padding-top constant(safe-area-inset-top)
+  padding-top env(safe-area-inset-top)
+
 
 
 .q-layout-header, .q-toolbar
@@ -28,8 +31,3 @@ body, html
 
 .q-list-header
   color #009688
-
-// iPhone X
-@media only screen and (max-device-width: 375px) and (max-device-height: 812px) and (-webkit-device-pixel-ratio: 3)
-  footer.layout-footer
-    height 84px !important
