@@ -1,5 +1,5 @@
 <template>
-<div>
+<q-page>
 
   <div style="width:100%;text-align:center;" v-if="!loaded">
 
@@ -42,7 +42,7 @@
 
   </div>
 
-</div>
+</q-page>
 </template>
 
 <script>
