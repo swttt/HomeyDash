@@ -1,5 +1,5 @@
 <template>
-<div>
+<q-page>
   <transition appear
   enter-active-class="animated fadeIn"
   leave-active-class="animated fadeOut">
@@ -18,7 +18,7 @@
       </div>
     </div>
   </transition>
-</div>
+</q-page>
 </template>
 
 <script>
