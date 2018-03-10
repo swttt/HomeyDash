@@ -8,31 +8,40 @@ body, html, .box
   user-select none
 
 body, html
-  background-attachment: fixed;
-  background url(../assets/bg.jpg) no-repeat center center fixed !important
-  -webkit-background-size cover !important
-  -moz-background-size cover !important
-  -o-background-size cover !important
-  background-size cover !important
+
   // position: fixed !important;
   // top 0
   // bottom -48px
 
 
-body
+.bg
+  background-attachment: fixed;
+  position fixed !important
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index -1
+  background url(../assets/bg.jpg) no-repeat center center fixed !important
+  -webkit-background-size cover !important
+  -moz-background-size cover !important
+  -o-background-size cover !important
+  background-size cover !important
 
   // padding-top constant(safe-area-inset-bottom)
   // padding-top env(safe-area-inset-bottom)
 
 
 
-#q-app
-  // position fixed !important
-
+.q-layout
+  overflow-y auto!important
+  overflow-x hidden
   padding-top constant(safe-area-inset-top)
   padding-top env(safe-area-inset-top)
   // overflow: hidden !important;
   // height: 100%;
+
+
 
 .q-layout-header
   .q-toolbar

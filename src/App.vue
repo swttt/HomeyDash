@@ -1,5 +1,6 @@
 <template>
   <div id="q-app" >
+    <div class="bg"> </div>
     <router-view v-if="!loading && !multipleHomeys" />
 
     <div v-else class="row loading justify-center" style="height: 100vh;">

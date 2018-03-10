@@ -1,5 +1,5 @@
 <template>
-<q-layout class="layout" view="lhh LpR fFf" :right-breakpoint="1100">
+<q-layout class="layout" view="lHh LpR fFf" :right-breakpoint="1100">
   <q-layout-header>
     <router-view name="toolbar"></router-view>
   </q-layout-header>
