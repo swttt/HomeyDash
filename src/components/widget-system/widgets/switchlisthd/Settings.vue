@@ -1,16 +1,32 @@
 <template>
 <div class="col-12">
-  <q-toggle label="Show title" dark color="teal" v-model="widget.settings.showHeader" />
-  <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.headerName" />
-  <br/><br/><small>Select devices for in your widget</small>
-  <q-select
-      dark
-      multiple
-      toggle
-      color="teal"
-      v-model="widget.settings.devices"
-      :options="switches"
-    />
+
+  <q-list no-border>
+  <q-item tag="label">
+    <q-item-main label="Enable title" />
+    <q-item-side right>
+      <q-toggle dark color="teal" v-model="widget.settings.showHeader" />
+    </q-item-side>
+  </q-item>
+  <q-item tag="label" v-if="widget.settings.showHeader">
+    <q-item-main>
+      <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.headerName" />
+    </q-item-main>
+  </q-item>
+    <q-item tag="label">
+      <q-item-main>
+        <q-select
+          stack-label="Select devices"
+            dark
+            multiple
+            
+            color="teal"
+            v-model="widget.settings.devices"
+            :options="switches"
+          />
+      </q-item-main>
+    </q-item>
+</q-list>
 </div>
 </template>
 
