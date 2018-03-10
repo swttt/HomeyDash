@@ -19,7 +19,16 @@
 
 - [x] Find a solution to modular widgets
 - [ ] When stable enough try to port to PhoneGap
+- [ ] Fork quasar-cli and edit to homeydash-cli
+- [ ] Include scaffolding for plugins and widgets within the CLI
+- [ ] Create an icons component to be re-used
+- [ ] Create an icons portal for users to share and upload icons
+- [ ] On first enter show users a tutorial/walktrough
+- [ ] Create a release system (version and changelog)
+- [ ] Log-out button (maybe this should be under settings)
+- [ ] Fix vuex localstorage collide
 
 ## Settings
 
 - [x] Grab settings from a JSON file or make it more flexible in another way
+- [ ] Show version and latest changes
