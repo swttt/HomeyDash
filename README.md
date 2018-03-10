@@ -10,6 +10,10 @@
 
 HomeyDash is a dashboard that can be used to control devices paired to Homey  ([Athom.com](http://athom.com)) and show information like weather, news, media etc.
 
+Visit the current stable branch on https://homeyda.sh
+
+And the current beta branch on https://beta.homeyda.sh
+
 
 #### Support this project, become a Patron!
 
