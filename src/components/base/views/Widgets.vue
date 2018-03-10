@@ -29,8 +29,8 @@
 
       <div class="widgets-content">
       <div v-if="!widget">
-        <div class="row justify-center items-center gutters-md">
-          <div class="col-2" v-for="widget in widgets" :key="widget.id" style="padding:10px;">
+        <div class="row gutters-md">
+          <div class="col-3 col-xs-6 col-sm-4 col-md-3 col-lg-2" v-for="widget in widgets" :key="widget.id" style="padding:10px;">
             <q-btn color="teal" class="widget" v-on:click="selectWidget(widget)" outline>{{widget.name}}</q-btn>
           </div>
         </div>
