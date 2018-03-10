@@ -11,7 +11,7 @@
         {{widget.settings.homeyDevices[device].name}}<br/><small class="text-grey">{{widget.settings.homeyDevices[device].zone.name}}</small>
         </q-item-main>
       <q-item-side right>
-        <q-toggle v-model="widget.settings.homeyDevices[device].state.onoff" @change="switchDevice(device)" color="teal" />
+        <q-toggle v-model="widget.settings.homeyDevices[device].state.onoff" @input="switchDevice(device)" color="teal" />
       </q-item-side>
     </q-item>
   </q-list>
