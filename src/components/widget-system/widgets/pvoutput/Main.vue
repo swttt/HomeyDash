@@ -36,156 +36,156 @@
 </template>
 
 <script>
-    export default {
-        props: ['widget'],
-        data() {
-            return {
-                status: {},
-                statistics: {},
-                weekstatistics: {},
-                output: {},
-                intervalStatus: null,
-                intervalStatistics: null,
-                intervalWeekStatistics: null,
-                intervalOutput: null,
-            }
-        },
-        created: function () {
-            this.getStatus();
-            this.getStatistics();
-            this.getWeekStatistics();
-            this.getOutput();
-            this.intervalStatus = setInterval(() => {
-                this.getStatus();
-            }, 3600000)
-            this.intervalStatistics = setInterval(() => {
-                this.getStatistics();
-            }, 3600000)
-            this.intervalWeekStatistics = setInterval(() => {
-                this.getWeekStatistics();
-            }, 1800000)
-            this.intervalOutput = setInterval(() => {
-                this.getOutput();
-            }, 300000)
-        },
-        methods: {
-            getStatus() {
-                this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatus.jsp?key='+ this.widget.settings.apikey +'&sid='+ this.widget.settings.systemid)
-                    .then((response) => {
-                        var data = response.data.split(',')
-                        this.status = {
-                            time: data[1],
-                            energy_generation: data[2],
-                            power_generation: data[3],
-                            energy_consumption: data[4],
-                            power_consumption: data[5],
-                            temperature: data[7]
-                        };
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            getStatistics() {
-                this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatistic.jsp?key='+ this.widget.settings.apikey +'&sid='+ this.widget.settings.systemid)
-                    .then((response) => {
-                        var data = response.data.split(',')
-                        this.statistics = {
-                            energy_generated: data[0],
-                            energy_exported: data[1],
-                            avg_generation: data[2],
-                            min_generation: data[3],
-                            max_generation: data[4],
-                            avg_efficiency: data[5],
-                            outputs: data[6],
-                            date_from: data[7],
-                            date_to: data[8],
-                            record_efficiency: data[9],
-                            record_date: data[10]
-                        };
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            getWeekStatistics() {
-                var d = new Date();
-                var lastWeek = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
-                var lastweek_year = lastWeek.getFullYear();
-                var lastweek_month = ("0" + (lastWeek.getMonth() + 1)).slice(-2);
-                var lastweek_day = ("0" + lastWeek.getDate()).slice(-2);
-                var lastweek_date = lastweek_year+lastweek_month+lastweek_day;
-                var year = d.getFullYear();
-                var month = ("0" + (d.getMonth() + 1)).slice(-2);
-                var day = ("0" + d.getDate()).slice(-2);
-                var date = year+month+day;
-
-                this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatistic.jsp?key='+ this.widget.settings.apikey +'&sid='+ this.widget.settings.systemid +'&df='+ lastweek_date +'&dt='+ date)
-                    .then((response) => {
-                        var data = response.data.split(',')
-                        this.weekstatistics = {
-                            energy_generated: data[0],
-                            energy_exported: data[1],
-                            avg_generation: data[2],
-                            min_generation: data[3],
-                            max_generation: data[4],
-                            avg_efficiency: data[5],
-                            outputs: data[6],
-                            date_from: data[7],
-                            date_to: data[8],
-                            record_efficiency: data[9],
-                            record_date: data[10]
-                        };
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            getOutput() {
-                var d = new Date();
-                var year = d.getFullYear();
-                var month = ("0" + (d.getMonth() + 1)).slice(-2);
-                var day = ("0" + d.getDate()).slice(-2);
-                var date = year+month+day;
-
-                this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getoutput.jsp?key='+ this.widget.settings.apikey +'&sid='+ this.widget.settings.systemid +'&df='+ date)
-                    .then((response) => {
-                        var data = response.data.split(',')
-                        this.output = {
-                            energy_generated: data[1],
-                            efficiency: data[2],
-                            energy_exported: data[3],
-                            energy_used: data[4],
-                            peak_power: data[5],
-                            peak_time: data[6],
-                            condition: data[7]
-                        };
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                    });
-            },
-            formatNumber: function(number) {
-                if (number) {
-                    if (this.widget.settings.numberformat === 'us') {
-                        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    } else {
-                        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                    }
-                }
-            },
-            megaWattHour: function(number) {
-                var mwh = number / 1000000;
-                return Math.round(mwh);
-            }
-        },
-        beforeDestroy () {
-            clearInterval(this.intervalStatus);
-            clearInterval(this.intervalStatistics);
-            clearInterval(this.intervalWeekStatistics);
-            clearInterval(this.intervalOutput);
-        }
+export default {
+  props: ['widget'],
+  data () {
+    return {
+      status: {},
+      statistics: {},
+      weekstatistics: {},
+      output: {},
+      intervalStatus: null,
+      intervalStatistics: null,
+      intervalWeekStatistics: null,
+      intervalOutput: null
     }
+  },
+  created: function () {
+    this.getStatus()
+    this.getStatistics()
+    this.getWeekStatistics()
+    this.getOutput()
+    this.intervalStatus = setInterval(() => {
+      this.getStatus()
+    }, 3600000)
+    this.intervalStatistics = setInterval(() => {
+      this.getStatistics()
+    }, 3600000)
+    this.intervalWeekStatistics = setInterval(() => {
+      this.getWeekStatistics()
+    }, 1800000)
+    this.intervalOutput = setInterval(() => {
+      this.getOutput()
+    }, 300000)
+  },
+  methods: {
+    getStatus () {
+      this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatus.jsp?key=' + this.widget.settings.apikey + '&sid=' + this.widget.settings.systemid)
+        .then((response) => {
+          var data = response.data.split(',')
+          this.status = {
+            time: data[1],
+            energy_generation: data[2],
+            power_generation: data[3],
+            energy_consumption: data[4],
+            power_consumption: data[5],
+            temperature: data[7]
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+    getStatistics () {
+      this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatistic.jsp?key=' + this.widget.settings.apikey + '&sid=' + this.widget.settings.systemid)
+        .then((response) => {
+          var data = response.data.split(',')
+          this.statistics = {
+            energy_generated: data[0],
+            energy_exported: data[1],
+            avg_generation: data[2],
+            min_generation: data[3],
+            max_generation: data[4],
+            avg_efficiency: data[5],
+            outputs: data[6],
+            date_from: data[7],
+            date_to: data[8],
+            record_efficiency: data[9],
+            record_date: data[10]
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+    getWeekStatistics () {
+      var d = new Date()
+      var lastWeek = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7)
+      var lastweekYear = lastWeek.getFullYear()
+      var lastweekMonth = ('0' + (lastWeek.getMonth() + 1)).slice(-2)
+      var lastweekDay = ('0' + lastWeek.getDate()).slice(-2)
+      var lastweekDate = lastweekYear + lastweekMonth + lastweekDay
+      var year = d.getFullYear()
+      var month = ('0' + (d.getMonth() + 1)).slice(-2)
+      var day = ('0' + d.getDate()).slice(-2)
+      var date = year + month + day
+
+      this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getstatistic.jsp?key=' + this.widget.settings.apikey + '&sid=' + this.widget.settings.systemid + '&df=' + lastweekDate + '&dt=' + date)
+        .then((response) => {
+          var data = response.data.split(',')
+          this.weekstatistics = {
+            energy_generated: data[0],
+            energy_exported: data[1],
+            avg_generation: data[2],
+            min_generation: data[3],
+            max_generation: data[4],
+            avg_efficiency: data[5],
+            outputs: data[6],
+            date_from: data[7],
+            date_to: data[8],
+            record_efficiency: data[9],
+            record_date: data[10]
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+    getOutput () {
+      var d = new Date()
+      var year = d.getFullYear()
+      var month = ('0' + (d.getMonth() + 1)).slice(-2)
+      var day = ('0' + d.getDate()).slice(-2)
+      var date = year + month + day
+
+      this.axios.get('https://cors-anywhere.herokuapp.com/https://pvoutput.org/service/r2/getoutput.jsp?key=' + this.widget.settings.apikey + '&sid=' + this.widget.settings.systemid + '&df=' + date)
+        .then((response) => {
+          var data = response.data.split(',')
+          this.output = {
+            energy_generated: data[1],
+            efficiency: data[2],
+            energy_exported: data[3],
+            energy_used: data[4],
+            peak_power: data[5],
+            peak_time: data[6],
+            condition: data[7]
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    },
+    formatNumber: function (number) {
+      if (number) {
+        if (this.widget.settings.numberformat === 'us') {
+          return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        } else {
+          return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+        }
+      }
+    },
+    megaWattHour: function (number) {
+      var mwh = number / 1000000
+      return Math.round(mwh)
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.intervalStatus)
+    clearInterval(this.intervalStatistics)
+    clearInterval(this.intervalWeekStatistics)
+    clearInterval(this.intervalOutput)
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

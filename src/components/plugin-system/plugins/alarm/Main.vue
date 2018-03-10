@@ -1,12 +1,11 @@
 <template>
-<div class="row justify-center items-center content-center alarm-row">
-  <q-transition appear enter="fadeIn" leave="fadeOut">
+<q-page class="row justify-center items-center content-center alarm-row">
     <div v-if="heimdallInstalled" class="col col-6 col-md-6 col-lg-3 col-xs-10 alarm-container">
       <q-chip color="red" class="status">
         Not working yet!!
       </q-chip>
       <h3 v-if="code.length == 0" style="font-size:28px;">Enter PIN...</h3>
-      <h3 v-else style="font-size:32px;font-weight:300;"><span v-for="n in code.length" style="padding: 0px 5px 0px 5px;position:relative;top:5px;">*</span></h3>
+      <h3 v-else style="font-size:32px;font-weight:300;"><span v-for="n in code.length" :key="n" style="padding: 0px 5px 0px 5px;position:relative;top:5px;">*</span></h3>
       <div class="row">
         <div class="col col-4 number">
           <q-btn big round flat v-on:click="addPin('1')">1</q-btn>
@@ -52,58 +51,57 @@
         <q-btn class="link" icon="apps" color="teal" v-on:click="goTo('https://apps.athom.com/app/com.uc.heimdall')">Go to the appstore</q-btn>
       </center>
     </div>
-  </q-transition>
-</div>
+</q-page>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       // initializing for second tab to be selected by default
       code: '',
       heimdallInstalled: false
     }
   },
-  created() {
-    this.checkHeimdall();
+  created () {
+    this.checkHeimdall()
   },
   methods: {
-    addPin(number) {
-      if(this.code.length < 6) {
+    addPin (number) {
+      if (this.code.length < 6) {
         this.code = this.code + number
       }
     },
-    clearPin() {
-      this.code = '';
+    clearPin () {
+      this.code = ''
     },
-    goTo(url) {
-      _paq.push(['trackEvent', 'Actions', 'Heimdall Appstore']);
+    goTo (url) {
+      // _paq.push(['trackEvent', 'Actions', 'Heimdall Appstore'])
       window.open(
         url,
         '_blank' // <- This is what makes it open in a new window.
-      );
+      )
     },
-    checkHeimdall() {
-      this.$homey.apps.subscribe();
+    checkHeimdall () {
+      this.$homey.apps.subscribe()
       this.$homey.apps.getApp({
-          id: 'com.uc.heimdall'
-        })
+        id: 'com.uc.heimdall'
+      })
         .then(() => {
-          console.log("Heimdall is installed.");
-          this.heimdallInstalled = true;
+          console.log('Heimdall is installed.')
+          this.heimdallInstalled = true
         })
         .catch((error) => {
           console.log(error)
-        });
+        })
       this.$homey.apps.on('app.update', app => {
-        this.heimdallInstalled = true;
-      });
+        this.heimdallInstalled = true
+      })
       this.$homey.apps.on('app.delete', app => {
-        if(app == "com.uc.heimdall") {
-          this.heimdallInstalled = false;
+        if (app === 'com.uc.heimdall') {
+          this.heimdallInstalled = false
         }
-      });
+      })
     }
   }
 }
@@ -158,6 +156,5 @@ export default {
     text-align center
     padding 10px 0px 10px 0px
     color white
-
 
 </style>

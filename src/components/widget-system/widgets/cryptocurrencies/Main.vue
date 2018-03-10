@@ -1,7 +1,7 @@
 <template>
     <div class="cryptocurrencies" v-if="widget.settings.mode === 'single'">
         <ul>
-            <li v-cloak v-for="coin, index in coins" :key="coin.id" v-if="index < 1">
+            <li v-cloak v-for="(coin, index) in coins" :key="coin.id" v-if="index < 1">
                 <div class="single">
                     <div class="data">
                         <h5 class="name">{{ coin.name }}<span class="symbol" v-if="widget.settings.showSymbol"> [ {{ coin.symbol }} ]</span></h5>
@@ -31,7 +31,7 @@
             </li>
         </ul>
     </div>
-    <div class="cryptocurrencies multiple" v-else="widget.settings.mode === 'multiple'">
+    <div class="cryptocurrencies multiple" v-else>
         <table class="multipletable">
             <thead>
                 <tr>
@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-cloak v-for="coin in coins">
+                <tr v-cloak v-for="coin in coins" :key="coin">
                     <td class="name"><img v-bind:src="getCoinImage(coin.symbol)" v-if="widget.settings.showLogo" /> {{ coin.name }}</td>
                     <td class="symbol center" v-if="widget.settings.showSymbol">{{ coin.symbol }}</td>
                     <td class="price center" v-if="widget.settings.currency === 'USD'">&#36; {{ formatPrice(coin.price_usd) }}</td>
@@ -59,93 +59,93 @@
 </template>
 
 <script>
-    let CRYPTOCOMPARE_API_URI = "https://min-api.cryptocompare.com";
-    let CRYPTOCOMPARE_URI = "https://www.cryptocompare.com";
-    let COINMARKETCAP_API_URI = "https://api.coinmarketcap.com";
+let CRYPTOCOMPARE_API_URI = 'https://min-api.cryptocompare.com'
+let CRYPTOCOMPARE_URI = 'https://www.cryptocompare.com'
+let COINMARKETCAP_API_URI = 'https://api.coinmarketcap.com'
 
-    export default {
-        props: ['widget'],
-        data() {
-            return {
-                coins: [],
-                coinData: {},
-                interval: null
-            }
-        },
-        created: function () {
-            this.getCoinData();
-
-            let UPDATE_INTERVAL = this.widget.settings.refresh * 1000 || 60000;
-            this.interval = setInterval(() => {
-                this.getCoinData();
-            }, UPDATE_INTERVAL)
-
-            if (this.widget.settings.mode === 'single') {
-                this.widget.width = 300;
-            }
-        },
-        methods: {
-            getCoinData() {
-                this.axios.get(CRYPTOCOMPARE_API_URI + "/data/all/coinlist")
-                    .then((resp) => {
-                        this.coinData = resp.data.Data;
-                        this.getCoins();
-                    })
-                    .catch((err) => {
-                        this.getCoins();
-                        console.error(err);
-                    });
-            },
-            getCoins: function() {
-                this.axios.get(COINMARKETCAP_API_URI + "/v1/ticker/?limit=30&convert="+ this.widget.settings.currency)
-                    .then((resp) => {
-                        let crypto = this.widget.settings.crypto;
-                        let list = [];
-                        if (typeof crypto !== 'undefined' && crypto.length > 0) {
-                            resp.data.forEach(function(element) {
-                                if (crypto.includes(element.symbol)) {
-                                    list.push(element);
-                                }
-                            });
-                        }
-                        this.coins = list;
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                    });
-            },
-            getCoinImage: function(symbol) {
-                // These two symbols don't match up across API services. I'm manually
-                // replacing these here so I can find the correct image for the currency.
-                //
-                // In the future, it would be nice to find a more generic way of searching
-                // for currency images
-                symbol = (symbol === "MIOTA" ? "IOT" : symbol);
-                symbol = (symbol === "VERI" ? "VRM" : symbol);
-
-                if (this.coinData[symbol]) {
-                    return CRYPTOCOMPARE_URI + this.coinData[symbol].ImageUrl;
-                } else {
-                    return '';
-                }
-            },
-            getColor: (num) => {
-                return num > 0 ? "color:green;" : "color:red;";
-            },
-            formatPrice: function(price) {
-                if (this.widget.settings.currency === 'USD') {
-                    let val = (price/1).toFixed(2);
-                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                } else {
-                    let val = (price/1).toFixed(2).replace('.', ',');
-                    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                }
-            }
-        },
-        beforeDestroy () {
-            clearInterval(this.interval);
-        }
+export default {
+  props: ['widget'],
+  data () {
+    return {
+      coins: [],
+      coinData: {},
+      interval: null
     }
+  },
+  created: function () {
+    this.getCoinData()
+
+    let UPDATE_INTERVAL = this.widget.settings.refresh * 1000 || 60000
+    this.interval = setInterval(() => {
+      this.getCoinData()
+    }, UPDATE_INTERVAL)
+
+    if (this.widget.settings.mode === 'single') {
+      this.widget.width = 300
+    }
+  },
+  methods: {
+    getCoinData () {
+      this.axios.get(CRYPTOCOMPARE_API_URI + '/data/all/coinlist')
+        .then((resp) => {
+          this.coinData = resp.data.Data
+          this.getCoins()
+        })
+        .catch((err) => {
+          this.getCoins()
+          console.error(err)
+        })
+    },
+    getCoins: function () {
+      this.axios.get(COINMARKETCAP_API_URI + '/v1/ticker/?limit=30&convert=' + this.widget.settings.currency)
+        .then((resp) => {
+          let crypto = this.widget.settings.crypto
+          let list = []
+          if (typeof crypto !== 'undefined' && crypto.length > 0) {
+            resp.data.forEach(function (element) {
+              if (crypto.includes(element.symbol)) {
+                list.push(element)
+              }
+            })
+          }
+          this.coins = list
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    getCoinImage: function (symbol) {
+      // These two symbols don't match up across API services. I'm manually
+      // replacing these here so I can find the correct image for the currency.
+      //
+      // In the future, it would be nice to find a more generic way of searching
+      // for currency images
+      symbol = (symbol === 'MIOTA' ? 'IOT' : symbol)
+      symbol = (symbol === 'VERI' ? 'VRM' : symbol)
+
+      if (this.coinData[symbol]) {
+        return CRYPTOCOMPARE_URI + this.coinData[symbol].ImageUrl
+      } else {
+        return ''
+      }
+    },
+    getColor: (num) => {
+      return num > 0 ? 'color:green;' : 'color:red;'
+    },
+    formatPrice: function (price) {
+      if (this.widget.settings.currency === 'USD') {
+        let val = (price / 1).toFixed(2)
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      } else {
+        let val = (price / 1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+      }
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.interval)
+  }
+}
 </script>
 
 <style lang="stylus" scoped>

@@ -3,7 +3,7 @@
   <q-list v-if="!loading">
     <q-item>
       <q-item-main>
-        <q-select dark frame-color="white" v-model="settings.defaultDevice" float-label="Select a default power meter device" radio :options="powerUsageOptions" />
+        <q-select dark frame-color="white" color="white" v-model="settings.defaultDevice" float-label="Select a default power meter device" radio :options="powerUsageOptions" />
       </q-item-main>
     </q-item>
   </q-list>
@@ -14,26 +14,28 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   props: ['plugin', 'settings'],
-  data() {
+  data () {
     return {
       powerUsageOptions: [],
       loading: true
     }
   },
-  async created() {
+  async created () {
     // Get devices
-    let devices = await this.$homey.devices.getDevices();
+    let devices = await this.$homey.devices.getDevices()
     await _.forEach(devices, device => {
-      if(device.capabilities.measure_power) {
-        let option = {};
-        option.label = device.name;
-        option.value = device.id;
-        this.powerUsageOptions.push(option);
+      if (device.capabilities.measure_power) {
+        let option = {}
+        option.label = device.name
+        option.value = device.id
+        this.powerUsageOptions.push(option)
       }
-    });
-    this.loading = false;
+    })
+    this.loading = false
   }
 }
 </script>
