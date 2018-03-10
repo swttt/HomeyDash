@@ -23,11 +23,12 @@ body, html
   padding-top constant(safe-area-inset-top)
   padding-top env(safe-area-inset-top)
 
-.q-layout-footer.q-tabs
-  /* Status bar height on iOS 11.0 */
-  padding-bottom constant(safe-area-inset-bottom)
-  /* Status bar height on iOS 11+ */
-  padding-bottom env(safe-area-inset-bottom)
+.q-layout-footer
+  .q-tabs
+    /* Status bar height on iOS 11.0 */
+    padding-bottom constant(safe-area-inset-bottom)
+    /* Status bar height on iOS 11+ */
+    padding-bottom env(safe-area-inset-bottom)
 
 
 .q-layout-header, .q-toolbar
