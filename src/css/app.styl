@@ -13,11 +13,11 @@ body, html
   -moz-background-size cover !important
   -o-background-size cover !important
   background-size cover !important
-  position: fixed !important;
+  // position: fixed !important;
 
 body
-  padding-top constant(safe-area-inset-bottom)
-  padding-top env(safe-area-inset-bottom)
+  // padding-top constant(safe-area-inset-bottom)
+  // padding-top env(safe-area-inset-bottom)
 
 
 #q-app
@@ -40,6 +40,10 @@ body
 .q-layout-header, .q-toolbar
   border 0!important
   background rgba(255, 255, 255, 0)!important
+
+.q-layout-header
+  padding-top constant(safe-area-inset-bottom)
+  padding-top env(safe-area-inset-bottom)
 
 .q-list-header
   color #009688
