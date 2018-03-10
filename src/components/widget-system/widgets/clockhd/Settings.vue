@@ -1,6 +1,14 @@
 <template>
 <div class="col-12">
-  <q-toggle dark v-model="widget.settings.showDay" label="Show date below the clock" />
+  <q-list no-border>
+  <q-item tag="label">
+    <q-item-main label="Show date below the clock" />
+    <q-item-side right>
+      <q-toggle dark color="teal" v-model="widget.settings.showDay" />
+    </q-item-side>
+  </q-item>
+</q-list>
+
 </div>
 </template>
 
