@@ -127,7 +127,8 @@ export default {
       this.modal = false
     },
     async saveSettings () {
-      this.$store.commit('settings/updateSettings', this.settings)
+      await this.$store.commit('settings/updateSettings', this.settings)
+      this.modal = false
     },
     clearStorage () {
       localStorage.removeItem('vuex')
