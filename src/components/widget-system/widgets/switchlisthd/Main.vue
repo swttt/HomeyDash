@@ -1,8 +1,8 @@
 <template>
 <div>
   <q-list v-if="!loading">
-    <q-item >
-      <q-item-main v-if="widget.settings.showHeader">
+    <q-item v-if="widget.settings.showHeader">
+      <q-item-main >
          <h5>{{widget.settings.headerName}}</h5>
         </q-item-main>
     </q-item>
