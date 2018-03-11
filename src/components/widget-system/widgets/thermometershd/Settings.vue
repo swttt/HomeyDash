@@ -9,28 +9,30 @@
 </template>
 
 <script>
-    export default {
-        props: ['widget'],
-        data() {
-            return {
-                thermometers: []
-            }
-        },
-        created() {
-            this.getThermometers();
-        },
-        methods:{
-            async getThermometers() {
-                let devices = await this.$homey.devices.getDevices();
-                _.forEach(devices, device => {
-                    if (device.capabilities.measure_temperature) {
-                        this.thermometers.push({
-                            label: device.name,
-                            value: device.id
-                        });
-                    }
-                });
-            }
-        }
+import _ from 'lodash'
+
+export default {
+  props: ['widget'],
+  data () {
+    return {
+      thermometers: []
     }
+  },
+  created () {
+    this.getThermometers()
+  },
+  methods: {
+    async getThermometers () {
+      let devices = await this.$homey.devices.getDevices()
+      _.forEach(devices, device => {
+        if (device.capabilities.measure_temperature) {
+          this.thermometers.push({
+            label: device.name,
+            value: device.id
+          })
+        }
+      })
+    }
+  }
+}
 </script>

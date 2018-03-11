@@ -1,131 +1,86 @@
 <template>
-<!-- Don't drop "q-app" class -->
-<div id="q-app">
-  <header></header>
-  <main>
-    <q-layout id="layout" ref="layout" view="lhh LpR fFf" :right-breakpoint="1100">
-      <router-view slot="header" v-if="!selectHomey" name="toolbar"></router-view>
-      <router-view class="scroll" slot="left" v-if="$route.matched[0].components.sidebar && !selectHomey" name="sidebar"></router-view>
+  <div id="q-app" >
+    <div class="bg"> </div>
+    <router-view v-if="!loading && !multipleHomeys" />
 
-      <router-view v-if="!selectHomey" name="main"></router-view>
-      <q-tabs v-if="!selectHomey" slot="navigation">
-          <q-route-tab slot="title" icon="dashboard" to="/" exact label="Dashboard" />
-        <q-route-tab v-for="plugin in plugins" :key="plugin.id" v-if="settings.plugins[plugin.id].enabled" slot="title" :icon="plugin.icon" :to="plugin.link" exact :label="plugin.name" />
-      </q-tabs>
-      <div v-if="selectHomey">
-        <div class="row justify-center" style="height:100vh;">
-          <div style="min-width:250px;margin-top:20%;">
-            <q-list style="background-color:white;" highlight separator>
-              <q-list-header>Select a Homey</q-list-header>
-              <q-item v-for="homey in homeys" :key="homey" v-on:click="loadHomey(homey.id)">
-                <!-- <q-item-side>
-                  <q-item-tile avatar>
-                    <img src="/statics/img/icon.svg" style="padding:5px;"/>
-                  </q-item-tile>
-                </q-item-side> -->
-                <q-item-main :label="homey.name" />
-
-              </q-item>
-            </q-list>
-
-          </div>
-        </div>
+    <div v-else class="row loading justify-center" style="height: 100vh;">
+      <div class="self-center">
+        <img src="statics/logo.png" /><br/>
+        <center v-if="loading">
+          <q-spinner size="50px" color="grey-7" /><br/>
+          <p style="margin: 20px;color:rgb(97, 97, 97);">LOADING...</p>
+        </center>
+        <q-list v-if="!loading && multipleHomeys" link no-border style="background-color:rgba(0,0,0,0.5);">
+          <q-list-header>Select a Homey</q-list-header>
+            <q-item v-for="homey in allHomeys" @click.native="selectHomey(homey.id)"  :key="homey.id">
+            <q-item-main style="color:white;" :label="homey.name" />
+              <q-item-side right>
+                <q-item-tile icon="keyboard_arrow_right" color="white" />
+              </q-item-side>
+            </q-item>
+        </q-list>
       </div>
-      <!-- Add settings modal -->
-      <settings/>
-    </q-layout>
-  </main>
-</div>
+    </div>
+  </div>
 </template>
 
 <script>
-/*
- * Root component
- */
+import Vue from 'vue'
+import queryString from 'query-string'
+import lodash from 'lodash'
 
-import settings from '@/base/components/Settings'
-import plugins from '@/plugin-system/'
 export default {
-  data() {
+  name: 'App',
+  data () {
     return {
-      // initializing for second tab to be selected by default
-      selectHomey: true,
-      homeys: [],
-      plugins: plugins
-    }
-  },
-  components: {
-    settings,
-    plugins
-  },
-  async created() {
-    if(this.$homey) {
-      this.selectHomey = false;
-    } else {
-
-      let user = await this.$athomCloud.getAuthenticatedUser()
-      this.homeys = user.getHomeys();
-      // console.log(this.homeys)
+      loading: true,
+      multipleHomeys: true,
+      allHomeys: []
     }
   },
   methods: {
-    loadHomey(id) {
-      console.log(id)
-      window.location.href = "/?cloudid=" + id
+    async selectHomey (id) {
+      this.loading = await true
+      this.multipleHomeys = await false
+
+      let selectedHomey = await this.$homeyAPI.forHomeyObject(lodash.find(this.allHomeys, function (homey) {
+        return homey.id === id
+      }))
+      Vue.prototype.$homey = await selectedHomey
+      this.loading = false
     }
   },
-  computed: {
-    settings: {
-      get() {
-        return this.$store.state.settings
-      }
+  async created () {
+    let token = window.localStorage.getItem('token')
+    if (token) {
+      token = await this.$athomCloud.setToken(JSON.parse(token))
+    }
+    let qs = queryString.parse(window.location.search)
+    if (qs.code) {
+      token = await this.$athomCloud.authenticateWithAuthorizationCode(qs.code)
+      window.history.pushState({}, '', '/')
+    }
+    if (!token) {
+      document.location.href = this.$athomCloud.getLoginUrl()
+    }
+
+    let user = await this.$athomCloud.getAuthenticatedUser()
+    let userHomeys = await user.getHomeys()
+    this.allHomeys = userHomeys
+    if (userHomeys.length === 1) {
+      this.multipleHomeys = false
+      let firstHomey = await this.$homeyAPI.forHomeyObject(userHomeys[0])
+      Vue.prototype.$homey = await firstHomey
+      this.loading = false
+    } else {
+      this.multipleHomeys = true
+      this.loading = false
     }
   }
 }
 </script>
 
-<style>
-body, html, .box {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: -moz-none;
-  -o-user-select: none;
-  user-select: none;
-}
-
-html,
-body {
-  position: fixed !important;
-  top: 0;
-  bottom: 0;
-  overflow: hidden !important;
-  height: 100%;
-}
-
-#layout {
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  background: url(assets/bg.jpg) no-repeat center center fixed !important;
-  -webkit-background-size: cover !important;
-  -moz-background-size: cover !important;
-  -o-background-size: cover !important;
-  background-size: cover !important;
-}
-
-.layout-aside {
-  background-color: #E0E1E2;
-  border: 0 !important;
-}
-
-.layout-footer {
-  border: 0 !important;
-  position: fixed;
-  bottom: 0;
-  /* Status bar height on iOS 11.0 */
-  padding-bottom: constant(safe-area-inset-bottom);
-  /* Status bar height on iOS 11+ */
-  padding-bottom: env(safe-area-inset-bottom);
-}
+<style lang="stylus" scoped>
+.q-list-highlight > .q-item:hover, .q-item-highlight:hover, .q-list-link > .q-item:hover, .q-item-link:hover
+  background rgba(0, 0, 0, 0.3)!important
 </style>

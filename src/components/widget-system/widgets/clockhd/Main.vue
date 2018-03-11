@@ -10,32 +10,31 @@
 </template>
 
 <script>
-import * as moment from 'moment';
+import * as moment from 'moment'
 
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
-      time:'',
+      time: '',
       day: '',
       interval: null
     }
   },
-  created(){
-    this.getTime();
-
+  created () {
+    this.getTime()
   },
-  methods:{
-    getTime(){
+  methods: {
+    getTime () {
       this.interval = setTimeout(() => {
-        this.time = moment().format('HH:mm:ss');
-        this.day = moment().format('D. MMMM YYYY');
-        this.getTime();
-    }, 1000);
+        this.time = moment().format('HH:mm:ss')
+        this.day = moment().format('D. MMMM YYYY')
+        this.getTime()
+      }, 1000)
     }
   },
   beforeDestroy () {
-    clearTimeout(this.interval);
+    clearTimeout(this.interval)
   }
 }
 </script>

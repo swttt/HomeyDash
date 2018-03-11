@@ -11,26 +11,26 @@
 
 <script>
 export default {
-    props: ['widget'],
-    data() {
-        return {
-            device: {},
-            loading: true
-        }
-    },
-    async mounted() {
-        await this.getThermometer();
-        this.loading = false;
-    },
-    methods: {
-        async getThermometer() {
-            this.device = await this.$homey.devices.getDevice({ id: this.widget.settings.thermometer });
-            await this.$homey.devices.subscribe();
-            this.device.on('$state', state => {
-                console.log(state);
-            });
-        }
+  props: ['widget'],
+  data () {
+    return {
+      device: {},
+      loading: true
     }
+  },
+  async mounted () {
+    await this.getThermometer()
+    this.loading = false
+  },
+  methods: {
+    async getThermometer () {
+      this.device = await this.$homey.devices.getDevice({ id: this.widget.settings.thermometer })
+      await this.$homey.devices.subscribe()
+      this.device.on('$state', state => {
+        console.log(state)
+      })
+    }
+  }
 }
 </script>
 
