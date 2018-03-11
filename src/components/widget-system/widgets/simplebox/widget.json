@@ -3,7 +3,7 @@
   "name": "Simple Box",
   "description": "This widget just adds a simple box to put in some text.",
   "author": "Bas Jansen",
-  "width": 200,
+  "width": 300,
   "components": {
     "settings": "Settings"
   },
@@ -11,5 +11,9 @@
     "type": "string",
     "id": "text",
     "default": "Test this box!"
+  },
+{
+  "type": "centered",
+  "id": "boolean"
   }]
 }
