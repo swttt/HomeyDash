@@ -13,6 +13,7 @@
           <q-btn-toggle
   v-model="widget.settings.mode"
   toggle-color="teal"
+  @input="emptySetting"
   :options="[
     {label: 'Single mode', value: 'single'},
     {label: 'Multiple mode', value: 'multiple'}
@@ -25,7 +26,6 @@
         <q-item-side right>
           <q-btn-toggle
   v-model="widget.settings.currency"
-  @input="thisLog"
   toggle-color="teal"
   :options="[
     {label: 'EUR', value: 'EUR'},
@@ -36,7 +36,8 @@
       </q-item>
       <q-item tag="label">
         <q-item-main>
-          <q-select toggle dark color="teal" multiple v-model="widget.settings.crypto" :options="selectCrypto" float-label="Select which crypto currencies to show, in single mode select only one currency" />
+          <q-select v-if="widget.settings.mode === 'multiple'" toggle dark color="teal" multiple v-model="widget.settings.crypto" :options="selectCrypto" float-label="Select which crypto currencies to show" />
+          <q-select v-if="widget.settings.mode === 'single'" dark color="teal" v-model="widget.settings.crypto" :options="selectCrypto" float-label="Select which crypto currency to show" />
         </q-item-main>
       </q-item>
             <q-list-header>Details to show</q-list-header>
@@ -105,8 +106,8 @@ export default {
         })
       return list
     },
-    thisLog (val) {
-      console.log(val)
+    emptySetting(){
+      this.widget.settings.crypto = []
     }
   }
 }
