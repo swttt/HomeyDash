@@ -1,6 +1,6 @@
 <template>
-    <div class="col-12">
-      <q-list no-border>
+  <div class="col-12">
+    <q-list no-border>
       <q-item tag="label">
         <q-item-main>
           <q-input color="teal" dark v-model="widget.settings.name" type="text" float-label="Name" />
@@ -23,7 +23,7 @@
         </q-item-main>
       </q-item>
     </q-list>
-    </div>
+  </div>
 </template>
 
 <script>
