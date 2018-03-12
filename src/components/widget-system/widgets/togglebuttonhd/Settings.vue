@@ -1,9 +1,9 @@
 <template>
   <div class="col-12">
-    <q-list link no-border>
+    <q-list no-border>
       <q-item tag="label">
         <q-item-main>
-          <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.name" />
+          <q-input stack-label="Title" placeholder="Your title here e.g. Light" dark color="teal" v-model="widget.settings.name" />
         </q-item-main>
       </q-item>
       <q-item tag="label">
@@ -16,6 +16,11 @@
       </q-item>
       <q-item tag="label">
         <q-item-main>
+          <q-select dark v-model="widget.settings.onoff" :options="onoffdevices" stack-label="Select which on/off device to show" />
+        </q-item-main>
+      </q-item>
+      <q-item tag="label">
+        <q-item-main>
           <q-uploader dark color="teal" stack-label="Upload SVG icon" :url="'/'" :extensions="'.svg'" :multiple="false" :headers="{'content-type': 'image/svg+xml' }" :send-raw="true" @add="added" />
         </q-item-main>
         <q-item-side right>
@@ -23,11 +28,7 @@
           <div class="previewtitle">Icon Preview</div>
         </q-item-side>
       </q-item>
-      <q-item tag="label">
-        <q-item-main>
-          <q-select dark v-model="widget.settings.onoff" :options="onoffdevices" stack-label="Select which on/off device to show" />
-        </q-item-main>
-      </q-item>
+      <q-list-header>Colors</q-list-header>
       <q-item tag="label">
         <q-item-main>
           <q-item-tile label>Off Color</q-item-tile>
