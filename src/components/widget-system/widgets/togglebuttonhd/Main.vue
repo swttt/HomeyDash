@@ -1,6 +1,11 @@
 <template>
+<<<<<<< HEAD:src/components/widget-system/widgets/togglebuttonshd/Main.vue
   <div class="onoff" v-if="!loading" v-on:click="switchDevice" >
     <div class="icon" v-bind:style="{ maskImage: 'url(' + widget.settings.icon + ')' }"></div>
+=======
+  <div class="onoff" v-if="!loading" v-on:click="switchDevice">
+    <div class="icon" v-bind:style="{ maskImage: 'url(' + this.widget.settings.icon + ')' }"></div>
+>>>>>>> de7f689ef842ee83e1a5283e32b9d8689b7b0627:src/components/widget-system/widgets/togglebuttonhd/Main.vue
     <h5>{{ widget.settings.name }}</h5>
     <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
   </div>
@@ -61,10 +66,10 @@ export default {
     width auto
     height auto
     min-height 75px
-    mask-size auto 60px
     -webkit-mask-position center center
     mask-position center center
     -webkit-mask-repeat no-repeat
     mask-repeat no-repeat
     -webkit-mask-size auto 60px
+    mask-size auto 60px
 </style>
