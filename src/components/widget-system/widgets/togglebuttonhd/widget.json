@@ -1,7 +1,7 @@
 {
-    "id": "togglebuttonshd",
-    "name": "Toggle Buttons",
-    "description": "Toggle buttons based on Homey devices",
+    "id": "togglebuttonhd",
+    "name": "Toggle Button",
+    "description": "Toggle button based on Homey devices",
     "author": "Jelger Haanstra (Phuturist)",
     "width": 150,
     "components": {

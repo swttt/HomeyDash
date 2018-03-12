@@ -1,5 +1,5 @@
 <template>
-  <div class="onoff" v-if="!loading" v-on:click="switchDevice" >
+  <div class="onoff" v-if="!loading" v-on:click="switchDevice">
     <div class="icon" v-bind:style="{ maskImage: 'url(' + this.widget.settings.icon + ')' }"></div>
     <h5>{{ widget.settings.name }}</h5>
     <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
@@ -61,10 +61,10 @@ export default {
     width auto
     height auto
     min-height 75px
-    mask-size auto 60px
     -webkit-mask-position center center
     mask-position center center
     -webkit-mask-repeat no-repeat
     mask-repeat no-repeat
     -webkit-mask-size auto 60px
+    mask-size auto 60px
 </style>
