@@ -1,7 +1,7 @@
 <template>
-<div class="content">
+<div class="content" v-bind:class="{centered: widget.settings.centered}">
   {{widget.settings.text}}
-</div>
+  </div>
 </template>
 
 <script>
@@ -18,6 +18,8 @@ export default {
 @import '~variables'
 
 .content
+  padding 10 px
+.centered
   padding 10px
-
-  </style>
+  text-align center
+</style>
