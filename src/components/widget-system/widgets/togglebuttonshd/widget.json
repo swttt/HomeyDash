@@ -1,0 +1,41 @@
+{
+    "id": "togglebuttonshd",
+    "name": "Toggle Buttons",
+    "description": "Toggle buttons based on Homey devices",
+    "author": "Jelger Haanstra (Phuturist)",
+    "width": 150,
+    "components": {
+        "settings": "Settings"
+    },
+    "settings": [
+        {
+            "id": "name",
+            "type": "string"
+        },
+        {
+            "id": "room",
+            "type": "boolean",
+            "default": true
+        },
+        {
+            "id": "icon",
+            "type": "string",
+            "default": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/PjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PGc+PGc+PHBhdGggZD0iTTM2Ni40NjMsMTcyLjUzOWMtOC41NTItOS41OTUtMjMuMjYyLTEwLjQzOS0zMi44NTgtMS44ODVjLTkuNTk1LDguNTUyLTEwLjQzOSwyMy4yNjMtMS44ODUsMzIuODU4YzE2LjU2MSwxOC41NzgsMjUuNjgxLDQyLjUzMiwyNS42ODIsNjcuNDQ5YzAsNTUuOTEzLTQ1LjQ4OSwxMDEuNDAyLTEwMS40MDIsMTAxLjQwMnMtMTAxLjQwMi00NS40ODktMTAxLjQwMi0xMDEuNDAyYzAtMjQuOTE5LDkuMTItNDguODczLDI1LjY4Mi02Ny40NDljOC41NTQtOS41OTUsNy43MDktMjQuMzA2LTEuODg1LTMyLjg2Yy05LjU5NS04LjU1Mi0yNC4zMDYtNy43MDgtMzIuODYsMS44ODVjLTI0LjE3MSwyNy4xMTQtMzcuNDg1LDYyLjA2OC0zNy40ODUsOTguNDIzQzEwOC4wNTIsMzUyLjU0LDE3NC40MjEsNDE4LjkwOSwyNTYsNDE4LjkwOVM0MDMuOTQ4LDM1Mi41NCw0MDMuOTQ4LDI3MC45NkM0MDMuOTQ2LDIzNC42MDYsMzkwLjYzNCwxOTkuNjUyLDM2Ni40NjMsMTcyLjUzOXoiLz48L2c+PC9nPjxnPjxnPjxwYXRoIGQ9Ik0yNTYsOTMuMDkxYy0xMi44NTMsMC0yMy4yNzMsMTAuNDItMjMuMjczLDIzLjI3M3Y5OS43MzljMCwxMi44NTMsMTAuNDIsMjMuMjczLDIzLjI3MywyMy4yNzNjMTIuODUzLDAsMjMuMjczLTEwLjQyLDIzLjI3My0yMy4yNzN2LTk5LjczOUMyNzkuMjczLDEwMy41MTEsMjY4Ljg1Myw5My4wOTEsMjU2LDkzLjA5MXoiLz48L2c+PC9nPjxnPjxnPjxwYXRoIGQ9Ik0yNTYsMEMxMTQuODQyLDAsMCwxMTQuODQyLDAsMjU2czExNC44NDIsMjU2LDI1NiwyNTZzMjU2LTExNC44NDIsMjU2LTI1NlMzOTcuMTU4LDAsMjU2LDB6IE0yNTYsNDY1LjQ1NWMtMTE1LjQ5NSwwLTIwOS40NTUtOTMuOTYxLTIwOS40NTUtMjA5LjQ1NVMxNDAuNTA1LDQ2LjU0NSwyNTYsNDYuNTQ1UzQ2NS40NTUsMTQwLjUwNyw0NjUuNDU1LDI1NlMzNzEuNDkzLDQ2NS40NTUsMjU2LDQ2NS40NTV6Ii8+PC9nPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48Zz48L2c+PGc+PC9nPjxnPjwvZz48L3N2Zz4="
+        },
+        {
+            "id": "offcolor",
+            "type": "string",
+            "default": "#EEEEEE"
+        },
+        {
+            "id": "oncolor",
+            "type": "string",
+            "default": "#009688"
+        },
+        {
+            "id": "device",
+            "type": "array",
+            "default": []
+        }
+    ]
+}
