@@ -130,13 +130,13 @@ export default {
 <style lang="stylus">
 @import '~variables'
 
-// .container
-//   position absolute
-//   top 20px
-//   bottom 0
-//   right 0
-//   left 0
-//   margin 0px 10px 10px 10px
+.container
+  position absolute
+  top 55px
+  bottom 50px
+  right 0
+  left 0
+  // margin 10px 10px 10px 10px
 
 .edit
   /* background-color rgba(255, 0, 0, 0.29)!important */
