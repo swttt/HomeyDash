@@ -1,5 +1,6 @@
 <template>
 <div class="col-12">
+<q-list no-border>
 <q-item tag="label">
   <q-item-main>
   <q-input dark color="teal" v-model="widget.settings.text" type="textarea" float-label="Box content" :min-rows="2"></q-input>
@@ -19,6 +20,7 @@
           <q-toggle dark v-model="widget.settings.centered" color="teal" />
       </q-item-side>
     </q-item>
+  </q-list>
 </div>
 </template>
 
