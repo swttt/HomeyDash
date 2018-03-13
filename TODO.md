@@ -31,4 +31,4 @@
 ## Settings
 
 - [x] Grab settings from a JSON file or make it more flexible in another way
-- [ ] Show version and latest changes
+- [ ] Show version and latest changes (part of the release system)

@@ -16,15 +16,15 @@
       </q-item>
       <q-item tag="label">
         <q-item-main>
-          <q-select dark v-model="widget.settings.onoff" :options="onoffdevices" stack-label="Select which on/off device to show" />
+          <q-select filter filter-placeholder="Search device..." dark v-model="widget.settings.onoff" :options="toggledevices" stack-label="Select which onoff or button device to show" />
         </q-item-main>
       </q-item>
       <q-item tag="label">
         <q-item-main>
-          <q-uploader dark color="teal" stack-label="Upload SVG icon" :url="'/'" :extensions="'.svg'" :multiple="false" :headers="{'content-type': 'image/svg+xml' }" :send-raw="true" @add="added" />
+          <q-uploader dark color="teal" stack-label="Upload SVG icon" :url="'/'" :extensions="'.svg'" no-thumbnails hide-upload-button hide-upload-progress :headers="{'content-type': 'image/svg+xml' }" :send-raw="true" @add="added" />
         </q-item-main>
         <q-item-side right>
-          <div id="preview" v-bind:style="maskStyle"></div>
+          <div id="preview" v-bind:style="{ maskImage: 'url(' + this.widget.settings.icon + ')' }"></div>
           <div class="previewtitle">Icon Preview</div>
         </q-item-side>
       </q-item>
@@ -61,27 +61,20 @@ export default {
   props: ['widget'],
   data () {
     return {
-      onoffdevices: [],
-      maskStyle: {
-        '-webkit-mask-image': 'url(' + this.widget.settings.icon + ')',
-        'mask-image': 'url(' + this.widget.settings.icon + ')',
-        '-webkit-mask-position': 'center center',
-        'mask-position': 'center center',
-        '-webkit-mask-repeat': 'no-repeat',
-        'mask-repeat': 'no-repeat'
-      }
+      toggledevices: []
     }
   },
   created () {
-    this.getOnOffDevices()
+    this.getToggleDevices()
   },
   methods: {
-    async getOnOffDevices () {
+    async getToggleDevices () {
       let devices = await this.$homey.devices.getDevices()
       _.forEach(devices, device => {
-        if (device.capabilities.onoff) {
-          this.onoffdevices.push({
+        if (device.capabilities.onoff || device.capabilities.button) {
+          this.toggledevices.push({
             label: device.name,
+            sublabel: device.zone.name,
             value: device.id
           })
         }
@@ -93,8 +86,6 @@ export default {
 
       reader.addEventListener('load', () => {
         this.widget.settings.icon = reader.result
-        var cssStyle = '-webkit-mask-image: url(' + reader.result + '); mask-image: url(' + reader.result + '); -webkit-mask-position: center center; mask-position: center center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat'
-        document.getElementById('preview').style.cssText = cssStyle
       }, false)
 
       if (file) {
@@ -114,6 +105,12 @@ export default {
     min-width: 75px
     background-color: #fff
     margin-left: 20px
+    -webkit-mask-position center center
+    mask-position center center
+    -webkit-mask-repeat no-repeat
+    mask-repeat no-repeat
+    -webkit-mask-size auto 60px
+    mask-size auto 60px
 
   .previewtitle
     background-color: #009688

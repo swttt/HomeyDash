@@ -19,8 +19,10 @@
           stack-label="Select devices"
             dark
             multiple
-            
             color="teal"
+            filter
+            filter-placeholder="Search device..."
+            :display-value="`${ widget.settings.devices.length } device${ widget.settings.devices.length !== 1 ? 's' : '' } selected`"
             v-model="widget.settings.devices"
             :options="switches"
           />
@@ -55,6 +57,7 @@ export default {
           let option = {}
           option.label = device.name
           option.value = device.id
+          option.sublabel = device.zone.name
           this.switches.push(option)
         }
       })
