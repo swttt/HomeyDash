@@ -1,0 +1,25 @@
+{
+  "id": "dimhd",
+  "name": "Dim device",
+  "description": "Dim capabilities for Homey devices",
+  "author": "Jelger Haanstra (Phuturist)",
+  "width": 200,
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [{
+      "id": "name",
+      "type": "string"
+    },
+    {
+      "id": "room",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "id": "device",
+      "type": "array",
+      "default": []
+    }
+  ]
+}

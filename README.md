@@ -2,19 +2,24 @@
 <img src="https://github.com/swttt/HomeyDash/raw/master/.github/logo.png" alt="HomeyDash Logo"/>
 </p>
 
+[![buddy pipeline](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598/badge.svg?token=b5c7fb0214da03ae94a8712a40a923eb562bb9b669ed01659718444eaac60a1b "buddy pipeline")](https://app.buddy.works/sjansen/homeydash-1/pipelines/pipeline/128598)
+
 # HomeyDash
 
 > Home-automation dashboard for Homey
 
 HomeyDash is a dashboard that can be used to control devices paired to Homey  ([Athom.com](http://athom.com)) and show information like weather, news, media etc.
 
-#### Work in progress
+**Stable:** https://homeyda.sh
 
-Current release isn't considered stable yet.
+**Beta:** https://beta.homeyda.sh
 
-#### Become a Patron!
 
-https://www.patreon.com/homeydash
+#### Support this project, become a Patron!
+
+To keep the server and coffee running, please consider becoming a patron!
+
+<a href="https://www.patreon.com/bePatron?u=9768305"><img width="175" src="https://github.com/swttt/HomeyDash/raw/beta/.github/patreon.png" alt="HomeyDash Logo"/></a>
 
 ## Contributing
 
@@ -27,20 +32,15 @@ And if you already know a good solution, feel free to make a [Pull Request](http
 
 Pull requests can be done on the develop branch. Until the master branch isn't stable enough (and is considered alpha/beta) the develop branch won't get build and pushed for now. After the master branch is more stable, i will auto build the develop branch to a seperate sub-domain.
 
-#### Plug-ins
-
-Currently there isn't any documentation yet on how to create plugins. Plug-ins are functional, and will be merged once aproved.
-
-A good example of a plug-in is the `power-usage` plugin that you can find in `/src/components/plugins/power-usage`.
-
-Don't forget to add your plugin to the `/src/components/plugins/index.js`!
-
 ## Build Setup
 
 Make sure to add this to your HOSTS file: `127.0.0.1     homeydash.local`
 
 ``` bash
-# install dependencies
+# you need the quasar-cli
+$ npm install -g quasar-cli
+
+# install all other dependencies
 $ npm install
 
 # serve with hot reload at localhost:8081

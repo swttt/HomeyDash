@@ -1,6 +1,6 @@
 <template>
 <q-toolbar slot="header">
-  <q-btn v-if="$route.matched[0].components.sidebar" flat @click="$root.$children[0].$refs.layout.toggleLeft()">
+  <q-btn v-if="$route.matched[1].components.sidebar" round  flat @click="$root.$emit('sidebar')">
     <q-icon name="menu" />
   </q-btn>
   <q-toolbar-title>
@@ -14,13 +14,9 @@
 </template>
 
 <script>
-import {
-  EventBus
-} from 'src/eventBus';
-
 
 export default {
-  data() {
+  data () {
     return {
       currentZone: ''
     }
@@ -28,25 +24,25 @@ export default {
   components: {
 
   },
-  mounted() {
-    if(this.$route.params.zone){
-      this.getZone(this.$route.params.zone);
+  mounted () {
+    if (this.$route.params.zone) {
+      this.getZone(this.$route.params.zone)
     }
   },
   methods: {
-    getZone(zone){
+    getZone (zone) {
       this.$homey.zones.getZone({id: zone})
         .then(result => {
-          this.currentZone = result.name;
-        });
+          this.currentZone = result.name
+        })
     },
-    openSettings(){
-      EventBus.$emit('openSettings')
+    openSettings () {
+      this.$root.$emit('openSettings')
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.getZone(to.params.zone);
-    next();
+    this.getZone(to.params.zone)
+    next()
   },
   computed: {
 

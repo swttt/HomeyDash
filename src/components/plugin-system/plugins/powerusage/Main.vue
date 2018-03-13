@@ -1,7 +1,9 @@
 <template>
 <div>
 
-  <q-transition appear enter="fadeIn" leave="fadeOut">
+  <transition appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut">
     <div class="row justify-center items-center content-center power-row">
       <div v-show="!settings.plugins['powerusage'].defaultDevice.length" class="col col-4 col-xs-11 col-md-4 settings-box">
         <p>No default power measure device found, please go to your settings and select one.</p>
@@ -10,9 +12,11 @@
         </q-btn>
       </div>
     </div>
-  </q-transition>
+  </transition>
 
-  <q-transition appear enter="fadeIn" leave="fadeOut">
+  <transition appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut">
     <div class="row justify-center" v-if="settings.plugins['powerusage'].defaultDevice.length">
 
       <div class="col-4 col-xs-11 col-md-4 info-box">
@@ -44,196 +48,185 @@
       </div>
 
     </div>
-  </q-transition>
+  </transition>
 </div>
 </template>
 
-
 <script>
-import * as moment from 'moment';
-import {
-  EventBus
-} from 'src/eventBus';
+import * as moment from 'moment'
+
 export default {
   components: {},
-  data() {
+  data () {
     return {
       dayLoading: true,
       weekLoading: true,
       monthLoading: true,
-      currentValue: "",
-      todayStart: "",
-      weekStart: "",
-      monthStart: "",
-      yesterdayStart: "",
-      lastWeekStart: "",
-      lastMonthStart: "",
-      yesterdayEnd: "",
-      lastWeekEnd: "",
-      lastMonthEnd: ""
+      currentValue: '',
+      todayStart: '',
+      weekStart: '',
+      monthStart: '',
+      yesterdayStart: '',
+      lastWeekStart: '',
+      lastMonthStart: '',
+      yesterdayEnd: '',
+      lastWeekEnd: '',
+      lastMonthEnd: ''
     }
   },
-  mounted() {
-
-    if(this.settings.plugins['powerusage'].defaultDevice.length) {
-      this.loadDay();
-      this.loadWeek();
+  mounted () {
+    if (this.settings.plugins['powerusage'].defaultDevice.length) {
+      this.loadDay()
+      this.loadWeek()
       this.loadMonth()
     }
-
   },
   methods: {
-    openSettings() {
-      EventBus.$emit('openSettings')
+    openSettings () {
+      this.$root.$emit('openSettings')
     },
-    async loadDay() {
+    async loadDay () {
       await Promise.all([
         this.getCurrentValue(),
         this.getTodayData(),
         this.getYesterdayData()
-      ]);
-      this.dayLoading = false;
+      ])
+      this.dayLoading = false
     },
-    async loadWeek() {
+    async loadWeek () {
       await Promise.all([
         this.getThisWeekData(),
         this.getLastWeekData()
-      ]);
-      this.weekLoading = false;
+      ])
+      this.weekLoading = false
     },
-    async loadMonth() {
+    async loadMonth () {
       await Promise.all([
         this.getThisMonthData(),
         this.getLastMonthData()
-      ]);
-      this.monthLoading = false;
+      ])
+      this.monthLoading = false
     },
-    async getCurrentValue() {
-      await this.$homey.devices.subscribe();
+    async getCurrentValue () {
+      await this.$homey.devices.subscribe()
       let device = await this.$homey.devices.getDevice({
         id: this.$store.state.settings.plugins['powerusage'].defaultDevice
-      });
-      this.currentValue = await device.state.meter_power;
-      console.log('Current value: ' + this.currentValue);
+      })
+      this.currentValue = await device.state.meter_power
+      console.log('Current value: ' + this.currentValue)
       device.on('$state', state => {
-        this.currentValue = state.meter_power;
-      });
+        this.currentValue = state.meter_power
+      })
     },
-    async getTodayData() {
-
+    async getTodayData () {
       let result = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('day').utc().format(),
         end: moment().startOf('day').add(10, 'minutes').utc().format()
-      });
-      if(result) {
-        this.todayStart = await result.split("\n")[0].split(',')[1];
-        console.log('Today start: ' + this.todayStart);
+      })
+      if (result) {
+        this.todayStart = await result.split('\n')[0].split(',')[1]
+        console.log('Today start: ' + this.todayStart)
       }
     },
-    async getYesterdayData() {
-
+    async getYesterdayData () {
       let start = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('day').subtract(1, 'days').utc().format(),
         end: moment().startOf('day').subtract(1, 'days').add(10, 'minutes').utc().format()
-      });
+      })
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('day').subtract(1, 'days').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('day').subtract(1, 'days').utc().format()
-      });
-      if(start) {
-        this.yesterdayStart = await start.split("\n")[0].split(',')[1];
-        console.log('Yesterday start: ' + this.yesterdayStart);
+      })
+      if (start) {
+        this.yesterdayStart = await start.split('\n')[0].split(',')[1]
+        console.log('Yesterday start: ' + this.yesterdayStart)
       }
-      if(end) {
-        let endLines = await end.split("\n");
-        this.yesterdayEnd = await endLines[endLines.length - 2].split(',')[1];
-        console.log('Yesterday end: ' + this.yesterdayEnd);
+      if (end) {
+        let endLines = await end.split('\n')
+        this.yesterdayEnd = await endLines[endLines.length - 2].split(',')[1]
+        console.log('Yesterday end: ' + this.yesterdayEnd)
       }
     },
-    async getThisWeekData() {
-
+    async getThisWeekData () {
       let result = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('isoWeek').utc().format(),
         end: moment().startOf('isoWeek').add(10, 'minutes').utc().format()
-      });
-      if(result) {
-        this.weekStart = await result.split("\n")[0].split(',')[1];
-        console.log('Week start: ' + this.weekStart);
+      })
+      if (result) {
+        this.weekStart = await result.split('\n')[0].split(',')[1]
+        console.log('Week start: ' + this.weekStart)
       }
     },
-    async getLastWeekData() {
-
+    async getLastWeekData () {
       let start = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('isoWeek').subtract(1, 'weeks').utc().format(),
         end: moment().startOf('isoWeek').subtract(1, 'weeks').add(10, 'minutes').utc().format()
-      });
+      })
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('isoWeek').subtract(1, 'weeks').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('isoWeek').subtract(1, 'weeks').utc().format()
-      });
-      if(start) {
-        this.lastWeekStart = await start.split("\n")[0].split(',')[1];
-        console.log('Last week start: ' + this.lastWeekStart);
+      })
+      if (start) {
+        this.lastWeekStart = await start.split('\n')[0].split(',')[1]
+        console.log('Last week start: ' + this.lastWeekStart)
       }
-      if(end) {
-        let endLines = await end.split("\n");
-        this.lastWeekEnd = await endLines[endLines.length - 2].split(',')[1];
-        console.log('Last week end: ' + this.lastWeekEnd);
+      if (end) {
+        let endLines = await end.split('\n')
+        this.lastWeekEnd = await endLines[endLines.length - 2].split(',')[1]
+        console.log('Last week end: ' + this.lastWeekEnd)
       }
     },
-    async getThisMonthData() {
-
+    async getThisMonthData () {
       let result = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('month').utc().format(),
         end: moment().startOf('month').add(10, 'minutes').utc().format()
-      });
-      if(result) {
-        this.monthStart = await result.split("\n")[0].split(',')[1];
-        console.log('Month start: ' + this.monthStart);
+      })
+      if (result) {
+        this.monthStart = await result.split('\n')[0].split(',')[1]
+        console.log('Month start: ' + this.monthStart)
       }
     },
-    async getLastMonthData() {
-
+    async getLastMonthData () {
       let start = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().startOf('month').subtract(1, 'months').utc().format(),
         end: moment().startOf('month').subtract(1, 'months').add(10, 'minutes').utc().format()
-      });
+      })
       let end = await this.$homey.insights.getEntries({
         uri: 'homey:device:' + this.$store.state.settings.plugins['powerusage'].defaultDevice,
         name: 'meter_power',
         start: moment().endOf('month').subtract(1, 'months').subtract(10, 'minutes').utc().format(),
         end: moment().endOf('month').subtract(1, 'months').utc().format()
-      });
-      if(start) {
-        this.lastMonthStart = await start.split("\n")[0].split(',')[1];
-        console.log('Last month start: ' + this.lastMonthStart);
+      })
+      if (start) {
+        this.lastMonthStart = await start.split('\n')[0].split(',')[1]
+        console.log('Last month start: ' + this.lastMonthStart)
       }
-      if(end) {
-        let endLines = end.split("\n");
-        this.lastMonthEnd = await endLines[endLines.length - 2].split(',')[1];
-        console.log('Last month end: ' + this.lastMonthEnd);
+      if (end) {
+        let endLines = end.split('\n')
+        this.lastMonthEnd = await endLines[endLines.length - 2].split(',')[1]
+        console.log('Last month end: ' + this.lastMonthEnd)
       }
     }
   },
   computed: {
     settings: {
-      get() {
+      get () {
         return this.$store.state.settings
       }
     }

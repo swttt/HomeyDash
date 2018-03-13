@@ -1,8 +1,8 @@
 <template>
 <div>
   <q-list v-if="!loading">
-    <q-item >
-      <q-item-main v-if="widget.settings.showHeader">
+    <q-item v-if="widget.settings.showHeader">
+      <q-item-main >
          <h5>{{widget.settings.headerName}}</h5>
         </q-item-main>
     </q-item>
@@ -11,7 +11,7 @@
         {{widget.settings.homeyDevices[device].name}}<br/><small class="text-grey">{{widget.settings.homeyDevices[device].zone.name}}</small>
         </q-item-main>
       <q-item-side right>
-        <q-toggle v-model="widget.settings.homeyDevices[device].state.onoff" @change="switchDevice(device)" color="teal" />
+        <q-toggle v-model="widget.settings.homeyDevices[device].state.onoff" @input="switchDevice(device)" color="teal" />
       </q-item-side>
     </q-item>
   </q-list>
@@ -21,31 +21,31 @@
 <script>
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
       devices: {},
       loading: true
     }
   },
-  async mounted() {
-    await this.loopDevices();
-    this.loading = false;
+  async mounted () {
+    await this.loopDevices()
+    this.loading = false
   },
   methods: {
-    async loopDevices() {
+    async loopDevices () {
       this.widget.settings.devices.forEach(async (device) => {
         this.widget.settings.homeyDevices[device] = await this.$homey.devices.getDevice({
           id: device
-        });
-        await this.$homey.devices.subscribe();
+        })
+        await this.$homey.devices.subscribe()
         this.widget.settings.homeyDevices[device].on('$state', state => {
           // console.log(state);
-        });
+        })
       })
     },
-    switchDevice(device){
-      console.log(this.widget.settings.homeyDevices[device].state.onoff);
-        this.widget.settings.homeyDevices[device].setCapabilityValue('onoff', this.widget.settings.homeyDevices[device].state.onoff)
+    switchDevice (device) {
+      console.log(this.widget.settings.homeyDevices[device].state.onoff)
+      this.widget.settings.homeyDevices[device].setCapabilityValue('onoff', this.widget.settings.homeyDevices[device].state.onoff)
     }
   }
 }

@@ -26,13 +26,9 @@
 </template>
 
 <script>
-import store from 'src/store';
-import {
-  EventBus
-} from 'src/eventBus';
 
 export default {
-  data() {
+  data () {
     return {
       editMode: false
     }
@@ -40,26 +36,26 @@ export default {
   components: {
 
   },
-  mounted() {
+  mounted () {
 
   },
-  created() {
+  created () {
 
   },
   methods: {
-    startEdit() {
-      EventBus.$emit('editMode', true)
-      this.editMode = true;
+    startEdit () {
+      this.$root.$emit('editMode', true)
+      this.editMode = true
     },
-    quitEdit() {
-      EventBus.$emit('editMode', false)
-      this.editMode = false;
+    quitEdit () {
+      this.$root.$emit('editMode', false)
+      this.editMode = false
     },
-    openSettings(){
-      EventBus.$emit('openSettings')
+    openSettings () {
+      this.$root.$emit('openSettings')
     },
-    openWidgets(){
-      EventBus.$emit('openWidgets')
+    openWidgets () {
+      this.$root.$emit('openWidgets')
     }
   }
 }

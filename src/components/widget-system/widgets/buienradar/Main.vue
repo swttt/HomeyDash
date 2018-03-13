@@ -6,25 +6,25 @@
 <script>
 export default {
   props: ['widget'],
-  data() {
+  data () {
     return {
       interval: null,
-      url: "//api.buienradar.nl/image/1.0/RadarMapNL?w=250&h=300"
+      url: '//api.buienradar.nl/image/1.0/RadarMapNL?w=250&h=300'
     }
   },
-  created(){
-    this.getRadar();
+  created () {
+    this.getRadar()
   },
-  methods:{
-    getRadar(){
+  methods: {
+    getRadar () {
       this.interval = setTimeout(() => {
-        this.url = "//api.buienradar.nl/image/1.0/RadarMapNL?w=250&h=300" + '&random=' + Math.random();
-        this.getRadar();
-    }, 300000);
+        this.url = '//api.buienradar.nl/image/1.0/RadarMapNL?w=250&h=300' + '&random=' + Math.random()
+        this.getRadar()
+      }, 300000)
     }
   },
   beforeDestroy () {
-    clearTimeout(this.interval);
+    clearTimeout(this.interval)
   }
 }
 </script>
