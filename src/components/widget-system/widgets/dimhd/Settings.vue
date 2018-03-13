@@ -48,6 +48,7 @@ export default {
         if (device.capabilities.dim) {
           this.dimdevices.push({
             label: device.name,
+            sublabel: device.zone.name,
             value: device.id
           })
         }
