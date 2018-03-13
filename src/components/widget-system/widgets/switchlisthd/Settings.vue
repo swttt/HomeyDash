@@ -22,6 +22,7 @@
             color="teal"
             filter
             filter-placeholder="Search device..."
+            :display-value="`${ widget.settings.devices.length } device${ widget.settings.devices.length !== 1 ? 's' : '' } selected`"
             v-model="widget.settings.devices"
             :options="switches"
           />
