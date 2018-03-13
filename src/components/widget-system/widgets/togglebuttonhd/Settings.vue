@@ -74,6 +74,7 @@ export default {
         if (device.capabilities.onoff || device.capabilities.button) {
           this.toggledevices.push({
             label: device.name,
+            sublabel: device.zone.name,
             value: device.id
           })
         }
