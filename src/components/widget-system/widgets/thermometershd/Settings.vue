@@ -1,6 +1,6 @@
 <template>
     <div class="col-12">
-      <q-list link no-border>
+      <q-list no-border>
         <q-item tag="label">
           <q-item-main>
             <q-input stack-label="Title" placeholder="Your title here e.g. Living room" dark color="teal" v-model="widget.settings.name" />
@@ -56,6 +56,7 @@ export default {
         if (device.capabilities.measure_temperature) {
           this.thermometers.push({
             label: device.name,
+            sublabel: device.zone.name,
             value: device.id
           })
         }
