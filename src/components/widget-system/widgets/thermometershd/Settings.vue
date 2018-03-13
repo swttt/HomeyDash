@@ -24,7 +24,7 @@
         </q-item>
         <q-item tag="label">
           <q-item-main>
-            <q-select dark v-model="widget.settings.thermometer" :options="thermometers" stack-label="Select which thermometer to show" />
+            <q-select filter filter-placeholder="Search device..." dark v-model="widget.settings.thermometer" :options="thermometers" stack-label="Select which thermometer to show" />
           </q-item-main>
         </q-item>
         <q-item tag="label">
