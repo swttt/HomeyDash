@@ -19,7 +19,6 @@
           stack-label="Select devices"
             dark
             multiple
-            
             color="teal"
             v-model="widget.settings.devices"
             :options="switches"
