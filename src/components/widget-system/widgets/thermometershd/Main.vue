@@ -26,6 +26,9 @@ export default {
     async getThermometer () {
       this.device = await this.$homey.devices.getDevice({ id: this.widget.settings.thermometer })
       await this.$homey.devices.subscribe()
+      this.device.on('$state', state => {
+        // console.log(state);
+      })
     }
   }
 }
