@@ -23,7 +23,8 @@ export default {
     return {
       device: {},
       loading: true,
-      dim: 0
+      dim: 0,
+      timeout: 1000
     }
   },
   async mounted () {
@@ -33,15 +34,18 @@ export default {
   methods: {
     async getDimDevice () {
       this.device = await this.$homey.devices.getDevice({ id: this.widget.settings.device })
-      this.dim = this.device.state.dim
+      this.dim = this.device.state.dim * 100
       await this.$homey.devices.subscribe()
       this.device.on('$state', state => {
         this.dim = this.device.state.dim * 100
       })
     },
     changeDim (newVal) {
-      var dimLevel = newVal / 100
-      this.device.setCapabilityValue('dim', dimLevel)
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        var dimLevel = newVal / 100
+        this.device.setCapabilityValue('dim', dimLevel)
+      }, 1000)
     }
   }
 }
