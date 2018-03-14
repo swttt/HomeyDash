@@ -16,7 +16,7 @@
       </q-item>
       <q-item tag="label">
         <q-item-main>
-          <q-select dark v-model="widget.settings.device" :options="dimdevices" stack-label="Select which dim capable device to show" />
+          <q-select filter filter-placeholder="Search device..." dark v-model="widget.settings.device" :options="dimdevices" stack-label="Select which dim capable device to show" />
         </q-item-main>
       </q-item>
       <q-item tag="label">
@@ -48,6 +48,7 @@ export default {
         if (device.capabilities.dim) {
           this.dimdevices.push({
             label: device.name,
+            sublabel: device.zone.name,
             value: device.id
           })
         }
