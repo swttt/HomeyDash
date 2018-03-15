@@ -33,6 +33,14 @@ export default {
         this.state = this.device.state.onoff
       }
       await this.$homey.devices.subscribe()
+      this.device.on('$state', state => {
+        this.state = this.device.state.onoff
+        if (this.device.state.onoff) {
+          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.oncolor
+        } else {
+          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.offcolor
+        }
+      })
     },
     async switchDevice () {
       if (this.device.capabilities.onoff) {
