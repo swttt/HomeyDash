@@ -1,0 +1,55 @@
+{
+  "id": "lighthd",
+  "name": "Homey Lights",
+  "description": "Homey Lights",
+  "author": "Jelger Haanstra (Phuturist)",
+  "width": 250,
+  "components": {
+    "settings": "Settings"
+  },
+  "settings": [{
+      "id": "name",
+      "type": "string"
+    },
+    {
+      "id": "room",
+      "type": "boolean",
+      "default": true
+    },
+    {
+        "id": "icon",
+        "type": "string",
+        "default": "data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNjRweCIgaGVpZ2h0PSI2NHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzUxLjY3NiwxNDEuNDA4Yy0yNi4xNzgtMjUuODA4LTYwLjgyMy0zOS43MjgtOTcuNjQzLTM5LjIxNmMtMzUuMzg0LDAuNTAxLTY4Ljc4NSwxNC42MjMtOTQuMDUzLDM5Ljc2MyAgICBjLTI1LjI2OCwyNS4xNDMtMzkuNTU1LDU4LjQ3NC00MC4yMjcsOTMuODU0Yy0wLjcyNCwzOC4wNzEsMTMuODg0LDczLjY2NSw0MS4xMzEsMTAwLjIyNSAgICBjMTQuMzMxLDEzLjk3LDI0LjU3OCwzMS4yNDEsMjkuNzQzLDUwLjAzN3Y3OS44OTloMTMwLjc1MnYtNzkuODgxYzUuMTE5LTE4LjkwMiwxNS4xOTctMzYuMDE2LDI5LjI0Ny00OS41NzQgICAgYzI2Ljg2LTI1LjkyLDQxLjY1Mi02MC43NDYsNDEuNjUyLTk4LjA2M0MzOTIuMjc4LDIwMS42ODcsMzc3Ljg1OSwxNjcuMjIzLDM1MS42NzYsMTQxLjQwOHogTTI5MS4zNzksNDM1Ljk3aC03MC43NTJ2LTM2Ljg5ICAgIGg3MC43NTJWNDM1Ljk3eiBNMzI5Ljc5MywzMTQuOTI4Yy0xNS40OTUsMTQuOTUzLTI3LjIxNCwzMy4yNzctMzQuMzM3LDUzLjUyOVYzMTMuOTVsMjkuMzI0LTI5LjY5N2wtMjEuMzQ3LTIxLjA3OSAgICBsLTM3Ljk3NywzOC40NjF2NjcuNDQ2SDI0Ni41NXYtNjcuNDQ2bC0zNy45NzctMzguNDYxbC0yMS4zNDcsMjEuMDc5bDI5LjMyNCwyOS42OTd2NTQuNTg3ICAgIGMtNy4xNzItMjAuMjAxLTE5LjAyNC0zOC42ODEtMzQuNzI1LTUzLjk4NWMtMjEuMjQ5LTIwLjcxMy0zMi42NDItNDguNDc2LTMyLjA3OC03OC4xNzIgICAgYzEuMDc3LTU2LjY0OCw0OC4wNDktMTAzLjM4OCwxMDQuNzEtMTA0LjE5YzI4LjcxLTAuNDEzLDU1Ljc0LDEwLjQ1NSw3Ni4xNTUsMzAuNTgzYzIwLjQxOSwyMC4xMzIsMzEuNjY0LDQ3LjAxLDMxLjY2NCw3NS42ODEgICAgQzM2Mi4yNzgsMjY3LjU1NCwzNTAuNzQxLDI5NC43MTMsMzI5Ljc5MywzMTQuOTI4eiIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHJlY3QgeD0iMjI4LjkyMyIgeT0iNDgyIiB3aWR0aD0iNTQuMTUiIGhlaWdodD0iMzAiIGZpbGw9IiMwMDAwMDAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxyZWN0IHg9IjI0MS4wMDMiIHdpZHRoPSIzMCIgaGVpZ2h0PSI2Ny4xOSIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHJlY3QgeD0iMzQyLjAyNiIgeT0iNTMuMzIyIiB0cmFuc2Zvcm09Im1hdHJpeCgwLjUzNjUgLTAuODQzOSAwLjg0MzkgMC41MzY1IDExNi40NDM1IDM0OC42NTM3KSIgd2lkdGg9IjY3LjE5IiBoZWlnaHQ9IjMwIiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQkKCQkJPHJlY3QgeD0iNDI0LjA5MSIgeT0iMTQ2LjYyNSIgdHJhbnNmb3JtPSJtYXRyaXgoMC45MDU1IC0wLjQyNDMgMC40MjQzIDAuOTA1NSAtMjUuMzM1OCAyMDkuNDcwMSkiIHdpZHRoPSI2Ny4xODkiIGhlaWdodD0iMjkuOTk5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cmVjdCB4PSIxMjEuMzczIiB5PSIzNC43MjYiIHRyYW5zZm9ybT0ibWF0cml4KDAuODQzOSAtMC41MzY1IDAuNTM2NSAwLjg0MzkgLTE1LjM2NjIgODMuODI4OSkiIHdpZHRoPSIzMCIgaGVpZ2h0PSI2Ny4xOSIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJCgkJCTxyZWN0IHg9IjM5LjMxNSIgeT0iMTI4LjA1IiB0cmFuc2Zvcm09Im1hdHJpeCgwLjQyNDMgLTAuOTA1NSAwLjkwNTUgMC40MjQzIC0xMTUuMTAzNCAxNDIuMjQwMSkiIHdpZHRoPSIyOS45OTkiIGhlaWdodD0iNjcuMTg5IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="
+    },
+    {
+        "id": "offcolor",
+        "type": "string",
+        "default": "#EEEEEE"
+    },
+    {
+        "id": "oncolor",
+        "type": "string",
+        "default": "#009688"
+    },
+    {
+      "id": "device",
+      "type": "array",
+      "default": []
+    },
+    {
+        "id": "dim",
+        "type": "boolean",
+        "default": false
+    },
+    {
+        "id": "colortemperature",
+        "type": "boolean",
+        "default": false
+    },
+    {
+        "id": "color",
+        "type": "boolean",
+        "default": false
+    }
+  ]
+}

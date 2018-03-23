@@ -48,12 +48,8 @@ export default {
       if (this.device.capabilities.onoff) {
         if (this.state) {
           this.device.setCapabilityValue('onoff', false)
-          this.state = false
-          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.offcolor
         } else {
           this.device.setCapabilityValue('onoff', true)
-          this.state = true
-          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.oncolor
         }
       } else if (this.device.capabilities.button) {
         this.device.setCapabilityValue('button', true)
