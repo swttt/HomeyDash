@@ -1,7 +1,7 @@
 <template>
   <div class="dim" v-if="!loading">
     <q-slider
-      v-model="dim"
+      :value="dim"
       :min="0"
       :max="100"
       :step="1"
@@ -9,7 +9,7 @@
       label
       label-always
       snap
-      @input="changeDim"
+      @change="changeDim"
     />
     <h5>{{ widget.settings.name }}</h5>
     <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
@@ -23,8 +23,7 @@ export default {
     return {
       device: {},
       loading: true,
-      dim: 0,
-      timeout: 1000
+      dim: 0
     }
   },
   async mounted () {
@@ -41,11 +40,8 @@ export default {
       })
     },
     changeDim (newVal) {
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        var dimLevel = newVal / 100
-        this.device.setCapabilityValue('dim', dimLevel)
-      }, 1000)
+      var dimLevel = newVal / 100
+      this.device.setCapabilityValue('dim', dimLevel)
     }
   }
 }
