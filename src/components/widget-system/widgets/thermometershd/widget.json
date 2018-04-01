@@ -26,6 +26,11 @@
             "id": "thermometer",
             "type": "array",
             "default": []
+        },
+        {
+            "id": "humidity",
+            "type": "boolean",
+            "default": false
         }
     ]
 }

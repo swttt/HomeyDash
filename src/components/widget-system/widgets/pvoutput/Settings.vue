@@ -1,6 +1,6 @@
 <template>
   <div class="col-12">
-    <q-list link no-border>
+    <q-list no-border>
       <q-item tag="label">
         <q-item-main>
           <q-input dark v-model="widget.settings.apikey" type="text" stack-label="API Key (read only)" />

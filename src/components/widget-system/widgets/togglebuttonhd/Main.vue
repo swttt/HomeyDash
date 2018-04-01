@@ -1,9 +1,11 @@
 <template>
-  <div class="onoff" v-if="!loading" v-on:click="switchDevice">
-    <div class="icon" v-bind:style="{ maskImage: 'url(' + widget.settings.icon + ')', backgroundColor: widget.settings.offcolor }"></div>
-    <h5>{{ widget.settings.name }}</h5>
-    <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
-  </div>
+  <v-touch v-on:tap="switchDevice">
+    <div class="onoff" v-if="!loading">
+      <div class="icon" v-bind:style="{ maskImage: 'url(' + widget.settings.icon + ')', backgroundColor: widget.settings.offcolor }"></div>
+      <h5>{{ widget.settings.name }}</h5>
+      <small class="text-grey" v-if="widget.settings.room">{{ device.zone.name }}</small>
+    </div>
+  </v-touch>
 </template>
 
 <script>
@@ -46,12 +48,8 @@ export default {
       if (this.device.capabilities.onoff) {
         if (this.state) {
           this.device.setCapabilityValue('onoff', false)
-          this.state = false
-          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.offcolor
         } else {
           this.device.setCapabilityValue('onoff', true)
-          this.state = true
-          this.$el.querySelector('.icon').style.backgroundColor = this.widget.settings.oncolor
         }
       } else if (this.device.capabilities.button) {
         this.device.setCapabilityValue('button', true)
