@@ -22,11 +22,11 @@
     </span>
   </div>
   <div class="battery" v-if="device.capabilities.measure_battery && device.state.measure_battery !== null">
-    <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-4" />
-    <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-3" />
-    <q-icon color="teal" v-else-if="device.state.measure_battery < 51 && device.state.measure_battery > 25" name="fa-battery-2" />
-    <q-icon color="orange" v-else-if="device.state.measure_battery < 56 && device.state.measure_battery > 10" name="fa-battery-1" />
-    <q-icon color="red" v-else-if="device.state.measure_battery < 10" name="fa-battery-0" />
+    <q-icon color="teal" v-if="device.state.measure_battery > 80" name="fa-battery-full" />
+    <q-icon color="teal" v-else-if="device.state.measure_battery < 81 && device.state.measure_battery > 50" name="fa-battery-three-quarters" />
+    <q-icon color="teal" v-else-if="device.state.measure_battery < 51 && device.state.measure_battery > 25" name="fa-battery-half" />
+    <q-icon color="orange" v-else-if="device.state.measure_battery < 56 && device.state.measure_battery > 10" name="fa-battery-quarter" />
+    <q-icon color="red" v-else-if="device.state.measure_battery < 10" name="fa-battery-empty" />
   </div>
 
   <q-modal no-backdrop-dismiss style="background-color: rgba(0, 0, 0, 0.85)" class="device-modal" :content-css="{background: 'rgba(0, 0, 0, 0)', boxShadow: '0 0 0 0', border: '0 0 0 0'}" v-model="showModal" minimized>
